@@ -1,0 +1,9 @@
+{
+    "name": "app",
+    "version": "0.0.0",
+    "main": "App.tsx",
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-router-dom": "^6.22.1"
+    }
+}
