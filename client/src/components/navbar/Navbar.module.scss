@@ -1,0 +1,39 @@
+@import '~@style/_variables.scss';
+
+.navbar {
+    align-items: center;
+    background-color: $dark-red;
+    color: $light-cream;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    // justify-content: center;
+    padding: 20px;
+
+    .navbarTitle {
+        font-family: 'satisfy';
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 3px;
+        margin-right: auto;
+    }
+
+    .navbarSearch {
+        background-color: $light-cream;
+        border: none;
+        border-radius: 10px;
+        padding: 5px 8px;
+        width: 100%;
+    }
+
+    .navbarList {
+        display: flex;
+        gap: 20px;
+        margin-left: auto;
+        width: fit-content;
+
+        li {
+            font-weight: bold;
+            letter-spacing: 2px
+        }
+    }
+}
