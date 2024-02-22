@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const productRouter = require('./routes/productRoutes');
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,6 +14,10 @@ const mongoDB = `mongodb+srv://${process.env.DB_UN}:${process.env.DB_PW}@develop
 async function main() {
   mongoose.connect(mongoDB);
 }
+
+// Routers
+
+app.use('/product/', productRouter);
 
 // Error handling
 app.use((req, res) => {
