@@ -6,7 +6,7 @@ const TypeSchema = new mongoose.Schema({
     enum: ['hardware', 'audio/disc', 'video/disc', 'game/disc'],
     required: true,
   },
-  products: [{ type: mongoose.Types.ObjectId }],
+  products: [{ type: mongoose.Types.ObjectId, ref: 'product' }],
 });
 
 module.exports = mongoose.model('type', TypeSchema);
