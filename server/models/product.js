@@ -6,6 +6,15 @@ const ProductSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   number_in_stock: { type: Number, required: true },
   image: { type: String },
+  genre: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'genre',
+  },
+  type: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'type',
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('product', ProductSchema);
