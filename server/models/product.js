@@ -9,10 +9,10 @@ const ProductSchema = new mongoose.Schema({
     type: Buffer,
     contentType: String,
   },
-  genre: {
+  genre: [{
     type: mongoose.Schema.ObjectId,
     ref: 'genre',
-  },
+  }],
   type: {
     type: mongoose.Schema.ObjectId,
     ref: 'type',
