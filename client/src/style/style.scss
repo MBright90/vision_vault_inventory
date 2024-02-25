@@ -1,4 +1,5 @@
 @import url('./_fonts.scss');
+@import './variables';
 
 // Style reset
 html,
@@ -30,9 +31,11 @@ header {
 
 body, input, button, textarea {
   font-family: 'urbanist', sans-serif;
+  letter-spacing: 2px;
 }
 
 body {
+  background-color: $light-cream;
   position: relative;
   overflow: hidden;
   max-width: 2000px;
