@@ -6,7 +6,6 @@
     color: $light-cream;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    // justify-content: center;
     padding: 20px;
 
     .navbarTitle {
@@ -17,12 +16,27 @@
         margin-right: auto;
     }
 
-    .navbarSearch {
+    .search {
+        position: relative;
+    }
+
+    .searchInput {
         background-color: $light-cream;
         border: none;
         border-radius: 10px;
         padding: 5px 8px;
+        position: relative;
         width: 100%;
+    }
+
+    .searchConfirm {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        position: absolute;
+        top: 20%;
+        right: -10px;
     }
 
     .navbarList {
