@@ -1,0 +1,8 @@
+{
+    "name": "new-product-form",
+    "version": "0.0.0",
+    "main": "NewProductForm.tsx",
+    "dependencies": {
+        "react": "^18.2.0"
+    }
+}
