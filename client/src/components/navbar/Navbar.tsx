@@ -6,8 +6,9 @@ const Navbar: React.FC = () => {
     return (
         <nav className={style.navbar}>
             <h1 className={style.navbarTitle}>VisionVault</h1>
-            <div>
-                <input className={style.navbarSearch}/>
+            <div className={style.search}>
+                <input className={style.searchInput}/>
+                <button className={style.searchConfirm}>GO!</button>
             </div>
             <ul className={style.navbarList}>
                 <li className={style.navbarItem}><a href="/">Home</a></li>
