@@ -16,11 +16,20 @@ async function main() {
 }
 
 // Routers
+app.get('/', (req, res) => {
+  console.log('frontend connected');
+  const requestData = {
+    method: req.method,
+    headers: req.headers,
+  };
+  res.json(requestData);
+});
 
 app.use('/product/', productRouter);
 
 // Error handling
 app.use((req, res) => {
+  console.log(req);
   res.status(404).render('404', { title: '404' });
 });
 
