@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const productController = require('../controllers/productController');
 
 const productRouter = express.Router();
@@ -6,7 +7,9 @@ const productRouter = express.Router();
 // productRouter.get('/', (req, res) => {
 // });
 
-productRouter.get('/search/', productController.product_search);
+// productRouter.get('/search/', productController.product_search);
+
+productRouter.use(cors());
 
 productRouter.get('/:id', productController.product_get);
 
