@@ -17,7 +17,7 @@ async function main() {
 }
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 // Routers
 app.get('/', (req, res) => {
