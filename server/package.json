@@ -6,7 +6,8 @@
   "scripts": {
     "start": "NODE_ENV=production node --env-file=.env server",
     "startdev": "nodemon --env-file=.env server.js",
-    "serverstart": "DEBUG=server:* npm run startDev"
+    "serverstart": "DEBUG=server:* npm run startDev",
+    "upload test data": "node "
   },
   "keywords": [],
   "author": "",
