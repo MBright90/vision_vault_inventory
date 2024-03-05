@@ -1,237 +1,563 @@
 [
     {
-    "name": "The Lord of the Rings Trilogy",
-    "description": "The epic fantasy masterpiece by J.R.R. Tolkien",
-    "price": 29.99,
-    "number_in_stock": 100,
-    "type": "<ID of BOOK type>",
-    "genre": "Fantasy Adventure"
+        "name": "The Lord of the Rings Trilogy",
+        "description": "The epic fantasy masterpiece by J.R.R. Tolkien",
+        "price": 29.99,
+        "number_in_stock": 100,
+        "type": "book",
+        "genres": "Fantasy, Adventure"
     },
     {
-    "name": "PlayStation 5",
-    "description": "The latest gaming console from Sony",
-    "price": 499.99,
-    "number_in_stock": 50,
-    "type": "<ID of HARDWARE type>"
+        "name": "PlayStation 5",
+        "description": "The latest gaming console from Sony",
+        "price": 499.99,
+        "number_in_stock": 50,
+        "type": "hardware",
+        "genres": ""
     },
     {
-    "name": "Star Wars: The Complete Saga",
-    "description": "The epic space opera film series created by George Lucas",
-    "price": 39.99,
-    "number_in_stock": 75,
-    "type": "<ID of DVD type>",
-    "genre": "Science Fiction Action Adventure"
+        "name": "Star Wars: The Complete Saga",
+        "description": "The epic space opera film series created by George Lucas",
+        "price": 39.99,
+        "number_in_stock": 75,
+        "type": "video",
+        "genres": "Science-Fiction, Action, Adventure"
     },
     {
-    "name": "The Witcher 3: Wild Hunt",
-    "description": "An action role-playing game developed by CD Projekt Red",
-    "price": 49.99,
-    "number_in_stock": 30,
-    "type": "<ID of GAME type>",
-    "genre": "Action Adventure RPG"
+        "name": "The Witcher 3: Wild Hunt",
+        "description": "An action role-playing game developed by CD Projekt Red",
+        "price": 49.99,
+        "number_in_stock": 30,
+        "type": "game",
+        "genres": "Action, Adventure, RPG"
     },
     {
-    "name": "Apple iPhone 13",
-    "description": "The latest smartphone from Apple",
-    "price": 999.99,
-    "number_in_stock": 20,
-    "type": "<ID of HARDWARE type>"
+        "name": "Apple iPhone 13",
+        "description": "The latest smartphone from Apple",
+        "price": 999.99,
+        "number_in_stock": 20,
+        "type": "hardware",
+        "genres": ""
     },
     {
-    "name": "Harry Potter and the Sorcerer's Stone",
-    "description": "The first book in the Harry Potter series by J.K. Rowling",
-    "price": 14.99,
-    "number_in_stock": 150,
-    "type": "<ID of BOOK type>",
-    "genre": "Fantasy Adventure"
+        "name": "Harry Potter and the Sorcerer's Stone",
+        "description": "The first book in the Harry Potter series by J.K. Rowling",
+        "price": 14.99,
+        "number_in_stock": 150,
+        "type": "book",
+        "genres": "Fantasy, Adventure"
     },
     {
-    "name": "Nintendo Switch",
-    "description": "A hybrid video game console developed by Nintendo",
-    "price": 299.99,
-    "number_in_stock": 40,
-    "type": "<ID of HARDWARE type>"
+        "name": "Nintendo Switch",
+        "description": "A hybrid video game console developed by Nintendo",
+        "price": 299.99,
+        "number_in_stock": 40,
+        "type": "hardware",
+        "genres": ""
     },
     {
-    "name": "The Matrix Trilogy",
-    "description": "The iconic science fiction film series directed by the Wachowskis",
-    "price": 24.99,
-    "number_in_stock": 80,
-    "type": "<ID of DVD type>",
-    "genre": "Science Fiction Action"
+        "name": "The Matrix Trilogy",
+        "description": "The iconic science fiction film series directed by the Wachowskis",
+        "price": 24.99,
+        "number_in_stock": 80,
+        "type": "video",
+        "genres": "Science-Fiction, Action"
     },
     {
-    "name": "Xbox Series X",
-    "description": "The latest gaming console from Microsoft",
-    "price": 499.99,
-    "number_in_stock": 25,
-    "type": "<ID of HARDWARE type>"
+        "name": "Xbox Series X",
+        "description": "The latest gaming console from Microsoft",
+        "price": 499.99,
+        "number_in_stock": 25,
+        "type": "hardware",
+        "genres": ""
     },
     {
-    "name": "Game of Thrones: The Complete Series",
-    "description": "The television adaptation of A Song of Ice and Fire by George R.R. Martin",
-    "price": 49.99,
-    "number_in_stock": 60,
-    "type": "<ID of DVD type>",
-    "genre": "Fantasy Drama Adventure"
+        "name": "Game of Thrones: The Complete Series",
+        "description": "The television adaptation of A Song of Ice and Fire by George R.R. Martin",
+        "price": 49.99,
+        "number_in_stock": 60,
+        "type": "video",
+        "genres": "Fantasy, Drama, Adventure"
     },
     {
         "name": "Apple AirPods Pro",
         "description": "Wireless earbuds with active noise cancellation",
         "price": 249.99,
         "number_in_stock": 100,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "The Great Gatsby",
         "description": "A novel by F. Scott Fitzgerald",
         "price": 9.99,
         "number_in_stock": 200,
-        "type": "<ID of BOOK type>",
-        "genre": "Literary Fiction"
+        "type": "book",
+        "genres": "Literary, Fiction"
     },
     {
         "name": "Nintendo Switch Pro Controller",
         "description": "A high-performance controller for Nintendo Switch",
         "price": 69.99,
         "number_in_stock": 50,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "Samsung Galaxy Watch 4",
         "description": "A smartwatch with advanced health features",
         "price": 349.99,
         "number_in_stock": 30,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "Breaking Bad: The Complete Series",
         "description": "The critically acclaimed television series",
         "price": 59.99,
         "number_in_stock": 75,
-        "type": "<ID of DVD type>",
-        "genre": "Crime Drama"
+        "type": "video",
+        "genres": "Crime, Drama"
     },
     {
         "name": "Amazon Kindle Paperwhite",
         "description": "A waterproof e-reader with a high-resolution display",
         "price": 129.99,
         "number_in_stock": 80,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "FIFA 22",
         "description": "A popular football simulation video game",
         "price": 59.99,
         "number_in_stock": 40,
-        "type": "<ID of GAME type>",
-        "genre": "Sports Simulation"
+        "type": "game",
+        "genres": "Sports, Simulation"
     },
     {
         "name": "Marvel's Spider-Man: Miles Morales",
         "description": "An action-adventure game developed by Insomniac Games",
         "price": 49.99,
         "number_in_stock": 35,
-        "type": "<ID of GAME type>",
-        "genre": "Action Adventure"
+        "type": "game",
+        "genres": "Action, Adventure"
     },
     {
         "name": "Fitbit Charge 5",
         "description": "A fitness tracker with built-in GPS and heart rate monitoring",
         "price": 179.99,
         "number_in_stock": 60,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "The Office: The Complete Series",
         "description": "The American television mockumentary sitcom",
         "price": 69.99,
         "number_in_stock": 90,
-        "type": "<ID of DVD type>",
-        "genre": "Comedy"
+        "type": "video",
+        "genres": "Comedy"
     },
     {
         "name": "Google Pixel 6",
         "description": "The latest flagship smartphone from Google",
         "price": 699.99,
         "number_in_stock": 25,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "Assassin's Creed Valhalla",
         "description": "An action role-playing video game set in the Viking Age",
         "price": 59.99,
         "number_in_stock": 45,
-        "type": "<ID of GAME type>",
-        "genre": "Action Adventure RPG"
+        "type": "game",
+        "genres": "Action, Adventure, RPG"
     },
     {
         "name": "Dune",
         "description": "A science fiction novel by Frank Herbert",
         "price": 12.99,
         "number_in_stock": 150,
-        "type": "<ID of BOOK type>",
-        "genre": "Science Fiction"
+        "type": "book",
+        "genres": "Science-Fiction"
     },
     {
         "name": "Sony WH-1000XM4",
         "description": "Wireless noise-canceling headphones",
         "price": 349.99,
         "number_in_stock": 50,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "Friends: The Complete Series",
         "description": "The popular American television sitcom",
         "price": 69.99,
         "number_in_stock": 70,
-        "type": "<ID of DVD type>",
-        "genre": "Comedy"
+        "type": "video",
+        "genres": "Comedy"
     },
     {
         "name": "PlayStation 4 Pro",
         "description": "A high-performance gaming console from Sony",
         "price": 399.99,
         "number_in_stock": 20,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "The Catcher in the Rye",
         "description": "A novel by J.D. Salinger",
         "price": 11.99,
         "number_in_stock": 180,
-        "type": "<ID of BOOK type>",
-        "genre": "Literary Fiction"
+        "type": "book",
+        "genres": "Fiction"
     },
     {
         "name": "Apple Watch Series 7",
         "description": "The latest smartwatch from Apple",
         "price": 399.99,
         "number_in_stock": 40,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
     },
     {
         "name": "Red Dead Redemption 2",
         "description": "An action-adventure game developed by Rockstar Games",
         "price": 59.99,
         "number_in_stock": 55,
-        "type": "<ID of GAME type>",
-        "genre": "Action Adventure"
+        "type": "game",
+        "genres": "Action, Adventure"
     },
     {
         "name": "The Godfather Trilogy",
         "description": "A series of crime films directed by Francis Ford Coppola",
         "price": 29.99,
         "number_in_stock": 65,
-        "type": "<ID of DVD type>",
-        "genre": "Crime Drama"
+        "type": "video",
+        "genres": "Crime, Drama"
     },
     {
         "name": "Fitbit Versa 3",
         "description": "A fitness smartwatch with built-in GPS and heart rate tracking",
         "price": 229.99,
         "number_in_stock": 55,
-        "type": "<ID of HARDWARE type>"
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "The Hobbit",
+        "description": "A novel by J.R.R. Tolkien",
+        "price": 12.99,
+        "number_in_stock": 120,
+        "type": "book",
+        "genres": "Fantasy, Adventure"
+    },
+    {
+        "name": "Nintendo Switch Lite",
+        "description": "A handheld gaming console developed by Nintendo",
+        "price": 199.99,
+        "number_in_stock": 70,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "The Mandalorian: Season 1",
+        "description": "The first season of the Star Wars television series",
+        "price": 29.99,
+        "number_in_stock": 90,
+        "type": "video",
+        "genres": "Science-Fiction, Action, Adventure"
+    },
+    {
+        "name": "Final Fantasy VII Remake",
+        "description": "A remake of the classic RPG developed by Square Enix",
+        "price": 59.99,
+        "number_in_stock": 40,
+        "type": "game",
+        "genres": "Role-Playing"
+    },
+    {
+        "name": "Samsung Galaxy S21",
+        "description": "The flagship smartphone from Samsung",
+        "price": 799.99,
+        "number_in_stock": 35,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Pride and Prejudice",
+        "description": "A novel by Jane Austen",
+        "price": 9.99,
+        "number_in_stock": 150,
+        "type": "book",
+        "genres": "Romance, Fiction"
+    },
+    {
+        "name": "Logitech G502 Hero Gaming Mouse",
+        "description": "A high-performance gaming mouse with customizable features",
+        "price": 79.99,
+        "number_in_stock": 60,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Fitbit Inspire 2",
+        "description": "A fitness tracker with 24/7 heart rate monitoring",
+        "price": 99.99,
+        "number_in_stock": 85,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Breaking Bad: Season 1",
+        "description": "The first season of the critically acclaimed television series",
+        "price": 19.99,
+        "number_in_stock": 100,
+        "type": "video",
+        "genres": "Crime, Drama"
+    },
+    {
+        "name": "Amazon Echo Dot (4th Gen)",
+        "description": "A smart speaker with Alexa voice control",
+        "price": 49.99,
+        "number_in_stock": 120,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Nineteen Eighty-Four",
+        "description": "A dystopian novel by George Orwell",
+        "price": 10.99,
+        "number_in_stock": 80,
+        "type": "book",
+        "genres": "Dystopian, Fiction"
+    },
+    {
+        "name": "Sony PlayStation Platinum Wireless Headset",
+        "description": "A premium gaming headset with 3D audio support",
+        "price": 159.99,
+        "number_in_stock": 45,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Grey's Anatomy: Season 1",
+        "description": "The first season of the medical drama television series",
+        "price": 24.99,
+        "number_in_stock": 80,
+        "type": "video",
+        "genres": "Drama"
+    },
+    {
+        "name": "Google Nest Thermostat",
+        "description": "A smart thermostat with energy-saving features",
+        "price": 129.99,
+        "number_in_stock": 60,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Minecraft",
+        "description": "A sandbox video game developed by Mojang Studios",
+        "price": 29.99,
+        "number_in_stock": 50,
+        "type": "game",
+        "genres": "Sandbox, Adventure"
+    },
+    {
+        "name": "The Picture of Dorian Gray",
+        "description": "A novel by Oscar Wilde",
+        "price": 8.99,
+        "number_in_stock": 100,
+        "type": "book",
+        "genres": "Gothic, Fiction"
+    },
+    {
+        "name": "Bose QuietComfort 45 Wireless Headphones",
+        "description": "Premium noise-canceling headphones for immersive sound",
+        "price": 329.99,
+        "number_in_stock": 30,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Friends: Season 1",
+        "description": "The first season of the popular American television sitcom",
+        "price": 14.99,
+        "number_in_stock": 70,
+        "type": "video",
+        "genres": "Comedy"
+    },
+    {
+        "name": "Nintendo 3DS XL",
+        "description": "A handheld gaming console by Nintendo",
+        "price": 199.99,
+        "number_in_stock": 25,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "The Chronicles of Narnia Box Set",
+        "description": "A series of high fantasy novels by C.S. Lewis",
+        "price": 39.99,
+        "number_in_stock": 60,
+        "type": "book",
+        "genres": "Fantasy, Adventure"
+    },
+    {
+        "name": "Apple iPad Pro",
+        "description": "A powerful tablet with a stunning Liquid Retina display",
+        "price": 799.99,
+        "number_in_stock": 35,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Interstellar",
+        "description": "A science fiction film directed by Christopher Nolan",
+        "price": 14.99,
+        "number_in_stock": 100,
+        "type": "video",
+        "genres": "Science-Fiction, Drama"
+    },
+    {
+        "name": "Call of Duty: Warzone",
+        "description": "A free-to-play battle royale game",
+        "price": 0,
+        "number_in_stock": 150,
+        "type": "game",
+        "genres": "Shooter"
+    },
+    {
+        "name": "Sony PlayStation VR",
+        "description": "A virtual reality headset for PlayStation 4 and PlayStation 5",
+        "price": 299.99,
+        "number_in_stock": 25,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "To Kill a Mockingbird",
+        "description": "A novel by Harper Lee",
+        "price": 10.99,
+        "number_in_stock": 80,
+        "type": "book",
+        "genres": "Southern Gothic, Bildungsroman"
+    },
+    {
+        "name": "Logitech MX Master 3 Wireless Mouse",
+        "description": "An advanced wireless mouse with customizable buttons",
+        "price": 99.99,
+        "number_in_stock": 50,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Fitbit Versa Lite Edition",
+        "description": "A versatile fitness smartwatch with heart rate tracking",
+        "price": 129.99,
+        "number_in_stock": 70,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "The Shawshank Redemption",
+        "description": "A drama film directed by Frank Darabont",
+        "price": 9.99,
+        "number_in_stock": 120,
+        "type": "video",
+        "genres": "Drama"
+    },
+    {
+        "name": "Amazon Fire TV Stick 4K",
+        "description": "A streaming media player with 4K Ultra HD and HDR support",
+        "price": 49.99,
+        "number_in_stock": 90,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "The Art of War",
+        "description": "An ancient Chinese military treatise attributed to Sun Tzu",
+        "price": 7.99,
+        "number_in_stock": 200,
+        "type": "book",
+        "genres": "Military, Strategy"
+    },
+    {
+        "name": "Bose SoundLink Color Bluetooth Speaker II",
+        "description": "A portable Bluetooth speaker with bold sound",
+        "price": 129.99,
+        "number_in_stock": 40,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Friends: Season 2",
+        "description": "The second season of the popular American television sitcom",
+        "price": 19.99,
+        "number_in_stock": 80,
+        "type": "video",
+        "genres": "Comedy"
+    },
+    {
+        "name": "Nintendo Game Boy Advance SP",
+        "description": "A handheld gaming console by Nintendo",
+        "price": 79.99,
+        "number_in_stock": 55,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "The Catcher in the Rye",
+        "description": "A novel by J.D. Salinger",
+        "price": 11.99,
+        "number_in_stock": 180,
+        "type": "book",
+        "genres": "Coming-of-age, Fiction"
+    },
+    {
+        "name": "Apple MacBook Pro",
+        "description": "A high-performance laptop with Retina display",
+        "price": 1499.99,
+        "number_in_stock": 30,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "Grand Theft Auto V",
+        "description": "An action-adventure game developed by Rockstar Games",
+        "price": 29.99,
+        "number_in_stock": 55,
+        "type": "game",
+        "genres": "Action, Adventure"
+    },
+    {
+        "name": "The Sopranos: The Complete Series",
+        "description": "The complete series of the American crime drama television series",
+        "price": 89.99,
+        "number_in_stock": 65,
+        "type": "video",
+        "genres": "Crime, Drama"
+    },
+    {
+        "name": "Google Pixelbook Go",
+        "description": "A lightweight Chromebook with a sleek design",
+        "price": 649.99,
+        "number_in_stock": 45,
+        "type": "hardware",
+        "genres": ""
+    },
+    {
+        "name": "The Girl with the Dragon Tattoo",
+        "description": "A novel by Stieg Larsson",
+        "price": 13.99,
+        "number_in_stock": 100,
+        "type": "book",
+        "genres": "Mystery, Crime, Thriller"
     }
 ]
   
