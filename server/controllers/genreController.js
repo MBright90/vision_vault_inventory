@@ -3,16 +3,21 @@ const Genre = require('../models/genre');
 
 // genre_get_all
 
-function genre_get_id(req, res, genre, genreArr) {
+async function genre_get_id(req, res, genre) {
   // find genre and create if not found
-  Genre.findOneAndUpdate({ name: genre }, { upsert: true })
-    .then((result) => result)
-    .catch((err) => res.status(500).send(err));
-
-  // Potential efficient method
-  Genre.updateMany({ name: { $in: genreArr } }, { upsert: true })
-    .then((result) => result)
-    .catch((err) => res.status(500).send(err));
+  try {
+    if (genre === '') return '';
+    const lowerGen = genre.toLowerCase();
+    const result = await Genre.findOneAndUpdate(
+      { name: lowerGen },
+      { name: lowerGen },
+      { upsert: true },
+    );
+    return result;
+  } catch (err) {
+    res.status(500).send(err);
+    throw err;
+  }
 }
 
 function genre_get_all(req, res) {
