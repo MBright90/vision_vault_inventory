@@ -38,7 +38,7 @@ function product_post(req, res) {
     price,
     number_in_stock,
     image,
-    genreDocs,
+    genres: genreDocs,
     type,
     stock_last_updated: new Date(),
     last_updated: new Date(),
