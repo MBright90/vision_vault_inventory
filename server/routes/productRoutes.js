@@ -4,12 +4,7 @@ const productController = require('../controllers/productController');
 
 const productRouter = express.Router();
 
-// productRouter.get('/', (req, res) => {
-// });
-
-// productRouter.get('/search/', productController.product_search);
-
-productRouter.use(cors());
+productRouter.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
 productRouter.get('/:id', productController.product_get);
 
