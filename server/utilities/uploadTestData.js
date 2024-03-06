@@ -1,8 +1,13 @@
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 
-// const Product = require('../models/product');
+// models
+const Product = require('../models/product');
+
+// controllers
 const genreController = require('../controllers/genreController');
+
+// data
 const testData = require('./testData/productData.json');
 
 // Connect to mongoDB database
@@ -14,7 +19,6 @@ async function main() {
 }
 
 async function uploadTestProducts(dataArr) {
-  // eslint-disable-next-line no-unused-vars
   const mappedData = await Promise.all(dataArr.map(async (product) => {
     const genreArr = product.genres.split(',').map((item) => item.trim());
 
@@ -22,7 +26,7 @@ async function uploadTestProducts(dataArr) {
 
     if (genreArr.length > 0) {
       genreIDs = await Promise.all(genreArr.map(async (genre) => {
-        const ID = await genreController.genre_get_id(null, null, genre);
+        const ID = await genreController.get_id(null, null, genre);
         return ID;
       }));
     }
@@ -33,48 +37,22 @@ async function uploadTestProducts(dataArr) {
   }));
 
   console.log(mappedData);
-}
 
-//   try {
-//     Product.insertMany(mappedData);
-//   } catch (err) {
-//     console.log(err);
-//   }
+  mappedData.forEach((item) => {
+    try {
+      const productDoc = new Product(item);
+      const productID = productDoc.save();
+
+      productDoc.genres.forEach((genre) => {
+        genreController.add_product(null, null, genre, productID);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    // Do same for types
+  });
+}
 
 main()
   .then(uploadTestProducts(testData))
   .catch((err) => (console.log(err)));
-
-//   function product_post(req, res) {
-//     const {
-//       name, description, price, number_in_stock, image, genres, type,
-//     } = req.body;
-
-//     // parse genres
-//     const genreArr = genres.split(' ');
-//     const genreDocs = [];
-
-//     genreArr.forEach((genre) => {
-//       const genreDoc = genreController.genre_get_id(req, res, genre);
-//       if (!genreDoc._id) return;
-//       genreDocs[genreDocs.length] = genreDoc;
-//     });
-
-//     const newProduct = new Product({
-//       name,
-//       description,
-//       price,
-//       number_in_stock,
-//       image,
-//       genres: genreDocs,
-//       type,
-//       stock_last_updated: new Date(),
-//       last_updated: new Date(),
-//     });
-
-//     newProduct.save()
-//       .then((result) => res.send(result))
-//       .catch((err) => {
-//         res.status(500).send(err);
-//       });
-//   }
