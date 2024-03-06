@@ -20,7 +20,7 @@
         "description": "The epic space opera film series created by George Lucas",
         "price": 39.99,
         "number_in_stock": 75,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Science-Fiction, Action, Adventure"
     },
     {
@@ -28,7 +28,7 @@
         "description": "An action role-playing game developed by CD Projekt Red",
         "price": 49.99,
         "number_in_stock": 30,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Action, Adventure, RPG"
     },
     {
@@ -60,7 +60,7 @@
         "description": "The iconic science fiction film series directed by the Wachowskis",
         "price": 24.99,
         "number_in_stock": 80,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Science-Fiction, Action"
     },
     {
@@ -76,7 +76,7 @@
         "description": "The television adaptation of A Song of Ice and Fire by George R.R. Martin",
         "price": 49.99,
         "number_in_stock": 60,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Fantasy, Drama, Adventure"
     },
     {
@@ -116,7 +116,7 @@
         "description": "The critically acclaimed television series",
         "price": 59.99,
         "number_in_stock": 75,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Crime, Drama"
     },
     {
@@ -132,7 +132,7 @@
         "description": "A popular football simulation video game",
         "price": 59.99,
         "number_in_stock": 40,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Sports, Simulation"
     },
     {
@@ -140,7 +140,7 @@
         "description": "An action-adventure game developed by Insomniac Games",
         "price": 49.99,
         "number_in_stock": 35,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Action, Adventure"
     },
     {
@@ -156,7 +156,7 @@
         "description": "The American television mockumentary sitcom",
         "price": 69.99,
         "number_in_stock": 90,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Comedy"
     },
     {
@@ -172,7 +172,7 @@
         "description": "An action role-playing video game set in the Viking Age",
         "price": 59.99,
         "number_in_stock": 45,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Action, Adventure, RPG"
     },
     {
@@ -196,7 +196,7 @@
         "description": "The popular American television sitcom",
         "price": 69.99,
         "number_in_stock": 70,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Comedy"
     },
     {
@@ -228,7 +228,7 @@
         "description": "An action-adventure game developed by Rockstar Games",
         "price": 59.99,
         "number_in_stock": 55,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Action, Adventure"
     },
     {
@@ -236,7 +236,7 @@
         "description": "A series of crime films directed by Francis Ford Coppola",
         "price": 29.99,
         "number_in_stock": 65,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Crime, Drama"
     },
     {
@@ -268,7 +268,7 @@
         "description": "The first season of the Star Wars television series",
         "price": 29.99,
         "number_in_stock": 90,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Science-Fiction, Action, Adventure"
     },
     {
@@ -276,7 +276,7 @@
         "description": "A remake of the classic RPG developed by Square Enix",
         "price": 59.99,
         "number_in_stock": 40,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Role-Playing"
     },
     {
@@ -316,7 +316,7 @@
         "description": "The first season of the critically acclaimed television series",
         "price": 19.99,
         "number_in_stock": 100,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Crime, Drama"
     },
     {
@@ -348,7 +348,7 @@
         "description": "The first season of the medical drama television series",
         "price": 24.99,
         "number_in_stock": 80,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Drama"
     },
     {
@@ -364,7 +364,7 @@
         "description": "A sandbox video game developed by Mojang Studios",
         "price": 29.99,
         "number_in_stock": 50,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Sandbox, Adventure"
     },
     {
@@ -388,7 +388,7 @@
         "description": "The first season of the popular American television sitcom",
         "price": 14.99,
         "number_in_stock": 70,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Comedy"
     },
     {
@@ -420,7 +420,7 @@
         "description": "A science fiction film directed by Christopher Nolan",
         "price": 14.99,
         "number_in_stock": 100,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Science-Fiction, Drama"
     },
     {
@@ -428,7 +428,7 @@
         "description": "A free-to-play battle royale game",
         "price": 0,
         "number_in_stock": 150,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Shooter"
     },
     {
@@ -444,7 +444,7 @@
         "description": "A novel by Harper Lee",
         "price": 10.99,
         "number_in_stock": 80,
-        "type": "book",
+        "type": "book/disc",
         "genres": "Southern Gothic, Bildungsroman"
     },
     {
@@ -468,7 +468,7 @@
         "description": "A drama film directed by Frank Darabont",
         "price": 9.99,
         "number_in_stock": 120,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Drama"
     },
     {
@@ -500,7 +500,7 @@
         "description": "The second season of the popular American television sitcom",
         "price": 19.99,
         "number_in_stock": 80,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Comedy"
     },
     {
@@ -532,7 +532,7 @@
         "description": "An action-adventure game developed by Rockstar Games",
         "price": 29.99,
         "number_in_stock": 55,
-        "type": "game",
+        "type": "game/disc",
         "genres": "Action, Adventure"
     },
     {
@@ -540,7 +540,7 @@
         "description": "The complete series of the American crime drama television series",
         "price": 89.99,
         "number_in_stock": 65,
-        "type": "video",
+        "type": "video/disc",
         "genres": "Crime, Drama"
     },
     {
