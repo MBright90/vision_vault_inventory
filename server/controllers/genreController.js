@@ -1,9 +1,7 @@
 /* eslint-disable camelcase */
 const Genre = require('../models/genre');
 
-// genre_get_all
-
-async function genre_get_id(req, res, genre) {
+async function get_id(req, res, genre) {
   // find genre and create if not found
   try {
     if (genre === '') return '';
@@ -20,7 +18,7 @@ async function genre_get_id(req, res, genre) {
   }
 }
 
-function genre_get_all(req, res) {
+function get_all(req, res) {
   Genre.find()
     .sort({ name: 1 })
     .then((result) => {
@@ -29,7 +27,15 @@ function genre_get_all(req, res) {
     .catch((err) => res.status(500).send(err));
 }
 
-function genre_get_products(req, res) {
+function add_product(req, res, genreId, productId) {
+  const result = Genre.updateOne(
+    { _id: genreId },
+    { $push: { products: productId } },
+  );
+  return result;
+}
+
+function get_products(req, res) {
   const { id } = req.params;
 
   Genre.findById(id)
@@ -38,7 +44,8 @@ function genre_get_products(req, res) {
 }
 
 module.exports = {
-  genre_get_id,
-  genre_get_all,
-  genre_get_products,
+  get_id,
+  get_all,
+  add_product,
+  get_products,
 };
