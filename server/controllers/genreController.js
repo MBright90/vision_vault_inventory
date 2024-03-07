@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 const Genre = require('../models/genre');
 
@@ -11,7 +12,7 @@ async function get_id(genre) {
       { name: lowerGen },
       { upsert: true },
     );
-    return result;
+    return result._id;
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err); // log error
