@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 const Type = require('../models/type');
 

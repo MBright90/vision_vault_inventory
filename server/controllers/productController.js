@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 const Product = require('../models/product');
 const genreController = require('./genreController');

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 const Genre = require('../models/genre');
 
