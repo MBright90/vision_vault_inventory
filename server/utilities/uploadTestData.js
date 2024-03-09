@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // models
-// const Product = require('../models/product');
+const Product = require('../models/product');
 
 // controllers
 const genreController = require('../controllers/genreController');
@@ -25,10 +25,9 @@ async function uploadTestProducts(dataArr) {
 
     let genreIds = [];
 
-    if (genreArr.length > 0) {
+    if (genreArr.length > 0 && genreArr[0] !== '') {
       genreIds = await Promise.all(genreArr.map(async (genre) => {
         const ID = await genreController.get_id(genre);
-        console.log(ID);
         return ID;
       }));
     }
@@ -44,22 +43,21 @@ async function uploadTestProducts(dataArr) {
     };
   }));
 
-  console.log(mappedData);
+  mappedData.forEach(async (item) => {
+    try {
+      const productDoc = new Product(item);
+      const productResult = await productDoc.save();
 
-  //   mappedData.forEach((item) => {
-  //     try {
-  //       const productDoc = new Product(item);
-  //       const productId = productDoc.save();
+      productDoc.genres.forEach((genre) => {
+        console.log(genre, productResult._id);
+        genreController.add_product(genre, productResult._id);
+      });
 
-  //       productDoc.genres.forEach((genre) => {
-  //         genreController.add_product(genre, productId);
-  //       });
-
-//       typeController.add_product(productDoc.type, productId);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   });
+      typeController.add_product(productResult.type, productResult._id);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 }
 
 main()
