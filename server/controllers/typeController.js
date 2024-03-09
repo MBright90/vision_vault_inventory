@@ -8,7 +8,7 @@ async function get_id(type) {
     const result = await Type.findOneAndUpdate(
       { name: lowerType },
       { name: lowerType },
-      { upsert: true },
+      { upsert: true, new: true },
     );
     return result._id;
   } catch (err) {
@@ -18,7 +18,7 @@ async function get_id(type) {
   }
 }
 async function add_product(typeId, productId) {
-  const result = Type.updateOne(
+  const result = await Type.updateOne(
     { _id: typeId },
     { $push: { products: productId } },
   );

@@ -9,7 +9,7 @@ async function get_id(genre) {
     const result = await Genre.findOneAndUpdate(
       { name: lowerGen },
       { name: lowerGen },
-      { upsert: true },
+      { upsert: true, new: true },
     );
     return result._id;
   } catch (err) {
@@ -28,8 +28,8 @@ function get_all(req, res) {
     .catch((err) => res.status(500).send(err));
 }
 
-function add_product(genreId, productId) {
-  const result = Genre.updateOne(
+async function add_product(genreId, productId) {
+  const result = await Genre.updateOne(
     { _id: genreId },
     { $push: { products: productId } },
   );
