@@ -19,13 +19,13 @@ async function get_id(genre) {
   }
 }
 
-function get_all(req, res) {
-  Genre.find()
-    .sort({ name: 1 })
-    .then((result) => {
-      res.send(result); // Add actual information parsing here
-    })
-    .catch((err) => res.status(500).send(err));
+async function get_all(req, res) {
+  try {
+    const result = await Genre.find().sort({ name: 1 });
+    res.send(result);
+  } catch (err) {
+    console.log(err); // log error
+  }
 }
 
 async function add_product(genreId, productId) {
