@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
 const productRouter = require('./routes/productRoutes');
+const genreRouter = require('./routes/genreRoutes');
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,19 +19,11 @@ async function main() {
 }
 
 // Middleware
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
 // Routers
-app.get('/', (req, res) => {
-  console.log('frontend connected');
-  const requestData = {
-    method: req.method,
-    headers: req.headers,
-  };
-  res.json(requestData);
-});
-
 app.use('/product/', productRouter);
+app.use('/genres/', genreRouter);
 
 // Error handling
 app.use((req, res) => {
