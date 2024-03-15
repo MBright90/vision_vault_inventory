@@ -7,7 +7,7 @@ const allGenre: Genre = {
     __id: '',
     __v: 0,
     name: 'All',
-    products: ['']
+    products: []
 };
 
 const Display: React.FC = () => {
@@ -22,22 +22,27 @@ const Display: React.FC = () => {
             if (!response.ok) throw new Error('Failed to retrieve genres');
                 const data = await response.json();
                 
-                const allProducts: string[] = [];
-                data.forEach((genre: Genre) => { allProducts.concat(...genre.products); });
+                // Add all products from each genre to allGenre
+                let allProducts: string[] = [];
+                data.forEach((genre: Genre) => { 
+                    allProducts = allProducts.concat(genre.products);
+                });
                 allGenre.products = allProducts;
 
                 setGenreSelection([allGenre, ...data]);
             } catch(err) {
                 console.log(err);
             }
-        }; // TODO: add product counts to allGenre!
+        };
 
         void retrieveGenres();
     }, []);
 
     // Change genreSelection to nodes
     useEffect((): void => {
-        console.log(genreSelection);
+        genreSelection.forEach((genre: Genre) => {
+            console.log(genre.name, genre.products.length);
+        });
     }, [genreSelection]);
 
     return (
