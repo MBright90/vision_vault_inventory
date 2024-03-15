@@ -21,11 +21,16 @@ const Display: React.FC = () => {
                 const response = await fetch('http://localhost:3000/genres/');
             if (!response.ok) throw new Error('Failed to retrieve genres');
                 const data = await response.json();
+                
+                const allProducts: string[] = [];
+                data.forEach((genre: Genre) => { allProducts.concat(...genre.products); });
+                allGenre.products = allProducts;
+
                 setGenreSelection([allGenre, ...data]);
             } catch(err) {
                 console.log(err);
             }
-        };
+        }; // TODO: add product counts to allGenre!
 
         void retrieveGenres();
     }, []);
