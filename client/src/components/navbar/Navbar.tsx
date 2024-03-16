@@ -13,7 +13,6 @@ const Navbar: React.FC = () => {
             <ul className={style.navbarList}>
                 <li className={style.navbarItem}><a href="/">Home</a></li>
                 <li className={style.navbarItem}><a href="/products/add">Add Product</a></li>
-                <li className={style.navbarItem}><a href="/products/categories">Categories</a></li>
             </ul>
         </nav>
     );
