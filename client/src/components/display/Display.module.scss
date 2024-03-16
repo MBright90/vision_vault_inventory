@@ -8,7 +8,7 @@
     overflow: hidden;
 
     > div:first-of-type {
-        border-right: 1px solid black;
+        border-right: 4px solid black;
     }
 }
 
@@ -35,6 +35,7 @@
         border: none;
         border-radius: none;
         cursor: pointer;
+        padding: 5px 0;
         width: 100%;
     }
 }
