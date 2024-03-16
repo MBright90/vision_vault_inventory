@@ -4,15 +4,21 @@ import style from './Display.module.scss';
 import type Genre from "src/custom_types/genre";
 
 const allGenre: Genre = {
-    __id: '',
+    __id: 'all',
     __v: 0,
     name: 'All',
     products: []
 };
 
+const capitalize = (string: string): string => {
+    const splitString = string.trim().split('');
+    splitString[0].toUpperCase();
+    return splitString.join().replaceAll(',', '');
+};
+
 const Display: React.FC = () => {
     const [genreSelection, setGenreSelection] = useState<Genre[]>([allGenre]);
-    // const [genreNodes, setGenreNodes] = useState<React.ReactNode[]>([]);
+    const [selectionNodes, setSelectionNodes] = useState<React.ReactNode[]>([]);
 
     // Fetch genres
     useEffect( (): void => {
@@ -40,16 +46,20 @@ const Display: React.FC = () => {
 
     // Change genreSelection to nodes
     useEffect((): void => {
-        genreSelection.forEach((genre: Genre) => {
-            console.log(genre.name, genre.products.length);
+        const nodeArr = genreSelection.map((genre: Genre) => {
+            return (
+                <ul className={style.selectionItem} key={genre.__id}>
+                    <button>{capitalize(genre.name)} ({genre.products.length})</button>
+                </ul>
+            );
         });
+        setSelectionNodes(nodeArr);
     }, [genreSelection]);
 
     return (
         <main className={style.display}>
-            <div className={style.displayControls}>
-                {/* <button onClick={() => { void retrieveGenres(); }}>Call api</button> */}
-                {/* {genreNodes} */}
+            <div className={style.displaySelection}>
+                <ul className={style.selectionList}>{selectionNodes}</ul>
             </div>
             <div className={style.displayScreen}>
             </div>
