@@ -50,4 +50,16 @@
             letter-spacing: 2px
         }
     }
+
+    .navbarItem {
+        .icon {
+            margin-right: 4px;
+        }
+
+        @media screen and (max-width: 900px) {
+            .text {
+                display: none;
+            }
+        }
+    }
 }
