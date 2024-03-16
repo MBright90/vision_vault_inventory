@@ -1,5 +1,5 @@
 interface Genre {
-    __id: string,
+    _id: string,
     __v: number,
     name: string,
     products: string[],
