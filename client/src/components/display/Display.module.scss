@@ -6,4 +6,35 @@
     flex-grow: 1;
     margin: 3vw;
     overflow: hidden;
+
+    > div:first-of-type {
+        border-right: 1px solid black;
+    }
+}
+
+.displaySelection {
+    display: flex;
+    overflow: none scroll;
+    height: 100%;
+    width: 100%;
+}
+
+.selectionList {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 100%;
+    width: 100%;
+}
+
+.selectionItem {
+    width: 100%;
+
+    > button {
+        background-color: none;
+        border: none;
+        border-radius: none;
+        cursor: pointer;
+        width: 100%;
+    }
 }
