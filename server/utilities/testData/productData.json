@@ -13,7 +13,7 @@
         "price": 499.99,
         "number_in_stock": 50,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Star Wars: The Complete Saga",
@@ -37,7 +37,7 @@
         "price": 999.99,
         "number_in_stock": 20,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Harry Potter and the Sorcerer's Stone",
@@ -53,7 +53,7 @@
         "price": 299.99,
         "number_in_stock": 40,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Matrix Trilogy",
@@ -69,7 +69,7 @@
         "price": 499.99,
         "number_in_stock": 25,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Game of Thrones: The Complete Series",
@@ -85,7 +85,7 @@
         "price": 249.99,
         "number_in_stock": 100,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Great Gatsby",
@@ -101,7 +101,7 @@
         "price": 69.99,
         "number_in_stock": 50,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Samsung Galaxy Watch 4",
@@ -109,7 +109,7 @@
         "price": 349.99,
         "number_in_stock": 30,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Breaking Bad: The Complete Series",
@@ -125,7 +125,7 @@
         "price": 129.99,
         "number_in_stock": 80,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "FIFA 22",
@@ -149,7 +149,7 @@
         "price": 179.99,
         "number_in_stock": 60,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Office: The Complete Series",
@@ -165,7 +165,7 @@
         "price": 699.99,
         "number_in_stock": 25,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Assassin's Creed Valhalla",
@@ -189,7 +189,7 @@
         "price": 349.99,
         "number_in_stock": 50,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Friends: The Complete Series",
@@ -205,15 +205,7 @@
         "price": 399.99,
         "number_in_stock": 20,
         "type": "hardware",
-        "genres": ""
-    },
-    {
-        "name": "The Catcher in the Rye",
-        "description": "A novel by J.D. Salinger",
-        "price": 11.99,
-        "number_in_stock": 180,
-        "type": "book",
-        "genres": "Fiction"
+        "genres": "hardware"
     },
     {
         "name": "Apple Watch Series 7",
@@ -221,7 +213,7 @@
         "price": 399.99,
         "number_in_stock": 40,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Red Dead Redemption 2",
@@ -245,7 +237,7 @@
         "price": 229.99,
         "number_in_stock": 55,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Hobbit",
@@ -261,7 +253,7 @@
         "price": 199.99,
         "number_in_stock": 70,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Mandalorian: Season 1",
@@ -285,7 +277,7 @@
         "price": 799.99,
         "number_in_stock": 35,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Pride and Prejudice",
@@ -301,7 +293,7 @@
         "price": 79.99,
         "number_in_stock": 60,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Fitbit Inspire 2",
@@ -309,7 +301,7 @@
         "price": 99.99,
         "number_in_stock": 85,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Breaking Bad: Season 1",
@@ -325,7 +317,7 @@
         "price": 49.99,
         "number_in_stock": 120,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Nineteen Eighty-Four",
@@ -341,7 +333,7 @@
         "price": 159.99,
         "number_in_stock": 45,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Grey's Anatomy: Season 1",
@@ -357,7 +349,7 @@
         "price": 129.99,
         "number_in_stock": 60,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Minecraft",
@@ -381,7 +373,7 @@
         "price": 329.99,
         "number_in_stock": 30,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Friends: Season 1",
@@ -397,7 +389,7 @@
         "price": 199.99,
         "number_in_stock": 25,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Chronicles of Narnia Box Set",
@@ -413,7 +405,7 @@
         "price": 799.99,
         "number_in_stock": 35,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Interstellar",
@@ -437,7 +429,7 @@
         "price": 299.99,
         "number_in_stock": 25,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "To Kill a Mockingbird",
@@ -453,7 +445,7 @@
         "price": 99.99,
         "number_in_stock": 50,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Fitbit Versa Lite Edition",
@@ -461,7 +453,7 @@
         "price": 129.99,
         "number_in_stock": 70,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Shawshank Redemption",
@@ -477,7 +469,7 @@
         "price": 49.99,
         "number_in_stock": 90,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Art of War",
@@ -493,7 +485,7 @@
         "price": 129.99,
         "number_in_stock": 40,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Friends: Season 2",
@@ -509,7 +501,7 @@
         "price": 79.99,
         "number_in_stock": 55,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Catcher in the Rye",
@@ -525,7 +517,7 @@
         "price": 1499.99,
         "number_in_stock": 30,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "Grand Theft Auto V",
@@ -549,7 +541,7 @@
         "price": 649.99,
         "number_in_stock": 45,
         "type": "hardware",
-        "genres": ""
+        "genres": "hardware"
     },
     {
         "name": "The Girl with the Dragon Tattoo",

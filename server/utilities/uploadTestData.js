@@ -23,12 +23,12 @@ async function uploadTestProducts(dataArr) {
   const mappedData = await Promise.all(dataArr.map(async (product) => {
     const genreArr = product.genres.split(',').map((item) => item.trim());
 
-    let genreIds = [];
+    let formattedGenres = [];
 
     if (genreArr.length > 0 && genreArr[0] !== '') {
-      genreIds = await Promise.all(genreArr.map(async (genre) => {
+      formattedGenres = await Promise.all(genreArr.map(async (genre) => {
         const ID = await genreController.get_id(genre);
-        return ID;
+        return { name: genre, _id: ID };
       }));
     }
 
@@ -36,8 +36,8 @@ async function uploadTestProducts(dataArr) {
 
     return {
       ...product,
-      genres: genreIds,
-      type: typeId,
+      genres: formattedGenres,
+      type: { name: product.type, _id: typeId },
       last_updated: new Date(),
       stock_last_updated: new Date(),
     };
@@ -53,7 +53,7 @@ async function uploadTestProducts(dataArr) {
         genreController.add_product(genre, productResult._id);
       });
 
-      typeController.add_product(productResult.type, productResult._id);
+      typeController.add_product(productResult.type._id, productResult._id);
     } catch (err) {
       console.log(err);
     }
