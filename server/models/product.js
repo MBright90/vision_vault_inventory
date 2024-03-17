@@ -12,13 +12,19 @@ const ProductSchema = new mongoose.Schema({
     contentType: String,
   },
   genres: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'genre',
+    name: { type: String },
+    _id: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'genre',
+    },
   }],
   type: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'type',
-    required: true,
+    name: { type: String },
+    _id: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'type',
+      required: true,
+    },
   },
   stock_last_updated: { type: Date, required: true },
   last_updated: { type: Date, required: true },
