@@ -39,3 +39,10 @@
         width: 100%;
     }
 }
+
+.selectedItem {
+    > button {
+        background-color: rgb(200, 200, 200);
+        font-weight: bold;
+    }
+}

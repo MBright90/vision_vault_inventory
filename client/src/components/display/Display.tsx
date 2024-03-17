@@ -4,7 +4,7 @@ import style from './Display.module.scss';
 import type Genre from "src/custom_types/genre";
 
 const allGenre: Genre = {
-    __id: 'all',
+    _id: 'all',
     __v: 0,
     name: 'All',
     products: []
@@ -19,11 +19,18 @@ const capitalize = (string: string): string => {
 const Display: React.FC = () => {
     const [genreSelection, setGenreSelection] = useState<Genre[]>([allGenre]);
     const [selectionNodes, setSelectionNodes] = useState<React.ReactNode[]>([]);
+    const [currentlySelected, setCurrentlySelected] = useState<string>('all');
 
-    // Fetch genres
+    const toggleItemSelection = (genreId: string): void => {
+        console.log(genreId);
+        setCurrentlySelected(genreId);
+    };
+
+    // Set genreSelection
     useEffect( (): void => {
         const retrieveGenres = async (): Promise<void> => {
             try {
+                console.log('Calling database');
                 const response = await fetch('http://localhost:3000/genres/');
             if (!response.ok) throw new Error('Failed to retrieve genres');
                 const data = await response.json();
@@ -33,7 +40,8 @@ const Display: React.FC = () => {
                 data.forEach((genre: Genre) => { 
                     allProducts = allProducts.concat(genre.products);
                 });
-                allGenre.products = allProducts;
+
+                allGenre.products = [...new Set(allProducts)]; // Remove duplicates
 
                 setGenreSelection([allGenre, ...data]);
             } catch(err) {
@@ -44,17 +52,17 @@ const Display: React.FC = () => {
         void retrieveGenres();
     }, []);
 
-    // Change genreSelection to nodes
+    // Node creation from genreSelection
     useEffect((): void => {
         const nodeArr = genreSelection.map((genre: Genre) => {
             return (
-                <ul className={style.selectionItem} key={genre.__id}>
-                    <button>{capitalize(genre.name)} ({genre.products.length})</button>
+                <ul className={`${style.selectionItem} ${genre._id === currentlySelected ? style.selectedItem : null }`} key={genre._id}>
+                    <button key={genre._id} onClick={() => {toggleItemSelection(genre._id);}}>{capitalize(genre.name)} ({genre.products.length})</button>
                 </ul>
             );
         });
         setSelectionNodes(nodeArr);
-    }, [genreSelection]);
+    }, [genreSelection, currentlySelected]);
 
     return (
         <main className={style.display}>
