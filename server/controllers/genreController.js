@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 const Genre = require('../models/genre');
+const productController = require('./productController');
 
 async function get_id(genre) {
   // find genre and create if not found
@@ -36,17 +38,23 @@ async function add_product(genreId, productId) {
   return result;
 }
 
-function get_products(req, res) {
+async function get_genre_products(req, res) {
   const { id } = req.params;
 
-  Genre.findById(id)
-    .then((result) => res.send(result))
-    .catch((err) => res.status(500).send(err));
+  console.log('At get genre products');
+
+  try {
+    const result = await Genre.findById(id); // works up to here
+    const productResult = await productController.product_get_by_genre(result.products); // not a function?
+    res.send(productResult);
+  } catch (err) {
+    console.log(err); // log error
+  }
 }
 
 module.exports = {
   get_id,
   get_all,
   add_product,
-  get_products,
+  get_genre_products,
 };
