@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
 const Product = require('../models/product');
 const genreController = require('./genreController');
+const typeController = require('./typeController');
 
 // product_get, product_post, product_put, product_delete
 
-function product_get(req, res) {
+async function product_get(req, res) {
   const { id } = req.params;
 
   Product.findById(id)
@@ -27,20 +28,22 @@ async function product_get_by_genre(IdArr) {
   }
 }
 
-function product_post(req, res) {
+async function product_post(req, res) {
   const {
     name, description, price, number_in_stock, image, genres, type,
   } = req.body;
 
   // parse genres
-  const genreArr = genres.split(' ');
+  const genreArr = genres.toLowerCase().split(' ');
   const genreDocs = [];
 
-  genreArr.forEach((genre) => {
-    const genreDoc = genreController.genre_get_id(req, res, genre);
-    if (!genreDoc._id) return;
-    genreDocs[genreDocs.length] = genreDoc;
+  genreArr.forEach(async (genre) => {
+    const genreDoc = await genreController.get_id(genre);
+    if (!genreDoc.length > 0) return;
+    genreDocs[genreDocs.length] = { name: genre, _id: genreDoc };
   });
+
+  const typeId = await typeController.get_id(type);
 
   const newProduct = new Product({
     name,
@@ -49,7 +52,7 @@ function product_post(req, res) {
     number_in_stock,
     image,
     genres: genreDocs,
-    type,
+    type: { name: type.toLowercase(), _id: typeId },
     stock_last_updated: new Date(),
     last_updated: new Date(),
   });
