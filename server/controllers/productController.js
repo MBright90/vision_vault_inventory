@@ -16,6 +16,17 @@ function product_get(req, res) {
     });
 }
 
+async function product_get_by_genre(IdArr) {
+  try {
+    const products = await Product.find({
+      _id: { $in: IdArr },
+    });
+    return products;
+  } catch (err) {
+    return [];
+  }
+}
+
 function product_post(req, res) {
   const {
     name, description, price, number_in_stock, image, genres, type,
@@ -77,6 +88,7 @@ function product_decrement_stock(req, res) {
 
 module.exports = {
   product_get,
+  product_get_by_genre,
   product_post,
   product_update_stock,
   product_decrement_stock,
