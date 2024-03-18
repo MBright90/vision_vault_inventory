@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import style from './Display.module.scss';
 import type Genre from "src/custom_types/genre";
+import ProductDisplay from "@components/productDisplay/ProductDisplay";
 
 const allGenre: Genre = {
     _id: 'all',
@@ -12,7 +13,7 @@ const allGenre: Genre = {
 
 const capitalize = (string: string): string => {
     const splitString = string.trim().split('');
-    splitString[0].toUpperCase();
+    splitString[0] = splitString[0].toUpperCase();
     return splitString.join().replaceAll(',', '');
 };
 
@@ -30,7 +31,6 @@ const Display: React.FC = () => {
     useEffect( (): void => {
         const retrieveGenres = async (): Promise<void> => {
             try {
-                console.log('Calling database');
                 const response = await fetch('http://localhost:3000/genres/');
             if (!response.ok) throw new Error('Failed to retrieve genres');
                 const data = await response.json();
@@ -70,6 +70,7 @@ const Display: React.FC = () => {
                 <ul className={style.selectionList}>{selectionNodes}</ul>
             </div>
             <div className={style.displayScreen}>
+                <ProductDisplay genreId={currentlySelected}/>
             </div>
         </main>
     );
