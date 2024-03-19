@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import style from './Display.module.scss';
-import type Genre from "src/custom_types/genre";
+import type Genre from "@custom_types/genre";
 import ProductDisplay from "@components/productDisplay/ProductDisplay";
+import endpoint from "@utilities/endpoint";
+import capitalize from "@utilities/capitalize";
 
 const allGenre: Genre = {
     _id: 'all',
@@ -11,19 +13,12 @@ const allGenre: Genre = {
     products: []
 };
 
-const capitalize = (string: string): string => {
-    const splitString = string.trim().split('');
-    splitString[0] = splitString[0].toUpperCase();
-    return splitString.join().replaceAll(',', '');
-};
-
 const Display: React.FC = () => {
     const [genreSelection, setGenreSelection] = useState<Genre[]>([allGenre]);
     const [selectionNodes, setSelectionNodes] = useState<React.ReactNode[]>([]);
     const [currentlySelected, setCurrentlySelected] = useState<string>('all');
 
     const toggleItemSelection = (genreId: string): void => {
-        console.log(genreId);
         setCurrentlySelected(genreId);
     };
 
@@ -31,8 +26,8 @@ const Display: React.FC = () => {
     useEffect( (): void => {
         const retrieveGenres = async (): Promise<void> => {
             try {
-                const response = await fetch('http://localhost:3000/genres/');
-            if (!response.ok) throw new Error('Failed to retrieve genres');
+                const response = await fetch(`${endpoint}/genres/`);
+                if (!response.ok) throw new Error('Failed to retrieve genres');
                 const data = await response.json();
                 
                 // Add all products from each genre to allGenre
