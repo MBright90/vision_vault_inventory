@@ -6,12 +6,12 @@ const productRouter = express.Router();
 
 productRouter.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
-productRouter.get('/:id', productController.product_get);
+productRouter.get('/:id', productController.get_by_id);
 
-productRouter.post('/', productController.product_post);
+productRouter.post('/', productController.post);
 
-productRouter.put('/update_stock/:id', productController.product_update_stock);
+productRouter.put('/update_stock/:id', productController.update_stock);
 
-productRouter.put('/decrement/:id', productController.product_decrement_stock);
+productRouter.put('/decrement/:id', productController.decrement_stock);
 
 module.exports = productRouter;

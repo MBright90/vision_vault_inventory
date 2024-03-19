@@ -5,7 +5,7 @@ const typeController = require('./typeController');
 
 // product_get, product_post, product_put, product_delete
 
-async function product_get(req, res) {
+async function get_by_id(req, res) {
   const { id } = req.params;
 
   Product.findById(id)
@@ -17,18 +17,7 @@ async function product_get(req, res) {
     });
 }
 
-async function product_get_by_genre(IdArr) {
-  try {
-    const products = await Product.find({
-      _id: { $in: IdArr },
-    });
-    return products;
-  } catch (err) {
-    return [];
-  }
-}
-
-async function product_post(req, res) {
+async function post(req, res) {
   const {
     name, description, price, number_in_stock, image, genres, type,
   } = req.body;
@@ -64,7 +53,7 @@ async function product_post(req, res) {
     });
 }
 
-function product_update_stock(req, res) {
+function update_stock(req, res) {
   const { id } = req.params;
   const { increment } = req.body;
 
@@ -77,7 +66,7 @@ function product_update_stock(req, res) {
     }).catch((err) => res.status(500).send(err));
 }
 
-function product_decrement_stock(req, res) {
+function decrement_stock(req, res) {
   const { id } = req.params;
 
   Product.findOneAndUpdate(
@@ -90,9 +79,8 @@ function product_decrement_stock(req, res) {
 }
 
 module.exports = {
-  product_get,
-  product_get_by_genre,
-  product_post,
-  product_update_stock,
-  product_decrement_stock,
+  get_by_id,
+  post,
+  update_stock,
+  decrement_stock,
 };
