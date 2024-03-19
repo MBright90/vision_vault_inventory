@@ -6,6 +6,8 @@ const productRouter = express.Router();
 
 productRouter.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
+productRouter.get('/all', productController.get_all);
+
 productRouter.get('/:id', productController.get_by_id);
 
 productRouter.post('/', productController.post);
