@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const productRouter = require('./routes/productRoutes');
 const genreRouter = require('./routes/genreRoutes');
+const typeRouter = require('./routes/typeRoutes');
 
 const PORT = process.env.PORT || 3000;
 
@@ -22,8 +23,9 @@ async function main() {
 app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
 // Routers
-app.use('/product/', productRouter);
+app.use('/products/', productRouter);
 app.use('/genres/', genreRouter);
+app.use('/types/', typeRouter);
 
 // Error handling
 app.use((req, res) => {
