@@ -436,7 +436,7 @@
         "description": "A novel by Harper Lee",
         "price": 10.99,
         "number_in_stock": 80,
-        "type": "book/disc",
+        "type": "book",
         "genres": "Southern Gothic"
     },
     {
