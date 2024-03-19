@@ -55,11 +55,15 @@ ul {
   list-style: none;
 }
 
-// button {
-//   appearance: none;
-//   -moz-appearance: none;
-//   -webkit-appearance: none;
-// }
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
