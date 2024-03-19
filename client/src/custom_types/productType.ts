@@ -1,8 +1,8 @@
-interface productType {
-    __id: string,
+interface ProductType {
+    _id: string,
     __v: number,
     products: string[],
     name: string
 }
 
-export default productType;
+export default ProductType;
