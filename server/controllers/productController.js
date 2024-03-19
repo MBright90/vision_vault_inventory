@@ -3,8 +3,6 @@ const Product = require('../models/product');
 const genreController = require('./genreController');
 const typeController = require('./typeController');
 
-// product_get, product_post, product_put, product_delete
-
 async function get_all(req, res) {
   try {
     const result = await Product.find().sort({ name: 1 });
@@ -24,6 +22,17 @@ async function get_by_id(req, res) {
     .catch((err) => {
       res.status(500).send(err);
     });
+}
+
+async function get_by_type(req, res) {
+  const { typeid } = req.params;
+
+  try {
+    const result = Product.find({ type: { _id: typeid } });
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 }
 
 async function post(req, res) {
@@ -90,6 +99,7 @@ function decrement_stock(req, res) {
 module.exports = {
   get_all,
   get_by_id,
+  get_by_type,
   post,
   update_stock,
   decrement_stock,
