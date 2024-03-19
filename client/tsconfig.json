@@ -38,7 +38,7 @@
           "./src/style/*"
         ],
         "@utilities/*": [
-          "./src/utilities"
+          "./src/utilities/*"
         ],
       },
       "outDir": "build",
