@@ -1,0 +1,32 @@
+.productDisplay {
+    height: 100%;
+    width: 100%;
+}
+
+.loading {
+    align-items: center;
+    background-color: rgba(100, 100, 100, 0.3);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+
+    .loadingIcon {
+        animation: loading 4s infinite;
+        border-radius: 50%;
+        border: 8px solid #000;
+        border-bottom: none;
+        height: 40px;
+        width: 40px;
+    }
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    };
+
+    100% {
+        transform: rotate(360deg);
+    };
+}
