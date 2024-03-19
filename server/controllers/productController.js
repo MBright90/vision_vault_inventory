@@ -5,6 +5,15 @@ const typeController = require('./typeController');
 
 // product_get, product_post, product_put, product_delete
 
+async function get_all(req, res) {
+  try {
+    const result = await Product.find().sort({ name: 1 });
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
 async function get_by_id(req, res) {
   const { id } = req.params;
 
@@ -79,6 +88,7 @@ function decrement_stock(req, res) {
 }
 
 module.exports = {
+  get_all,
   get_by_id,
   post,
   update_stock,
