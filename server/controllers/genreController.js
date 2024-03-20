@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 const Genre = require('../models/genre');
-const Product = require('../models/product');
 
 async function get_id(genre) {
   // find genre and create if not found
@@ -37,21 +36,8 @@ async function add_product(genreId, productId) {
   return result;
 }
 
-async function get_genre_products(req, res) {
-  const { id } = req.params;
-
-  try {
-    const result = await Genre.findById(id); // works up to here
-    const productResult = await Product.find({ _id: { $in: result.products } }).sort({ name: 1 });
-    res.send(productResult);
-  } catch (err) {
-    console.log(err); // log error
-  }
-}
-
 module.exports = {
   get_id,
   get_all,
   add_product,
-  get_genre_products,
 };
