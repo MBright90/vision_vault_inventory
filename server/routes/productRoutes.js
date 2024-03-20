@@ -8,7 +8,11 @@ productRouter.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
 productRouter.get('/all', productController.get_all);
 
+productRouter.get('/byGenre/:genreid', productController.get_by_genre);
+
 productRouter.get('/byType/:typeid', productController.get_by_type);
+
+productRouter.get('/bygenreandtype/:genreId/:typeId', productController.get_by_type_and_genre);
 
 productRouter.get('/:id', productController.get_by_id);
 
