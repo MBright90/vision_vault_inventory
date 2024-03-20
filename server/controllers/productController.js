@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 const Product = require('../models/product');
 const genreController = require('./genreController');
@@ -8,7 +9,7 @@ async function get_all(req, res) {
     const result = await Product.find().sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    res.status(500).send(err);
+    console.log(err); // log error
   }
 }
 
@@ -20,18 +21,40 @@ async function get_by_id(req, res) {
       res.send(result);
     })
     .catch((err) => {
-      res.status(500).send(err);
+      console.log(err); // log error
     });
 }
 
-async function get_by_type(req, res) {
-  const { typeid } = req.params;
+async function get_by_genre(req, res) {
+  const { genreId } = req.params;
 
   try {
-    const result = Product.find({ type: { _id: typeid } });
+    const result = await Product.find({ 'genre._id': genreId });
     res.send(result);
   } catch (err) {
-    res.status(500).send(err);
+    console.log(err); // log error
+  }
+}
+
+async function get_by_type(req, res) {
+  const { typeId } = req.params;
+
+  try {
+    const result = await Product.find({ 'type._id': typeId });
+    res.send(result);
+  } catch (err) {
+    console.log(err); // log error
+  }
+}
+
+async function get_by_type_and_genre(req, res) {
+  const { genreId, typeId } = req.params;
+
+  try {
+    const result = await Product.find({ 'genre._id': genreId, 'type._id': typeId });
+    res.send(result);
+  } catch (err) {
+    console.log(err); // log error
   }
 }
 
@@ -99,7 +122,9 @@ function decrement_stock(req, res) {
 module.exports = {
   get_all,
   get_by_id,
+  get_by_genre,
   get_by_type,
+  get_by_type_and_genre,
   post,
   update_stock,
   decrement_stock,
