@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import style from './ProductDisplay.module.scss';
 import type Product from "@custom_types/product";
 import Filter from "@components/filter/Filter";
-import setFilterRequest from "@utilities/setFilterRequest";
 
 interface ProductDisplayProps {
     genreId: string;
@@ -18,23 +17,24 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         // set loading active
         setIsLoading(true);
 
-        const initialRetrieveProducts = async(): Promise<void> => {
+        const retrieveProducts = async(): Promise<void> => {
             let data: Product[] = [];
+
             try {
                 if (genreId !== 'all') {
                     if (typeFilter === 'all') {
-                        const response = await fetch(`http://localhost:3000/genres/${genreId}`);
+                        const response = await fetch(`http://localhost:3000/products/bygenre/${genreId}`); // tick
                         data = await response.json();
                     } else {
-                        const response = await fetch(`http://localhost:3000/genres/${genreId}/${typeFilter}`);
+                        const response = await fetch(`http://localhost:3000/products/bygenreandtype/${genreId}/${typeFilter}`);
                         data = await response.json();
                     }
                 } else {
                     if (typeFilter === 'all') {
-                        const response = await fetch(`http://localhost:3000/products/all`);
+                        const response = await fetch(`http://localhost:3000/products/all`); // tick
                         data = await response.json();
                     } else {
-                        const response = await fetch(`http://localhost:3000/products/bytype/${typeFilter}`);
+                        const response = await fetch(`http://localhost:3000/products/bytype/${typeFilter}`); // tick
                         data = await response.json();
                     }
                 }
@@ -42,10 +42,11 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
                 console.log(err); // log error
             }
 
+            console.log(data);
             setProducts(data);
         };
 
-        void initialRetrieveProducts();
+        void retrieveProducts();
     }, [genreId, typeFilter]);
 
     useEffect((): void => {
@@ -53,8 +54,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
     }, [products]);
 
     const updateFilter = (newFilter: string): void => {
-        const filterId = setFilterRequest(newFilter);
-        setTypeFilter(filterId);
+        setTypeFilter(newFilter);
     };
 
     const loading = isLoading ? <div className={style.loading}><div className={style.loadingIcon}></div></div> : null;
