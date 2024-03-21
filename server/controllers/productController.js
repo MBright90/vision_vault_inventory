@@ -26,21 +26,27 @@ async function get_by_id(req, res) {
 }
 
 async function get_by_genre(req, res) {
-  const { genreId } = req.params;
+  const { genreid } = req.params;
 
   try {
-    const result = await Product.find({ 'genre._id': genreId });
-    res.send(result);
+    console.log(genreid);
+    // const result = await Product.find({ genres: { _id: genreid } });
+
+    const response = await Product.aggregate([
+      { $unwind: { path: '$genres' } },
+      { $match: { _id: genreid } },
+    ]);
+    res.send(response);
   } catch (err) {
     console.log(err); // log error
   }
 }
 
 async function get_by_type(req, res) {
-  const { typeId } = req.params;
+  const { typeid } = req.params;
 
   try {
-    const result = await Product.find({ 'type._id': typeId });
+    const result = await Product.find({ 'type._id': typeid });
     res.send(result);
   } catch (err) {
     console.log(err); // log error
@@ -51,6 +57,8 @@ async function get_by_type_and_genre(req, res) {
   const { genreId, typeId } = req.params;
 
   try {
+    console.log(genreId, typeId);
+    console.log(req.params);
     const result = await Product.find({ 'genre._id': genreId, 'type._id': typeId });
     res.send(result);
   } catch (err) {
