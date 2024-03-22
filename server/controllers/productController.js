@@ -29,14 +29,8 @@ async function get_by_genre(req, res) {
   const { genreid } = req.params;
 
   try {
-    console.log(genreid);
-    // const result = await Product.find({ genres: { _id: genreid } });
-
-    const response = await Product.aggregate([
-      { $unwind: { path: '$genres' } },
-      { $match: { _id: genreid } },
-    ]);
-    res.send(response);
+    const result = await Product.find({ genres: { $elemMatch: { _id: genreid } } });
+    res.send(result);
   } catch (err) {
     console.log(err); // log error
   }
