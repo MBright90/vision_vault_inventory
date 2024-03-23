@@ -1,7 +1,7 @@
 {
     "name": "product-display",
     "version": "0.0.0",
-    "main": "productDisplay.tsx",
+    "main": "ProductDisplay.tsx",
     "dependencies": {
         "react": "^18.2.0"
     }
