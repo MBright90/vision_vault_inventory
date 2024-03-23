@@ -1,4 +1,4 @@
-interface Product {
+interface product_type {
     _id: string,
     __v: number,
     name: string,
@@ -11,4 +11,4 @@ interface Product {
     last_updated: Date
 }
 
-export default Product;
+export default product_type;
