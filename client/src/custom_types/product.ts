@@ -5,8 +5,14 @@ interface product_type {
     description: string,
     price: number,
     number_in_stock: number,
-    genres: string[],
-    type: string,
+    genres: Array<{
+        name: string,
+        _id: string
+    }>,
+    type: {
+        name: string,
+        _id: string
+    },
     stock_last_updated: Date,
     last_updated: Date
 }
