@@ -68,7 +68,9 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
                 <p>No products</p>
             </div>);
             // pass noProductMessage to setProductList - iterator method?
+            console.log(noProductMessage);
         }
+        console.log(productList);
     }, [products]);
 
     const updateFilter = (newFilter: string): void => {
@@ -82,8 +84,15 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
             <Filter productIsActive={true} updateFilter={updateFilter}/>
             <div className={style.productDisplay}>
                 { loading }
-                {/* Add check for length */}
-                { products.length > 0 ? <p>Products exist</p> : <p>Products don&apos;t exist</p> }
+                <table className={style.productTable}>
+                    <tr>
+                        <th>Product</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>In Stock</th>
+                    </tr>
+                    { productList }
+                </table>
             </div>
         </div>
     );
