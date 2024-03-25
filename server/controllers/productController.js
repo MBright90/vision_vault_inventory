@@ -29,7 +29,9 @@ async function get_by_genre(req, res) {
   const { genreId } = req.params;
 
   try {
-    const result = await Product.find({ genres: { $elemMatch: { _id: genreId } } });
+    const result = await Product.find(
+      { genres: { $elemMatch: { _id: genreId } } },
+    ).sort({ name: 1 });
     res.send(result);
   } catch (err) {
     console.log(err); // log error
@@ -40,7 +42,7 @@ async function get_by_type(req, res) {
   const { typeId } = req.params;
 
   try {
-    const result = await Product.find({ 'type._id': typeId });
+    const result = await Product.find({ 'type._id': typeId }).sort({ name: 1 });
     res.send(result);
   } catch (err) {
     console.log(err); // log error
@@ -51,7 +53,9 @@ async function get_by_type_and_genre(req, res) {
   const { genreId, typeId } = req.params;
 
   try {
-    const result = await Product.find({ $and: [{ genres: { $elemMatch: { _id: genreId } }, 'type._id': typeId }] });
+    const result = await Product.find(
+      { $and: [{ genres: { $elemMatch: { _id: genreId } }, 'type._id': typeId }] },
+    ).sort({ name: 1 });
     res.send(result);
   } catch (err) {
     console.log(err); // log error
