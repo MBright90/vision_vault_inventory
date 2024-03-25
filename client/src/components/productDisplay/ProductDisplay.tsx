@@ -13,6 +13,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
     const [productList, setProductList] = useState<React.ReactNode[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [typeFilter, setTypeFilter] = useState<string>('all');
+    const [activeProduct, setActiveProduct] = useState<product_type | null>(null);
 
     useEffect((): void => {
         // set loading active
@@ -64,11 +65,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
             });
             setProductList(productListArr);
         } else {
-            const noProductMessage: React.ReactNode = (<div className={style.noProductMessage}>
-                <p>No products</p>
-            </div>);
-            // pass noProductMessage to setProductList - iterator method?
-            console.log(noProductMessage);
+            setProductList([]);
         }
         console.log(productList);
     }, [products]);
@@ -81,23 +78,25 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
 
     return (
         <div className={style.productDisplayContainer}>
-            <Filter productIsActive={true} updateFilter={updateFilter}/>
-            <div className={style.productDisplay}>
+            <Filter productIsActive={activeProduct !== null} updateFilter={updateFilter}/>
                 { loading }
-                <table className={style.productTable}>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>In Stock</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { productList }
-                    </tbody>
-                </table>
-            </div>
+                <div className={style.tableWrapper}>
+                    <table className={style.productTable}>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>In Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { productList.length > 0 ? productList : <div className={style.noProductMessage}>
+                                <p>No products</p>
+                            </div> }
+                        </tbody>
+                    </table>
+                </div>
         </div>
     );
 };
