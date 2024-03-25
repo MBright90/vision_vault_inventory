@@ -14,7 +14,7 @@
 
 .displaySelection {
     display: flex;
-    overflow: none scroll;
+    overflow: auto;
     height: 100%;
     width: 100%;
 }
@@ -23,9 +23,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    justify-content: flex-start;
-    min-height: 100%;
-    padding-top: 10px;
+    justify-content: space-between;
+    height: 100%;
+    padding: 5px 0;
     position: sticky;
     width: 100%;
 }
