@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import style from './ProductDisplay.module.scss';
-import type product_type from "@custom_types/product";
+import type { product_type } from "@custom_types/types";
 import Filter from "@components/filter/Filter";
 
 interface ProductDisplayProps {
@@ -85,13 +85,17 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
             <div className={style.productDisplay}>
                 { loading }
                 <table className={style.productTable}>
-                    <tr>
-                        <th>Product</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>In Stock</th>
-                    </tr>
-                    { productList }
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>In Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { productList }
+                    </tbody>
                 </table>
             </div>
         </div>
