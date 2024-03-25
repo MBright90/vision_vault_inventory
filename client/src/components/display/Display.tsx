@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 import style from './Display.module.scss';
-import type Genre from "@custom_types/genre";
+import type { genre_type } from "@custom_types/types";
 import ProductDisplay from "@components/productDisplay/ProductDisplay";
 import endpoint from "@utilities/endpoint";
 import capitalize from "@utilities/capitalize";
 
-const allGenre: Genre = {
+const allGenre: genre_type = {
     _id: 'all',
     __v: 0,
     name: 'All',
@@ -14,7 +14,7 @@ const allGenre: Genre = {
 };
 
 const Display: React.FC = () => {
-    const [genreSelection, setGenreSelection] = useState<Genre[]>([allGenre]);
+    const [genreSelection, setGenreSelection] = useState<genre_type[]>([allGenre]);
     const [selectionNodes, setSelectionNodes] = useState<React.ReactNode[]>([]);
     const [currentlySelected, setCurrentlySelected] = useState<string>('all');
 
@@ -32,7 +32,7 @@ const Display: React.FC = () => {
                 
                 // Add all products from each genre to allGenre
                 let allProducts: string[] = [];
-                data.forEach((genre: Genre) => { 
+                data.forEach((genre: genre_type) => { 
                     allProducts = allProducts.concat(genre.products);
                 });
 
@@ -49,7 +49,7 @@ const Display: React.FC = () => {
 
     // Node creation from genreSelection
     useEffect((): void => {
-        const nodeArr = genreSelection.map((genre: Genre) => {
+        const nodeArr = genreSelection.map((genre: genre_type) => {
             return (
                 <ul className={`${style.selectionItem} ${genre._id === currentlySelected ? style.selectedItem : null }`} key={genre._id}>
                     <button key={genre._id} onClick={() => {toggleItemSelection(genre._id);}}>{capitalize(genre.name)} ({genre.products.length})</button>
