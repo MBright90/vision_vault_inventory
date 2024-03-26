@@ -20,8 +20,8 @@ export interface product_type {
         name: string,
         _id: string
     },
-    stock_last_updated: Date,
-    last_updated: Date
+    stock_last_updated: string,
+    last_updated: string
 }
 
 export interface productType_type {
