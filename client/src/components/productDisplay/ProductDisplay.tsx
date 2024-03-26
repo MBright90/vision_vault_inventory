@@ -17,7 +17,6 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
     const [activeProduct, setActiveProduct] = useState<product_type | null>(null);
 
     useEffect((): void => {
-        // set loading active
         setIsLoading(true);
 
         const retrieveProducts = async(): Promise<void> => {
