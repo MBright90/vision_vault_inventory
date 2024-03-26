@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import type ProductType from "@custom_types/productType";
+import type { productType_type } from "@custom_types/types";
 import endpoint from "@utilities/endpoint";
 import capitalize from "@utilities/capitalize";
 
@@ -32,12 +32,12 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
     // Create option nodes for select element list
     useEffect(() => {
         const retrieveTypes = async (): Promise<void> => {
-            let data: ProductType[] = [];
+            let data: productType_type[] = [];
             try {
                 const response = await fetch(`${endpoint}/types/`);
                 data = await response.json();
                 // Create ReactNode arr
-                const filterNodes: React.ReactNode[] = data.map((type: ProductType) => {
+                const filterNodes: React.ReactNode[] = data.map((type: productType_type) => {
                     return (<option className={style.filterOption} key={type._id} data-id={type._id}>
                         {capitalize(type.name)}
                     </option>);
@@ -45,7 +45,7 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
                 setFilterOptions(filterNodes);
 
                 // Create filterId arr
-                const filterIds: FilterIdSet[] = data.map((type: ProductType) => {
+                const filterIds: FilterIdSet[] = data.map((type: productType_type) => {
                     return { name: type.name, _id: type._id };
                 });
                 setFilterIdArr([{ name: 'all', _id: 'all' }, ...filterIds]);
