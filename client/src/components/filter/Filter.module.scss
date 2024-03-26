@@ -10,13 +10,17 @@
 }
 
 .back {
+    align-items: center;
     background-color: transparent;
     color: $light-cream;
+    display: flex;
     font-size: 1.4rem;
+    gap: 3px;
 
-    // &:active {
-    //     transform: translate(3px, 3px);
-    // }
+    span {
+        font-size: 1rem;
+        vertical-align: center;
+    }
 }
 
 .filterSelect {

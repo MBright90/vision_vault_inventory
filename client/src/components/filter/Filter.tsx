@@ -64,7 +64,7 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
     }, [selectedFilter]);
 
     // Include back button in controls if a product is currently active
-    const back: React.ReactNode | null = productIsActive ? <button onClick={() => { console.log('clicked'); }} className={style.back}>
+    const back: React.ReactNode | null = productIsActive ? <button onClick={goBack} className={style.back}>
         <FontAwesomeIcon icon={faBackward} /> <span>Go Back</span>
     </button> : null;
 
