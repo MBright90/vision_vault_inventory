@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import style from './ProductDisplay.module.scss';
 import type { product_type } from "@custom_types/types";
 import Filter from "@components/filter/Filter";
+import Product from "@components/product/Product";
 
 interface ProductDisplayProps {
     genreId: string;
@@ -56,7 +57,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         // create productList here
         if (products.length > 0) {
             const productListArr = products.map((product) => {
-                return (<tr className={style.productListTr} key={product._id}>
+                return (<tr className={style.productListTr} key={product._id} onClick={() => { updateActiveProduct(product); }}>
                     <td className={style.productListName}>{product.name}</td>
                     <td className={style.productListDesc}>{product.description}</td>
                     <td className={style.productListType}>{product.type.name}</td>
@@ -70,6 +71,10 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         console.log(productList);
     }, [products]);
 
+    const updateActiveProduct = (product: product_type): void => {
+        setActiveProduct(product);
+    };
+
     const updateFilter = (newFilter: string): void => {
         setTypeFilter(newFilter);
     };
@@ -79,6 +84,9 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
     return (
         <div className={style.productDisplayContainer}>
             <Filter productIsActive={activeProduct !== null} updateFilter={updateFilter}/>
+
+            { activeProduct !== null ? <Product product={activeProduct}/> : 
+            <>
                 { loading }
                 <div className={style.tableWrapper}>
                     <table className={style.productTable}>
@@ -97,6 +105,8 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
                         </tbody>
                     </table>
                 </div>
+            </>
+            }
         </div>
     );
 };
