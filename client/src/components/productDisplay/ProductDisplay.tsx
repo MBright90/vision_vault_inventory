@@ -71,7 +71,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         console.log(productList);
     }, [products]);
 
-    const updateActiveProduct = (product: product_type): void => {
+    const updateActiveProduct = (product: product_type | null): void => {
         setActiveProduct(product);
     };
 
@@ -83,7 +83,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
 
     return (
         <div className={style.productDisplayContainer}>
-            <Filter productIsActive={activeProduct !== null} updateFilter={updateFilter}/>
+            <Filter goBack={() => { updateActiveProduct(null); }} productIsActive={activeProduct !== null} updateFilter={updateFilter}/>
 
             { activeProduct !== null ? <Product product={activeProduct}/> : 
             <>

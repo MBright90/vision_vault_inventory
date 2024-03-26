@@ -15,11 +15,12 @@ interface FilterIdSet{
 }
 
 interface FilterProps {
+    goBack: () => void;
     productIsActive: boolean,
     updateFilter: (newFilter: string) => void;
 }
 
-const Filter: React.FC<FilterProps> = ({ productIsActive, updateFilter }) => {
+const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }) => {
     const [filterIdArr, setFilterIdArr] = useState<FilterIdSet[]>([]);
     const [selectedFilter, setSelectedFilter] = useState<string>('all');
     const [filterOptions, setFilterOptions] = useState<React.ReactNode[]>([]);
@@ -64,7 +65,7 @@ const Filter: React.FC<FilterProps> = ({ productIsActive, updateFilter }) => {
 
     // Include back button in controls if a product is currently active
     const back: React.ReactNode | null = productIsActive ? <button onClick={() => { console.log('clicked'); }} className={style.back}>
-        <FontAwesomeIcon icon={faBackward} />
+        <FontAwesomeIcon icon={faBackward} /> <span>Go Back</span>
     </button> : null;
 
     return (
