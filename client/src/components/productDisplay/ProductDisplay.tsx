@@ -44,8 +44,6 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
             } catch(err) {
                 console.log(err); // log error
             }
-
-            console.log(data);
             setProducts(data);
             setIsLoading(false);
         };
@@ -68,7 +66,6 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         } else {
             setProductList([]);
         }
-        console.log(productList);
     }, [products]);
 
     const updateActiveProduct = (product: product_type | null): void => {
@@ -76,6 +73,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
     };
 
     const updateFilter = (newFilter: string): void => {
+        setActiveProduct(null);
         setTypeFilter(newFilter);
     };
 
@@ -99,9 +97,9 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            { productList.length > 0 ? productList : <div className={style.noProductMessage}>
-                                <p>No products</p>
-                            </div> }
+                            { productList.length > 0 ? productList : <tr>
+                                <td className={style.noProductMessage} colSpan={4}>No products matching search parameters</td>
+                            </tr> }
                         </tbody>
                     </table>
                 </div>
