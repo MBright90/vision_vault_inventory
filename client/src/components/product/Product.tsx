@@ -28,8 +28,23 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     const lastUpdatedDate: string[] = lastUpdatedArr[0].split('-');
     const formattedLastUpdated: string = `${lastUpdatedArr[1].split('.')[0]} ${lastUpdatedDate[2]}/${lastUpdatedDate[1]}/${lastUpdatedDate[0]}`;
 
-    // updateStockFunc
-    // startEditing func
+    // Stock update funcs
+    // const beginStockUpdate = () => {
+
+    // };
+
+    // const updateStock = () => {
+
+    // };
+
+    // Editing funcs
+    // const beginProductEdit = () => {
+
+    // };
+
+    // const editProduct = () => {
+
+    // };
 
      return (
         <div className={style.productContainer}>
@@ -37,8 +52,8 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             <p className={style.productDetails}>{capitalize(product.type.name)} / {productGenres}</p>
             <p className={style.productDescription}>{product.description}</p>
             <div className={style.inStockContainer}>
-                <p>In stock: { product.number_in_stock > 0 ? product.number_in_stock : 'NO' }</p>
                 <button className={style.stockButton}>Update stock</button>
+                <p>In stock: { product.number_in_stock > 0 ? product.number_in_stock : 'NO' }</p>
             </div>
             <div className={style.editContainer}>
                 <button className={style.editButton}>Edit details</button>
