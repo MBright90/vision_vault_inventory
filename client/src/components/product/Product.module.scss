@@ -14,12 +14,17 @@
     font-style: italic;
 }
 
-.inStockContainer {
+.inStockContainer, .editContainer {
     align-items: center;
     display: flex;
     gap: 10px;
 }
 
+.inStockContainer {
+    margin-top: 20px;
+}
+
 .stockButton, .editButton {
     padding: 7px;
+    width: 120px;
 }
