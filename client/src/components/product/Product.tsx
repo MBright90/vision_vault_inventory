@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import capitalize from "@utilities/capitalize";
 import style from "./Product.module.scss";
 import type { product_type } from "@custom_types/types";
 
@@ -20,13 +21,12 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     }, [isEditing]);
 
     const productGenres: React.ReactNode[] = product.genres.map((genre: product_genre) => {
-        return <span key={genre._id}>{genre.name}</span>;
+        return <span key={genre._id}>{capitalize(genre.name)}</span>;
     });
 
     const lastUpdatedArr: string[] = product.stock_last_updated.split('T');
-    const formattedLastUpdated: string = `${lastUpdatedArr[0]}, ${lastUpdatedArr[1]}`;
-
-    console.log(formattedLastUpdated);
+    const lastUpdatedDate: string[] = lastUpdatedArr[0].split('-');
+    const formattedLastUpdated: string = `${lastUpdatedArr[1].split('.')[0]} ${lastUpdatedDate[2]}/${lastUpdatedDate[1]}/${lastUpdatedDate[0]}`;
 
     // updateStockFunc
     // startEditing func
@@ -34,14 +34,15 @@ const Product: React.FC<ProductProps> = ({ product }) => {
      return (
         <div className={style.productContainer}>
             <p className={style.productName}>{product.name}</p>
-            <p className={style.productDetails}>{product.type.name} / {productGenres}</p>
+            <p className={style.productDetails}>{capitalize(product.type.name)} / {productGenres}</p>
             <p className={style.productDescription}>{product.description}</p>
             <div className={style.inStockContainer}>
-                <button>Update stock</button>
+                <p>In stock: { product.number_in_stock > 0 ? product.number_in_stock : 'NO' }</p>
+                <button className={style.stockButton}>Update stock</button>
             </div>
             <div className={style.editContainer}>
-                <button>Edit</button>
-                <p>Last Edited: {}</p>
+                <button className={style.editButton}>Edit details</button>
+                <p>Last Edited: {formattedLastUpdated}</p>
             </div>
         </div>
      );
