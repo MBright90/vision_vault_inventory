@@ -1,6 +1,8 @@
 import React from "react";
 
 import style from './Modal.module.scss';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface ModalProps {
     children: React.ReactNode
@@ -12,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({ children, closeModal }) => {
         <div className={style.modalBackground}>
             <div className={style.modalContainer}>
                 {children}
-                <button onClick={closeModal} >X</button>
+                <button onClick={closeModal}><FontAwesomeIcon icon={faXmark}/></button>
             </div>
         </div>
     );
