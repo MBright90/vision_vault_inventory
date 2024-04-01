@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import capitalize from "@utilities/capitalize";
 import style from "./Product.module.scss";
@@ -14,11 +14,8 @@ interface product_genre {
 }
 
 const Product: React.FC<ProductProps> = ({ product }) => {
-    const [isEditing, setIsEditing] = useState<boolean>(false);
-
-    useEffect(() => {
-        setIsEditing(false);
-    }, [isEditing]);
+    const [isEditingStock, setIsEditingStock] = useState<boolean>(false);
+    const [editingStockValue, setEditingStockValue] = useState<number>(0);
 
     const productGenres: React.ReactNode[] = product.genres.map((genre: product_genre) => {
         return <span key={genre._id}>{capitalize(genre.name)}</span>;
@@ -30,12 +27,18 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
     // Stock update funcs
     const beginStockUpdate = (): void => {
-        console.log('beginning stock update');
+        setIsEditingStock(true);
     };
 
-    // const updateStock = () => {
+    const changeStockEditValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const newValue = parseInt(e.target.value);
+        console.log(newValue);
+        setEditingStockValue(newValue);
+    };
 
-    // };
+    const updateStock = (): void => {
+        console.log();
+    };
 
     // Editing funcs
     const beginProductEdit = (): void => {
@@ -54,6 +57,13 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             <div className={style.inStockContainer}>
                 <button className={style.stockButton} onClick={beginStockUpdate}>Update stock</button>
                 <p>In stock: { product.number_in_stock > 0 ? product.number_in_stock : 'NO' }</p>
+
+                { isEditingStock ? <>
+                    <input type='number' className={style.stockUpdate} value={editingStockValue} onChange={(e) => { changeStockEditValue(e); }} min={-100} max={100}/>
+                    <button>Submit</button>
+                    <button onClick={() => { setIsEditingStock(false); setEditingStockValue(0); }}>Cancel</button>
+                </> : null }
+
             </div>
             <div className={style.editContainer}>
                 <button className={style.editButton} onClick={beginProductEdit}>Edit details</button>
