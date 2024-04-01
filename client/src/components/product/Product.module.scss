@@ -24,7 +24,17 @@
     margin-top: 20px;
 }
 
-.stockButton, .editButton {
+button {
     padding: 7px;
     width: 120px;
+}
+
+input {
+    border-radius: none;
+    padding: 3px;
+
+    &[type=number] {
+        text-align: right;
+        width: 50px;
+    }
 }
