@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
+import Modal from "@components/modal";
 import capitalize from "@utilities/capitalize";
 import style from "./Product.module.scss";
 import type { product_type } from "@custom_types/types";
+import endpoint from "@utilities/endpoint";
 
 interface ProductProps {
     product: product_type
@@ -16,6 +18,8 @@ interface product_genre {
 const Product: React.FC<ProductProps> = ({ product }) => {
     const [isEditingStock, setIsEditingStock] = useState<boolean>(false);
     const [editingStockValue, setEditingStockValue] = useState<number>(0);
+
+    const [modal, setModal] = useState<React.ReactNode | null>(null);
 
     const productGenres: React.ReactNode[] = product.genres.map((genre: product_genre) => {
         return <span key={genre._id}>{capitalize(genre.name)}</span>;
@@ -36,8 +40,22 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         setEditingStockValue(newValue);
     };
 
-    const updateStock = (): void => {
-        console.log();
+    const updateStock = async (): Promise<void> => {
+        const response = await fetch(`${endpoint}/update_stock/${product._id}/${editingStockValue}`);
+        if (!response.ok) { setModal(
+            <Modal closeModal={() => { setModal(null); }}>
+                <p>Error updating stock amount</p>
+                <p>Please try again later</p>
+            </Modal>
+        ); } else {
+            // set out stock change
+            product.number_in_stock = 1;
+            setModal(
+                <Modal closeModal={() => { setModal(null); }}>
+                    <p>Stock updated</p>
+                </Modal>
+            );
+        }
     };
 
     // Editing funcs
@@ -51,6 +69,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
      return (
         <div className={style.productContainer}>
+            { modal }
             <p className={style.productName}>{product.name}</p>
             <p className={style.productDetails}>{capitalize(product.type.name)} / {productGenres}</p>
             <p className={style.productDescription}>{product.description}</p>
@@ -60,7 +79,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
                 { isEditingStock ? <>
                     <input type='number' className={style.stockUpdate} value={editingStockValue} onChange={(e) => { changeStockEditValue(e); }} min={-100} max={100}/>
-                    <button>Submit</button>
+                    <button onClick={() => { void updateStock; }}>Submit</button>
                     <button onClick={() => { setIsEditingStock(false); setEditingStockValue(0); }}>Cancel</button>
                 </> : null }
 
