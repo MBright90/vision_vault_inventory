@@ -41,7 +41,9 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     };
 
     const updateStock = async (): Promise<void> => {
-        const response = await fetch(`${endpoint}/update_stock/${product._id}/${editingStockValue}`);
+        // const response = await fetch(`${endpoint}/update_stock/${product._id}/${editingStockValue}`);
+        console.log('updatingStock');
+        const response = { ok: false };
         if (!response.ok) { setModal(
             <Modal closeModal={() => { setModal(null); }}>
                 <p>Error updating stock amount</p>
@@ -55,6 +57,8 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                     <p>Stock updated</p>
                 </Modal>
             );
+            setEditingStockValue(0);
+            setIsEditingStock(false);
         }
     };
 
@@ -79,7 +83,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
                 { isEditingStock ? <>
                     <input type='number' className={style.stockUpdate} value={editingStockValue} onChange={(e) => { changeStockEditValue(e); }} min={-100} max={100}/>
-                    <button onClick={() => { void updateStock; }}>Submit</button>
+                    <button onClick={() => { void updateStock(); }}>Submit</button>
                     <button onClick={() => { setIsEditingStock(false); setEditingStockValue(0); }}>Cancel</button>
                 </> : null }
 
