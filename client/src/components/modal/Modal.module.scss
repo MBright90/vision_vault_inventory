@@ -1,3 +1,5 @@
+@import '~@style/_variables.scss';
+
 .modalBackground {
     background-color: rgba(100, 100, 100, 0.8);
     bottom: 0;
@@ -9,8 +11,22 @@
     right: 0;
 }
 
+.modalContainer {
+    background-color: $dark-red;
+    color: $light-cream;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    position: relative;
+}
+
 .closeModal {
+    background: none;
+    color: $light-cream;
+    height: 20px;
+    padding: 3px !important;
     position: absolute;
     right: 5px;
     top: 5px;
+    width: 20px !important;
 }
