@@ -3,6 +3,11 @@
     flex-direction: column;
     gap: 10px;
     padding: 10px;
+
+    button {
+        padding: 7px;
+        width: 120px;
+    }
 }
 
 .productName {
@@ -22,11 +27,6 @@
 
 .inStockContainer {
     margin-top: 20px;
-}
-
-button {
-    padding: 7px;
-    width: 120px;
 }
 
 input {
