@@ -41,25 +41,31 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     };
 
     const updateStock = async (): Promise<void> => {
-        // const response = await fetch(`${endpoint}/update_stock/${product._id}/${editingStockValue}`);
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ increment: editingStockValue })
+        };
+
+        const response = await fetch(`${endpoint}/products/update_stock/${product._id}`, requestOptions);
         console.log('updatingStock');
-        const response = { ok: false };
-        if (!response.ok) { setModal(
-            <Modal closeModal={() => { setModal(null); }}>
-                <p>Error updating stock amount</p>
-                <p>Please try again later</p>
-            </Modal>
-        ); } else {
-            // set out stock change
-            product.number_in_stock = 1;
-            setModal(
-                <Modal closeModal={() => { setModal(null); }}>
-                    <p>Stock updated</p>
-                </Modal>
-            );
-            setEditingStockValue(0);
-            setIsEditingStock(false);
-        }
+        console.log(response);
+        // if (!response.ok) { setModal(
+        //     <Modal closeModal={() => { setModal(null); }}>
+        //         <p>Error updating stock amount</p>
+        //         <p>Please try again later</p>
+        //     </Modal>
+        // ); } else {
+        //     // set out stock change
+        //     product.number_in_stock = 1;
+        //     setModal(
+        //         <Modal closeModal={() => { setModal(null); }}>
+        //             <p>Stock updated</p>
+        //         </Modal>
+        //     );
+        //     setEditingStockValue(0);
+        //     setIsEditingStock(false);
+        // }
     };
 
     // Editing funcs
@@ -97,14 +103,3 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 };
 
 export default Product;
-
-// name
-// description
-// price
-// number_in_stock/stock_last_updated
-// genres
-// type
-// last_updated
-// edit button
-// add stock button - admin
-// sell one stock button
