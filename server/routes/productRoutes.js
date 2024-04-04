@@ -20,6 +20,4 @@ productRouter.post('/', productController.post);
 
 productRouter.put('/update_stock/:id', productController.update_stock);
 
-productRouter.put('/decrement/:id', productController.decrement_stock);
-
 module.exports = productRouter;

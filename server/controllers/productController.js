@@ -111,18 +111,6 @@ function update_stock(req, res) {
     }).catch((err) => res.status(500).send(err));
 }
 
-function decrement_stock(req, res) {
-  const { id } = req.params;
-
-  Product.findOneAndUpdate(
-    { _id: id },
-    { $inc: { number_in_stock: -1 }, $set: { stock_last_updated: new Date() } },
-  )
-    .then((result) => {
-      res.send(result);
-    }).catch((err) => res.status(500).send(err));
-}
-
 module.exports = {
   get_all,
   get_by_id,
@@ -131,5 +119,4 @@ module.exports = {
   get_by_type_and_genre,
   post,
   update_stock,
-  decrement_stock,
 };
