@@ -98,11 +98,11 @@ async function post(req, res) {
     });
 }
 
-function update_stock(req, res) {
+async function update_stock(req, res) {
   const { id } = req.params;
   const { increment } = req.body;
 
-  Product.findOneAndUpdate(
+  await Product.findOneAndUpdate(
     { _id: id },
     { $inc: { number_in_stock: increment }, $set: { stock_last_updated: new Date() } },
   )
