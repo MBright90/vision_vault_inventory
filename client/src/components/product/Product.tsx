@@ -48,8 +48,8 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         };
 
         const response = await fetch(`${endpoint}/products/update_stock/${product._id}`, requestOptions);
-        console.log('updatingStock');
-        console.log(response);
+        const data = response.json();
+        console.log(data);
         // if (!response.ok) { setModal(
         //     <Modal closeModal={() => { setModal(null); }}>
         //         <p>Error updating stock amount</p>
