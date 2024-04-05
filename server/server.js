@@ -22,6 +22,8 @@ async function main() {
 
 // Middleware
 app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Routers
 app.use('/products/', productRouter);
