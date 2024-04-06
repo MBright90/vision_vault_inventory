@@ -16,13 +16,13 @@ async function get_all(req, res) {
 async function get_by_id(req, res) {
   const { id } = req.params;
 
-  Product.findById(id)
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err); // log error
-    });
+  try {
+    const result = Product.findById(id);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 }
 
 async function get_by_genre(req, res) {
@@ -64,7 +64,7 @@ async function get_by_type_and_genre(req, res) {
 
 async function post(req, res) {
   const {
-    name, description, price, number_in_stock, image, genres, type,
+    name, description, price, number_in_stock, genres, type,
   } = req.body;
 
   // parse genres
@@ -84,31 +84,34 @@ async function post(req, res) {
     description,
     price,
     number_in_stock,
-    image,
     genres: genreDocs,
     type: { name: type.toLowercase(), _id: typeId },
     stock_last_updated: new Date(),
     last_updated: new Date(),
   });
 
-  newProduct.save()
-    .then((result) => res.send(result))
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+  try {
+    const result = await newProduct.save();
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 }
 
 async function update_stock(req, res) {
   const { id } = req.params;
   const { increment } = req.body;
 
-  await Product.findOneAndUpdate(
-    { _id: id },
-    { $inc: { number_in_stock: increment }, $set: { stock_last_updated: new Date() } },
-  )
-    .then((result) => {
-      res.send(result);
-    }).catch((err) => res.status(500).send(err));
+  try {
+    const result = await Product.findOneAndUpdate(
+      { _id: id },
+      { $inc: { number_in_stock: increment }, $set: { stock_last_updated: new Date() } },
+    );
+
+    res.send(result);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 }
 
 module.exports = {
