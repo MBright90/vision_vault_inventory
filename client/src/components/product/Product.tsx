@@ -50,22 +50,22 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         const response = await fetch(`${endpoint}/products/update_stock/${product._id}`, requestOptions);
         const data = response.json();
         console.log(data);
-        // if (!response.ok) { setModal(
-        //     <Modal closeModal={() => { setModal(null); }}>
-        //         <p>Error updating stock amount</p>
-        //         <p>Please try again later</p>
-        //     </Modal>
-        // ); } else {
-        //     // set out stock change
-        //     product.number_in_stock = 1;
-        //     setModal(
-        //         <Modal closeModal={() => { setModal(null); }}>
-        //             <p>Stock updated</p>
-        //         </Modal>
-        //     );
-        //     setEditingStockValue(0);
-        //     setIsEditingStock(false);
-        // }
+        if (!response.ok) { setModal(
+            <Modal closeModal={() => { setModal(null); }}>
+                <p>Error updating stock amount</p>
+                <p>Please try again later</p>
+            </Modal>
+        ); } else {
+            // set out stock change
+            product.number_in_stock = product.number_in_stock + editingStockValue;
+            setModal(
+                <Modal closeModal={() => { setModal(null); }}>
+                    <p>Stock updated</p>
+                </Modal>
+            );
+            setEditingStockValue(0);
+            setIsEditingStock(false);
+        }
     };
 
     // Editing funcs
