@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import type { productType_type } from "@custom_types/types";
-import endpoint from "@utilities/endpoint";
-import capitalize from "@utilities/capitalize";
+import retrieveTypes from "@utilities/retrieveTypes";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
@@ -31,30 +29,7 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
 
     // Create option nodes for select element list
     useEffect(() => {
-        const retrieveTypes = async (): Promise<void> => {
-            let data: productType_type[] = [];
-            try {
-                const response = await fetch(`${endpoint}/types/`);
-                data = await response.json();
-                // Create ReactNode arr
-                const filterNodes: React.ReactNode[] = data.map((type: productType_type) => {
-                    return (<option className={style.filterOption} key={type._id} data-id={type._id}>
-                        {capitalize(type.name)}
-                    </option>);
-                });
-                setFilterOptions(filterNodes);
-
-                // Create filterId arr
-                const filterIds: FilterIdSet[] = data.map((type: productType_type) => {
-                    return { name: type.name, _id: type._id };
-                });
-                setFilterIdArr([{ name: 'all', _id: 'all' }, ...filterIds]);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        void retrieveTypes();
+        void retrieveTypes(setFilterOptions, setFilterIdArr);
     }, []);
 
     // Pass selected filter id to parent component on change
