@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons"; 
 
 import style from "./Navbar.module.scss";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
     return (
@@ -14,16 +15,16 @@ const Navbar: React.FC = () => {
             </div>
             <ul className={style.navbarList}>
                 <li className={style.navbarItem}>
-                    <a href="/">
+                    <Link to="/">
                         <FontAwesomeIcon className={style.icon} icon={faHome} />
                         <span className={style.text}>Home</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className={style.navbarItem}>
-                    <a href="/products/add">
+                    <Link to="/new">
                         <FontAwesomeIcon className={style.icon} icon={faPlus} />
                         <span className={style.text}>Add Product</span>
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </nav>
