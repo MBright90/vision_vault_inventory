@@ -2,14 +2,12 @@ import React from "react";
 import '@style/style.scss';
 
 import Footer from "@components/footer";
-import Display from "@components/display";
-import Navbar from "@components/navbar";
+import RouteSwitch from '../routes';
 
 const App: React.FC = () => {
     return (
         <>
-            <Navbar />
-            <Display />
+            <RouteSwitch />
             <Footer />
         </>
     );
