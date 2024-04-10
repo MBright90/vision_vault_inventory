@@ -1,0 +1,46 @@
+.formContainer {
+    background-color: #fff;
+    height: calc(94vh - 81px);
+    margin: 1vh 1vw;
+    // padding: 10px 20px;
+    overflow: hidden;
+
+    h3 {
+        background-color: rgb(200, 200, 200);
+        padding: 10px;
+    }
+}
+
+.newProductForm {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    input, textarea {
+        font-size: 16px;
+        margin: 2px 0;
+        padding: 12px 20px;
+        resize: vertical;
+    }
+
+    .inputContainer {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        width: 80%;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .inputInfo {
+        font-size: 14px;
+        font-style: italic;
+    }
+
+    .formSubmitBtn {
+        padding: 7px;
+        width: 120px;
+    }
+}
