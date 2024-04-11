@@ -4,13 +4,9 @@ import retrieveTypes from "@utilities/retrieveTypes";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
+import { type FilterIdSet } from "@custom_types/types";
 
 import style from './Filter.module.scss';
-
-interface FilterIdSet{
-    name: string,
-    _id: string
-}
 
 interface FilterProps {
     goBack: () => void;
@@ -23,10 +19,6 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
     const [selectedFilter, setSelectedFilter] = useState<string>('all');
     const [filterOptions, setFilterOptions] = useState<React.ReactNode[]>([]);
 
-    function toggleFilter(e: React.ChangeEvent<HTMLSelectElement>): void {
-        setSelectedFilter(e.target.value.toLowerCase());
-    }
-
     // Create option nodes for select element list
     useEffect(() => {
         void retrieveTypes(setFilterOptions, setFilterIdArr);
@@ -37,6 +29,10 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
         const newFilterIndex = filterIdArr.findIndex((type) => selectedFilter === type.name);
         if (newFilterIndex >= 0) updateFilter(filterIdArr[newFilterIndex]._id);
     }, [selectedFilter]);
+
+    function toggleFilter(e: React.ChangeEvent<HTMLSelectElement>): void {
+        setSelectedFilter(e.target.value.toLowerCase());
+    }
 
     // Include back button in controls if a product is currently active
     const back: React.ReactNode | null = productIsActive ? <button onClick={goBack} className={style.back}>

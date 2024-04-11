@@ -1,3 +1,8 @@
+export interface FilterIdSet{
+    name: string,
+    _id: string
+}
+
 export interface genre_type {
     _id: string,
     __v: number,
