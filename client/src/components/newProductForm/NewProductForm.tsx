@@ -10,6 +10,8 @@ const NewProductForm: React.FC = () => {
     const [typeOptions, setTypeOptions] = useState<React.ReactNode[]>([]);
 
     const [currentName, setCurrentName] = useState<string>('');
+    const [currentDescription, setCurrentDescription] = useState<string>('');
+    const [currentStock, setCurrentStock] = useState<number>(0);
     const [currentType, setCurrentType] = useState<string>('Select type...');
 
     useEffect(() => {
@@ -17,13 +19,24 @@ const NewProductForm: React.FC = () => {
     }, []);
 
     useEffect(() => { // to remove
-        console.log(currentName); 
+        console.log(currentName);
+        console.log(currentDescription);
+        console.log(currentStock);
         console.log(currentType);
         console.log(typeIdArr);
     }, [currentType]);
 
     function handleNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
         setCurrentName(e.target.value);
+    }
+
+    function handleDescriptionChange(e: React.ChangeEvent<HTMLTextAreaElement>): void {
+        setCurrentDescription(e.target.value);
+    }
+
+    function handleStockChange(e: React.ChangeEvent<HTMLInputElement>): void {
+        const { value } = e.target;
+        if (typeof value === 'number' && value >= 0) setCurrentStock(value);
     }
 
     function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
@@ -41,12 +54,12 @@ const NewProductForm: React.FC = () => {
 
             <div className={style.inputContainer}>
                 <label htmlFor="description-input">Description</label>
-                <textarea id="description-input" name="description-input" required />
+                <textarea id="description-input" name="description-input" onChange={(e) => { handleDescriptionChange(e); }} required />
             </div>
 
             <div className={style.inputContainer}>
                 <label htmlFor="stock-input">Initial stock</label>
-                <input id="stock-input" name="stock-input" type="number" max={100} min={0} required />
+                <input id="stock-input" name="stock-input" type="number" max={100} min={0} onChange={(e) => { handleStockChange(e); }} required />
                 <p className={style.inputInfo}>
                     Max 100
                 </p>
