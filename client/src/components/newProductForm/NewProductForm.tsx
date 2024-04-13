@@ -13,7 +13,9 @@ const NewProductForm: React.FC = () => {
     const [currentDescription, setCurrentDescription] = useState<string>('');
     const [currentStock, setCurrentStock] = useState<number>(0);
     const [currentType, setCurrentType] = useState<string>('Select type...');
+    const [currentGenres, setCurrentGenres] = useState<string>('');
 
+    // Create option nodes for select element list
     useEffect(() => {
         void(retrieveTypes(setTypeOptions, setTypeIdArr));
     }, []);
@@ -23,6 +25,7 @@ const NewProductForm: React.FC = () => {
         console.log(currentDescription);
         console.log(currentStock);
         console.log(currentType);
+        console.log(currentGenres);
         console.log(typeIdArr);
     }, [currentType]);
 
@@ -40,7 +43,11 @@ const NewProductForm: React.FC = () => {
     }
 
     function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
-        setCurrentType(e.target.value.toLowerCase());
+        setCurrentType(e.target.value);
+    }
+
+    function handleGenreChange(e: React.ChangeEvent<HTMLInputElement>): void {
+        setCurrentGenres(e.target.value.toLowerCase());
     }
 
     return (<div className={style.formContainer}>
@@ -77,7 +84,7 @@ const NewProductForm: React.FC = () => {
 
             <div className={style.inputContainer}>
                 <label htmlFor="genres-input">Genres</label>
-                <input id="genres-input" name="genres-input" type="text" required />
+                <input id="genres-input" name="genres-input" type="text" onChange={(e) => { handleGenreChange(e); }} required />
                 <p className={style.inputInfo}>
                     Separate genres with a comma
                 </p>
