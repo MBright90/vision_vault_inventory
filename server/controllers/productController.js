@@ -67,8 +67,10 @@ async function post(req, res) {
     name, description, price, number_in_stock, genres, type,
   } = req.body;
 
-  // parse genres
-  const genreArr = genres.toLowerCase().split(' ');
+  // parse genres and normalize
+  const genreArr = genres.toLowerCase().split(',');
+  genreArr.forEach((genre) => genre.trim());
+
   const genreDocs = [];
 
   genreArr.forEach(async (genre) => {
