@@ -4,13 +4,17 @@ import retrieveTypes from "@utilities/retrieveTypes";
 import { type FilterIdSet } from "@custom_types/types";
 
 import style from './NewProductForm.module.scss';
+import Modal from "@components/modal/Modal";
 
 const NewProductForm: React.FC = () => {
+    const [modal, setModal] = useState<React.ReactNode | null>(null);
+
     const [typeIdArr, setTypeIdArr] = useState<FilterIdSet[]>([]);
     const [typeOptions, setTypeOptions] = useState<React.ReactNode[]>([]);
 
     const [currentName, setCurrentName] = useState<string>('');
     const [currentDescription, setCurrentDescription] = useState<string>('');
+    const [currentPrice, setCurrentPrice] = useState<number>(0);
     const [currentStock, setCurrentStock] = useState<number>(0);
     const [currentType, setCurrentType] = useState<string>('Select type...');
     const [currentGenres, setCurrentGenres] = useState<string>('');
@@ -37,6 +41,11 @@ const NewProductForm: React.FC = () => {
         setCurrentDescription(e.target.value);
     }
 
+    function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
+        const { value } = e.target;
+        if (typeof value === 'number' && value >= 0) setCurrentPrice(value);
+    }
+
     function handleStockChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value } = e.target;
         if (typeof value === 'number' && value >= 0) setCurrentStock(value);
@@ -50,7 +59,42 @@ const NewProductForm: React.FC = () => {
         setCurrentGenres(e.target.value.toLowerCase());
     }
 
+    async function submitForm(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
+        e.preventDefault();
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({
+                name: currentName,
+                description: currentDescription,
+                price: currentPrice,
+                number_in_stock: currentStock,
+                genres: currentGenres,
+                type: currentType
+            })
+        };
+
+        const response = await fetch('', requestOptions);
+
+        if (!response.ok) {
+            setModal(
+                <Modal closeModal={() => { setModal(null); }}>
+                    <h3>Error adding product</h3>
+                    <p>Please check all fields are completed and try again</p>
+                </Modal>
+            );
+        } else {
+            setModal(
+                <Modal closeModal={() => { setModal(null); }}>
+                    <p>Product added</p>
+                </Modal>
+            );
+        }
+    }
+
     return (<div className={style.formContainer}>
+        { modal }
         <h3>Add Product</h3>
         <form action="" className={style.newProductForm}>
 
@@ -62,6 +106,11 @@ const NewProductForm: React.FC = () => {
             <div className={style.inputContainer}>
                 <label htmlFor="description-input">Description</label>
                 <textarea id="description-input" name="description-input" onChange={(e) => { handleDescriptionChange(e); }} required />
+            </div>
+
+            <div className={style.inputContainer}>
+                <label htmlFor="price-input">Price</label>
+                <input id="price-input" name="price-input" type="number" min={0} onChange={(e) => { handlePriceChange(e); }} required />
             </div>
 
             <div className={style.inputContainer}>
@@ -77,9 +126,6 @@ const NewProductForm: React.FC = () => {
                 <select id="type-input" name="type-input" onChange={(e) => { handleTypeChange(e); }} required>
                     {typeOptions}
                 </select>
-                {/* <p className={style.inputInfo}>
-                    Separate genres with a comma
-                </p> */}
             </div>
 
             <div className={style.inputContainer}>
@@ -90,7 +136,7 @@ const NewProductForm: React.FC = () => {
                 </p>
             </div>
 
-            <button className={style.formSubmitBtn} type="submit">Add Product</button>
+            <button className={style.formSubmitBtn} type="submit" onClick={(e) => { void submitForm(e); }}>Add Product</button>
         </form>
     </div>
     );
