@@ -4,6 +4,19 @@ const Product = require('../models/product');
 const genreController = require('./genreController');
 const typeController = require('./typeController');
 
+function validateProduct(product) {
+  if (product.name.length < 2 || product.name.length > 150) return false;
+  if (product.description.length > 500) return false;
+  if (product.price <= 0) return false;
+  if (product.number_in_stock < 0) return false;
+  if (product.genres.length <= 0) return false;
+  if (
+    product.type.length <= 0
+    || !['hardware', 'video/disc', 'game/disc', 'book'].includes(product.type.toLowerCase())
+  ) return false;
+  return true;
+}
+
 async function get_all(req, res) {
   try {
     const result = await Product.find().sort({ name: 1 });
@@ -63,6 +76,9 @@ async function get_by_type_and_genre(req, res) {
 }
 
 async function post(req, res) {
+  // Verify all required fields
+  if (!validateProduct(req.body)) res.status(500).send({ err: 'Missing required fields' });
+
   const {
     name, description, price, number_in_stock, genres, type,
   } = req.body;
