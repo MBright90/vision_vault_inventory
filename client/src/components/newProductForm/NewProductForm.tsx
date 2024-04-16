@@ -1,37 +1,27 @@
 import React, { useEffect, useState } from "react";
 
 import retrieveTypes from "@utilities/retrieveTypes";
-import { type FilterIdSet } from "@custom_types/types";
 
 import style from './NewProductForm.module.scss';
 import Modal from "@components/modal/Modal";
+import endpoint from "@utilities/endpoint";
 
 const NewProductForm: React.FC = () => {
     const [modal, setModal] = useState<React.ReactNode | null>(null);
 
-    const [typeIdArr, setTypeIdArr] = useState<FilterIdSet[]>([]);
     const [typeOptions, setTypeOptions] = useState<React.ReactNode[]>([]);
 
     const [currentName, setCurrentName] = useState<string>('');
     const [currentDescription, setCurrentDescription] = useState<string>('');
     const [currentPrice, setCurrentPrice] = useState<number>(0);
     const [currentStock, setCurrentStock] = useState<number>(0);
-    const [currentType, setCurrentType] = useState<string>('Select type...');
+    const [currentType, setCurrentType] = useState<string>('');
     const [currentGenres, setCurrentGenres] = useState<string>('');
 
     // Create option nodes for select element list
     useEffect(() => {
-        void(retrieveTypes(setTypeOptions, setTypeIdArr));
+        void(retrieveTypes(setTypeOptions, null));
     }, []);
-
-    useEffect(() => { // to remove
-        console.log(currentName);
-        console.log(currentDescription);
-        console.log(currentStock);
-        console.log(currentType);
-        console.log(currentGenres);
-        console.log(typeIdArr);
-    }, [currentType]);
 
     function handleNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
         setCurrentName(e.target.value);
@@ -63,7 +53,7 @@ const NewProductForm: React.FC = () => {
         e.preventDefault();
 
         const requestOptions = {
-            method: 'PUT',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' }, 
             body: JSON.stringify({
                 name: currentName,
@@ -75,7 +65,7 @@ const NewProductForm: React.FC = () => {
             })
         };
 
-        const response = await fetch('', requestOptions);
+        const response = await fetch(`${endpoint}/products/`, requestOptions);
 
         if (!response.ok) {
             setModal(
@@ -93,7 +83,7 @@ const NewProductForm: React.FC = () => {
         }
     }
 
-    return (<div className={style.formContainer}>
+    return (<main className={style.formContainer}>
         { modal }
         <h3>Add Product</h3>
         <form action="" className={style.newProductForm}>
@@ -116,14 +106,13 @@ const NewProductForm: React.FC = () => {
             <div className={style.inputContainer}>
                 <label htmlFor="stock-input">Initial stock</label>
                 <input id="stock-input" name="stock-input" type="number" max={100} min={0} onChange={(e) => { handleStockChange(e); }} required />
-                <p className={style.inputInfo}>
-                    Max 100
-                </p>
+                <p className={style.inputInfo}>Max 100</p>
             </div>
 
             <div className={style.inputContainer}>
                 <label htmlFor="type-input">Type</label>
-                <select id="type-input" name="type-input" onChange={(e) => { handleTypeChange(e); }} required>
+                <select id="type-input" name="type-input" value={currentType} onChange={(e) => { handleTypeChange(e); }} required>
+                    <option>Select Type...</option>
                     {typeOptions}
                 </select>
             </div>
@@ -131,14 +120,13 @@ const NewProductForm: React.FC = () => {
             <div className={style.inputContainer}>
                 <label htmlFor="genres-input">Genres</label>
                 <input id="genres-input" name="genres-input" type="text" onChange={(e) => { handleGenreChange(e); }} required />
-                <p className={style.inputInfo}>
-                    Separate genres with a comma
-                </p>
+                <p className={style.inputInfo}>Minimum of one required</p>
+                <p className={style.inputInfo}>Separate genres with a comma</p>
             </div>
 
             <button className={style.formSubmitBtn} type="submit" onClick={(e) => { void submitForm(e); }}>Add Product</button>
         </form>
-    </div>
+    </main>
     );
 };
 

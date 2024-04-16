@@ -23,6 +23,12 @@
         resize: vertical;
     }
 
+    textarea {
+        max-height: 200px;
+        min-height: 100px;
+        resize: vertical;
+    }
+
     select {
         width: fit-content;
     }
