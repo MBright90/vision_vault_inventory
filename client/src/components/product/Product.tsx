@@ -5,6 +5,7 @@ import capitalize from "@utilities/capitalize";
 import style from "./Product.module.scss";
 import type { product_type } from "@custom_types/types";
 import endpoint from "@utilities/endpoint";
+import { Link } from "react-router-dom";
 
 interface ProductProps {
     product: product_type
@@ -68,13 +69,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         }
     };
 
-    // Editing funcs
-    const beginProductEdit = (): void => {
-        console.log('beginning product edit');
-    };
-
-    // const editProduct = () => {
-
     // };
 
      return (
@@ -95,7 +89,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
             </div>
             <div className={style.editContainer}>
-                <button className={style.editButton} onClick={beginProductEdit}>Edit details</button>
+                <Link className={style.editButton} to={`/edit/${product._id}`}>Edit details</Link>
                 <p>Last Edited: {formattedLastUpdated}</p>
             </div>
         </div>
