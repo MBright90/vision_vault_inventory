@@ -11,7 +11,7 @@ interface FilterIdSet{
 
 const retrieveTypes = async (
     setFilterOptions: (nodes: React.ReactNode[]) => void,
-    setFilterIdArr: (idSet: FilterIdSet[]) => void
+    setFilterIdArr: ((idSet: FilterIdSet[]) => void) | null
     ): Promise<void> => {
     let data: productType_type[] = [];
     try {
@@ -26,10 +26,12 @@ const retrieveTypes = async (
         setFilterOptions(filterNodes);
 
         // Create filterId arr
-        const filterIds: FilterIdSet[] = data.map((type: productType_type) => {
-            return { name: type.name, _id: type._id };
-        });
-        setFilterIdArr([{ name: 'all', _id: 'all' }, ...filterIds]);
+        if (setFilterIdArr !== null) {
+            const filterIds: FilterIdSet[] = data.map((type: productType_type) => {
+                return { name: type.name, _id: type._id };
+            });
+            setFilterIdArr([{ name: 'all', _id: 'all' }, ...filterIds]);
+        }
     } catch (err) {
         console.log(err);
     }
