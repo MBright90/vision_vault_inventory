@@ -1,0 +1,9 @@
+{
+    "name": "edit-product-form",
+    "version": "0.0.0",
+    "main": "EditProductForm.tsx",
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-router-dom": "^6.22.1"
+    }
+}
