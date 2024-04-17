@@ -14,7 +14,7 @@ const RouteSwitch: React.FC = () => {
             <Routes>
                 <Route path="/" element={<Display />} />
                 <Route path="/new" element={<NewProductForm />} />
-                <Route path="/edit/:id" element={<EditProductForm />}/>
+                <Route path="/edit/:productId" element={<EditProductForm />}/>
             </Routes>
         </HashRouter>
     );
