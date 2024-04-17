@@ -29,8 +29,11 @@ async function get_all(req, res) {
 async function get_by_id(req, res) {
   const { id } = req.params;
 
+  console.log(id);
+
   try {
-    const result = Product.findById(id);
+    const result = Product.findOneById(id);
+    console.log(result);
     res.send(result);
   } catch (err) {
     console.log(err);
