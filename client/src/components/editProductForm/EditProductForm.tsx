@@ -87,7 +87,7 @@ const EditProductForm: React.FC = () => {
         <main className={style.formContainer}>
             { modal }
             <h3>Edit Product</h3>
-            <form action="" className={style.newProductForm}>
+            <form action="" className={style.editProductForm}>
 
                 <div className={style.inputContainer}>
                     <label htmlFor="name-input">Product Name</label>
