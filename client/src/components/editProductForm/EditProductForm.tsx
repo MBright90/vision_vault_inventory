@@ -48,6 +48,8 @@ const EditProductForm: React.FC = () => {
             }
         };
 
+        console.log('retrieving');
+
         // Set options for types
         void retrieveProduct();
         void retrieveTypes(setTypeOptions, null);
@@ -62,8 +64,9 @@ const EditProductForm: React.FC = () => {
     }
 
     function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
+        console.log('changing');
         const { value } = e.target;
-        if (typeof value === 'number' && value >= 0) setCurrentPrice(value);
+        if (typeof value === 'number' && value >= 0) {console.log('in conditional');setCurrentPrice(value);}
     }
 
     function handleStockChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -105,7 +108,7 @@ const EditProductForm: React.FC = () => {
                 </div>
 
                 <div className={style.inputContainer}>
-                    <label htmlFor="stock-input">Initial stock</label>
+                    <label htmlFor="stock-input">Current stock</label>
                     <input id="stock-input" name="stock-input" type="number" max={100} min={0} value={currentStock} onChange={(e) => { handleStockChange(e); }} required />
                     <p className={style.inputInfo}>Max 100</p>
                 </div>
