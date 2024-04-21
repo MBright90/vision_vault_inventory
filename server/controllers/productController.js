@@ -22,7 +22,8 @@ async function get_all(req, res) {
     const result = await Product.find().sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // log error
+    console.log(err); // TODO: log error here later
+    res.status(500).send(err);
   }
 }
 
@@ -32,6 +33,7 @@ async function get_by_id(req, res) {
     const result = await Product.findById(id);
     res.send(result);
   } catch (err) {
+    console.log(err); // TODO: log error here later
     res.status(500).send(err);
   }
 }
@@ -45,7 +47,8 @@ async function get_by_genre(req, res) {
     ).sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // log error
+    console.log(err); // TODO: log error here later
+    res.status(500).send(err);
   }
 }
 
@@ -56,7 +59,8 @@ async function get_by_type(req, res) {
     const result = await Product.find({ 'type._id': typeId }).sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // log error
+    console.log(err); // TODO: log error here later
+    res.status(500).send(err);
   }
 }
 
@@ -69,7 +73,8 @@ async function get_by_type_and_genre(req, res) {
     ).sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // log error
+    console.log(err); // TODO: log error here later
+    res.status(500).send(err);
   }
 }
 
@@ -110,6 +115,7 @@ async function post(req, res) {
     const result = await newProduct.save();
     res.send(result);
   } catch (err) {
+    console.log(err); // TODO: log error here later
     res.status(500).send(err);
   }
 }
@@ -126,6 +132,7 @@ async function update_stock(req, res) {
 
     res.send(result);
   } catch (err) {
+    console.log(err); // TODO: log error here later
     res.status(500).send(err);
   }
 }
