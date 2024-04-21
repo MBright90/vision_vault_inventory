@@ -11,33 +11,33 @@
         text-align: center;
         width: 120px;
     }
-}
 
-.productName {
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-
-.productDetails {
-    font-style: italic;
-}
-
-.inStockContainer, .editContainer {
-    align-items: center;
-    display: flex;
-    gap: 10px;
-}
-
-.inStockContainer {
-    margin-top: 20px;
-}
-
-input {
-    border-radius: none;
-    padding: 3px;
-
-    &[type=number] {
-        text-align: right;
-        width: 50px;
+    .productName {
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+    
+    .productDetails {
+        font-style: italic;
+    }
+    
+    .inStockContainer, .editContainer {
+        align-items: center;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .inStockContainer {
+        margin-top: 20px;
+    }
+    
+    input {
+        border-radius: none;
+        padding: 3px;
+    
+        &[type=number] {
+            text-align: right;
+            width: 50px;
+        }
     }
 }
