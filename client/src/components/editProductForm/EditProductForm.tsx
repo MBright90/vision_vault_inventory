@@ -41,8 +41,6 @@ const EditProductForm: React.FC = () => {
                 setCurrentStock(product.number_in_stock);
                 setCurrentType(product.type.name);
                 setCurrentGenres(product.genres.join(', '));
-
-
             } catch (err) {
                 console.log(err);
             }
@@ -66,6 +64,13 @@ const EditProductForm: React.FC = () => {
     function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
         console.log('changing');
         const { value } = e.target;
+        let valueNum: number;
+        try {
+            valueNum = parseFloat(value);
+            setCurrentPrice(valueNum);
+        } catch(err) {
+            console.log(err);
+        }
         if (typeof value === 'number' && value >= 0) {console.log('in conditional');setCurrentPrice(value);}
     }
 
@@ -104,12 +109,12 @@ const EditProductForm: React.FC = () => {
 
                 <div className={style.inputContainer}>
                     <label htmlFor="price-input">Price</label>
-                    <input id="price-input" name="price-input" type="number" min={0} value={currentPrice} onChange={(e) => { handlePriceChange(e); }} required />
+                    <input id="price-input" name="price-input" type="number" min={0} value={currentPrice} step={.01} onChange={(e) => { handlePriceChange(e); }} required />
                 </div>
 
                 <div className={style.inputContainer}>
                     <label htmlFor="stock-input">Current stock</label>
-                    <input id="stock-input" name="stock-input" type="number" max={100} min={0} value={currentStock} onChange={(e) => { handleStockChange(e); }} required />
+                    <input id="stock-input" name="stock-input" type="number" max={100} min={0} value={currentStock} step={1} onChange={(e) => { handleStockChange(e); }} required />
                     <p className={style.inputInfo}>Max 100</p>
                 </div>
 

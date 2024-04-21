@@ -100,12 +100,12 @@ const NewProductForm: React.FC = () => {
 
             <div className={style.inputContainer}>
                 <label htmlFor="price-input">Price</label>
-                <input id="price-input" name="price-input" type="number" min={0} onChange={(e) => { handlePriceChange(e); }} required />
+                <input id="price-input" name="price-input" type="number" min={0} step={0.1} onChange={(e) => { handlePriceChange(e); }} required />
             </div>
 
             <div className={style.inputContainer}>
                 <label htmlFor="stock-input">Initial stock</label>
-                <input id="stock-input" name="stock-input" type="number" max={100} min={0} onChange={(e) => { handleStockChange(e); }} required />
+                <input id="stock-input" name="stock-input" type="number" max={100} min={0} step={1} onChange={(e) => { handleStockChange(e); }} required />
                 <p className={style.inputInfo}>Max 100</p>
             </div>
 
