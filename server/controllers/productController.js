@@ -5,16 +5,17 @@ const genreController = require('./genreController');
 const typeController = require('./typeController');
 
 function validateProduct(product) {
-  if (product.name.length < 2 || product.name.length > 150) return false;
-  if (product.description.length > 500) return false;
-  if (product.price <= 0) return false;
-  if (product.number_in_stock < 0) return false;
-  if (product.genres.length <= 0) return false;
+  console.log('validating');
+  if (product.name.length < 2 || product.name.length > 150) return true;
+  if (product.description.length > 500) return true;
+  if (product.price <= 0) return true;
+  if (product.number_in_stock < 0) return true;
+  if (product.genres.length <= 0) return true;
   if (
     product.type.length <= 0
     || !['hardware', 'video/disc', 'game/disc', 'book'].includes(product.type.toLowerCase())
-  ) return false;
-  return true;
+  ) return true;
+  return false;
 }
 
 async function get_all(req, res) {
