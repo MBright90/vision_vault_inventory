@@ -5,6 +5,7 @@ import retrieveTypes from "@utilities/retrieveTypes";
 import style from './NewProductForm.module.scss';
 import Modal from "@components/modal/Modal";
 import endpoint from "@utilities/endpoint";
+import { redirect } from "react-router-dom";
 
 const NewProductForm: React.FC = () => {
     const [modal, setModal] = useState<React.ReactNode | null>(null);
@@ -33,12 +34,27 @@ const NewProductForm: React.FC = () => {
 
     function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
         const { value } = e.target;
-        if (typeof value === 'number' && value >= 0) setCurrentPrice(value);
+
+        try {
+            // convert value to float, reduce to 2DP, the convert to float again
+            const priceValue = parseFloat(value);
+            if (priceValue >= 0) setCurrentPrice(parseFloat(priceValue.toFixed(2)));
+        } catch (err) {
+            setCurrentPrice(0);
+            console.log(err);
+        }
     }
 
     function handleStockChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value } = e.target;
-        if (typeof value === 'number' && value >= 0) setCurrentStock(value);
+
+        try {
+            const stockValue = parseInt(value);
+            if (stockValue >= 0) setCurrentStock(stockValue);
+        } catch (err) {
+            setCurrentStock(0);
+            console.log(err);
+        }
     }
 
     function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
@@ -75,8 +91,9 @@ const NewProductForm: React.FC = () => {
                 </Modal>
             );
         } else {
+            const confirm = { text: 'Ok', func: () => { redirect('/'); } };
             setModal(
-                <Modal closeModal={() => { setModal(null); }}>
+                <Modal closeModal={() => { setModal(null); }} confirm={confirm}>
                     <p>Product added</p>
                 </Modal>
             );
@@ -100,12 +117,12 @@ const NewProductForm: React.FC = () => {
 
             <div className={style.inputContainer}>
                 <label htmlFor="price-input">Price</label>
-                <input id="price-input" name="price-input" type="number" min={0} step={0.1} onChange={(e) => { handlePriceChange(e); }} required />
+                <input id="price-input" name="price-input" type="number" value={currentPrice} min={0} step={0.01} onChange={(e) => { handlePriceChange(e); }} required />
             </div>
 
             <div className={style.inputContainer}>
                 <label htmlFor="stock-input">Initial stock</label>
-                <input id="stock-input" name="stock-input" type="number" max={100} min={0} step={1} onChange={(e) => { handleStockChange(e); }} required />
+                <input id="stock-input" name="stock-input" type="number" value={currentStock} max={100} min={0} step={1} onChange={(e) => { handleStockChange(e); }} required />
                 <p className={style.inputInfo}>Max 100</p>
             </div>
 
