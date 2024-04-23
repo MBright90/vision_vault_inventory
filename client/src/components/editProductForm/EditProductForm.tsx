@@ -62,21 +62,28 @@ const EditProductForm: React.FC = () => {
     }
 
     function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
-        console.log('changing');
         const { value } = e.target;
-        let valueNum: number;
+
         try {
-            valueNum = parseFloat(value);
-            setCurrentPrice(valueNum);
-        } catch(err) {
+            // convert value to float, reduce to 2DP, the convert to float again
+            const priceValue = parseFloat(value);
+            if (priceValue >= 0) setCurrentPrice(parseFloat(priceValue.toFixed(2)));
+        } catch (err) {
+            setCurrentPrice(0);
             console.log(err);
         }
-        if (typeof value === 'number' && value >= 0) {console.log('in conditional');setCurrentPrice(value);}
     }
 
     function handleStockChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value } = e.target;
-        if (typeof value === 'number' && value >= 0) setCurrentStock(value);
+        
+        try {
+            const stockValue = parseInt(value);
+            if (stockValue >= 0) setCurrentStock(stockValue);
+        } catch (err) {
+            setCurrentStock(0);
+            console.log(err);
+        }
     }
 
     function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
@@ -133,7 +140,7 @@ const EditProductForm: React.FC = () => {
                     <p className={style.inputInfo}>Separate genres with a comma</p>
                 </div>
 
-                <button className={style.formSubmitBtn} type="submit" onClick={(e) => { void submitForm(e); }}>Add Product</button>
+                <button className={style.formSubmitBtn} type="submit" onClick={(e) => { void submitForm(e); }}>Update Product</button>
             </form>
         </main>
     );
