@@ -108,6 +108,8 @@ const NewProductForm: React.FC = () => {
             <div className={style.inputContainer}>
                 <label htmlFor="name-input">Product Name</label>
                 <input id="name-input" name="name-input" type="text" onChange={(e) => { handleNameChange(e); }} required />
+                <p className={style.inputInfo}>Required</p>
+                <p className={style.inputInfo}>2 - 150 characters</p>
             </div>
 
             <div className={style.inputContainer}>
@@ -118,12 +120,14 @@ const NewProductForm: React.FC = () => {
             <div className={style.inputContainer}>
                 <label htmlFor="price-input">Price</label>
                 <input id="price-input" name="price-input" type="number" value={currentPrice} min={0} step={0.01} onChange={(e) => { handlePriceChange(e); }} required />
+                <p className={style.inputInfo}>Required</p>
+                <p className={style.inputInfo}>Must be more than 0.00</p>
             </div>
 
             <div className={style.inputContainer}>
                 <label htmlFor="stock-input">Initial stock</label>
                 <input id="stock-input" name="stock-input" type="number" value={currentStock} max={100} min={0} step={1} onChange={(e) => { handleStockChange(e); }} required />
-                <p className={style.inputInfo}>Max 100</p>
+                <p className={style.inputInfo}>Required</p>
             </div>
 
             <div className={style.inputContainer}>
@@ -132,6 +136,7 @@ const NewProductForm: React.FC = () => {
                     <option>Select Type...</option>
                     {typeOptions}
                 </select>
+                <p className={style.inputInfo}>Required</p>
             </div>
 
             <div className={style.inputContainer}>
