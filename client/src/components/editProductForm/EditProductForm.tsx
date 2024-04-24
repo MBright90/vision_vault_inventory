@@ -96,6 +96,26 @@ const EditProductForm: React.FC = () => {
 
     async function submitForm(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         e.preventDefault();
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({
+                name: currentName,
+                description: currentDescription,
+                price: currentPrice,
+                number_in_stock: currentStock,
+                genres: currentGenres,
+                type: currentType
+            })
+        };
+
+        try {
+            const response = await fetch(`${endpoint}/products/edit`, requestOptions);
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
