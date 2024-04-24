@@ -6,16 +6,16 @@ const typeController = require('./typeController');
 
 function validateProduct(product) {
   console.log('validating');
-  if (product.name.length < 2 || product.name.length > 150) return true;
-  if (product.description.length > 500) return true;
-  if (product.price <= 0) return true;
-  if (product.number_in_stock < 0) return true;
-  if (product.genres.length <= 0) return true;
+  if (product.name.length < 2 || product.name.length > 150) return { err: 'Name does not meet requirements' };
+  if (product.description.length > 500) return { err: 'Description exceeds permitted length of 500 characters' };
+  if (product.price <= 0) return { err: 'Price incorrectly set' };
+  if (product.number_in_stock <= 0) return { err: 'Stock incorrectly set' };
+  if (product.genres.length <= 0) return { err: 'Minimum genres not met' };
   if (
     product.type.length <= 0
     || !['hardware', 'video/disc', 'game/disc', 'book'].includes(product.type.toLowerCase())
-  ) return true;
-  return false;
+  ) return { err: 'Invalid product type chosen' };
+  return true;
 }
 
 async function get_all(req, res) {
@@ -81,7 +81,11 @@ async function get_by_type_and_genre(req, res) {
 
 async function post(req, res) {
   // Verify all required fields
-  if (!validateProduct(req.body)) res.status(500).send({ err: 'Missing required fields' });
+  const validation = validateProduct(req.body);
+  if (validation.err) {
+    res.status(400).send({ err: validation.err });
+    return;
+  }
 
   const {
     name, description, price, number_in_stock, genres, type,
@@ -101,18 +105,18 @@ async function post(req, res) {
 
   const typeId = await typeController.get_id(type);
 
-  const newProduct = new Product({
-    name,
-    description,
-    price,
-    number_in_stock,
-    genres: genreDocs,
-    type: { name: type.toLowercase(), _id: typeId },
-    stock_last_updated: new Date(),
-    last_updated: new Date(),
-  });
-
   try {
+    const newProduct = new Product({
+      name,
+      description,
+      price,
+      number_in_stock,
+      genres: genreDocs,
+      type: { name: type.toLowercase(), _id: typeId },
+      stock_last_updated: new Date(),
+      last_updated: new Date(),
+    });
+
     const result = await newProduct.save();
     res.send(result);
   } catch (err) {
