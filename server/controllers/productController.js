@@ -79,7 +79,7 @@ async function get_by_type_and_genre(req, res) {
   }
 }
 
-async function post(req, res) {
+async function post_product(req, res) {
   // Verify all required fields
   const validation = validateProduct(req.body);
   if (validation.err) {
@@ -125,6 +125,21 @@ async function post(req, res) {
   }
 }
 
+async function put_edit_product(req, res) {
+  const { id } = req.params;
+  const validation = validateProduct(req.body);
+  if (validation.err) {
+    res.status(400).send({ err: validation.err });
+    return;
+  }
+
+  const {
+    name, description, price, number_in_stock, genres, type,
+  } = req.body;
+
+  console.log(id, '\n', name, '\n', description, '\n', price, '\n', number_in_stock, '\n', genres, '\n', type);
+}
+
 async function update_stock(req, res) {
   const { id } = req.params;
   const { increment } = req.body;
@@ -148,6 +163,7 @@ module.exports = {
   get_by_genre,
   get_by_type,
   get_by_type_and_genre,
-  post,
+  post_product,
+  put_edit_product,
   update_stock,
 };
