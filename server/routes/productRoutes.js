@@ -18,6 +18,8 @@ productRouter.get('/:id', productController.get_by_id);
 
 productRouter.post('/', productController.post);
 
+productRouter.put('/edit/:id', productController.put_edit_product);
+
 productRouter.put('/update_stock/:id', productController.update_stock);
 
 module.exports = productRouter;
