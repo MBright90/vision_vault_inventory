@@ -24,17 +24,9 @@ const NewProductForm: React.FC = () => {
         void(retrieveTypes(setTypeOptions, null));
     }, []);
 
-    // function handleNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    //     setCurrentName(e.target.value);
-    // }
-
-    // function handleDescriptionChange(e: React.ChangeEvent<HTMLTextAreaElement>): void {
-    //     setCurrentDescription(e.target.value);
-    // }
-
     useEffect(() => {
-        console.log(currentPrice);
-    }, [currentPrice]);
+        console.log(currentType);
+    }, [currentType]);
 
     function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
         const { value } = e.target;
@@ -60,14 +52,6 @@ const NewProductForm: React.FC = () => {
             console.log(err);
         }
     }
-
-    // function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
-    //     setCurrentType(e.target.value);
-    // }
-
-    // function handleGenreChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    //     setCurrentGenres(e.target.value.toLowerCase());
-    // }
 
     async function submitForm(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         e.preventDefault();
