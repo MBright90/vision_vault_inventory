@@ -53,13 +53,6 @@ const EditProductForm: React.FC = () => {
         void retrieveTypes(setTypeOptions, null);
     }, []);
 
-    function handleNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        setCurrentName(e.target.value);
-    }
-
-    function handleDescriptionChange(e: React.ChangeEvent<HTMLTextAreaElement>): void {
-        setCurrentDescription(e.target.value);
-    }
 
     function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
         const { value } = e.target;
@@ -86,14 +79,6 @@ const EditProductForm: React.FC = () => {
         }
     }
 
-    function handleTypeChange(e: React.ChangeEvent<HTMLSelectElement>): void {
-        setCurrentType(e.target.value);
-    }
-
-    function handleGenreChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        setCurrentGenres(e.target.value.toLowerCase());
-    }
-
     async function submitForm(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         e.preventDefault();
 
@@ -111,8 +96,9 @@ const EditProductForm: React.FC = () => {
         };
 
         try {
-            const response = await fetch(`${endpoint}/products/edit`, requestOptions);
-            console.log(response);
+            const response = await fetch(`${endpoint}/products/edit/${productId}`, requestOptions);
+            const data = await response.json();
+            console.log(data);
         } catch (err) {
             console.log(err);
         }
@@ -126,12 +112,12 @@ const EditProductForm: React.FC = () => {
 
                 <div className={style.inputContainer}>
                     <label htmlFor="name-input">Product Name</label>
-                    <input id="name-input" name="name-input" type="text" value={currentName} onChange={(e) => { handleNameChange(e); }} required />
+                    <input id="name-input" name="name-input" type="text" value={currentName} onChange={(e) => { setCurrentName(e.target.value); }} required />
                 </div>
 
                 <div className={style.inputContainer}>
                     <label htmlFor="description-input">Description</label>
-                    <textarea id="description-input" name="description-input" value={currentDescription} onChange={(e) => { handleDescriptionChange(e); }} required />
+                    <textarea id="description-input" name="description-input" value={currentDescription} onChange={(e) => { setCurrentDescription(e.target.value); }} required />
                 </div>
 
                 <div className={style.inputContainer}>
@@ -147,7 +133,7 @@ const EditProductForm: React.FC = () => {
 
                 <div className={style.inputContainer}>
                     <label htmlFor="type-input">Type</label>
-                    <select id="type-input" name="type-input" value={currentType} onChange={(e) => { handleTypeChange(e); }} required>
+                    <select id="type-input" name="type-input" value={currentType} onChange={(e) => { setCurrentType(e.target.value); }} required>
                         <option>Select Type...</option>
                         {typeOptions}
                     </select>
@@ -155,7 +141,7 @@ const EditProductForm: React.FC = () => {
 
                 <div className={style.inputContainer}>
                     <label htmlFor="genres-input">Genres</label>
-                    <input id="genres-input" name="genres-input" type="text" value={currentGenres} onChange={(e) => { handleGenreChange(e); }} required />
+                    <input id="genres-input" name="genres-input" type="text" value={currentGenres} onChange={(e) => { setCurrentGenres(e.target.value); }} required />
                     <p className={style.inputInfo}>Minimum of one required</p>
                     <p className={style.inputInfo}>Separate genres with a comma</p>
                 </div>
