@@ -12,21 +12,29 @@
 }
 
 .modalContainer {
+    align-items: center;
     background-color: $dark-red;
     color: $light-cream;
     display: flex;
     flex-direction: column;
+    gap: 5px;
     padding: 30px;
     position: relative;
-}
 
-.closeModal {
-    background: none;
-    color: $light-cream;
-    height: 20px;
-    padding: 3px !important;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 20px !important;
+    .closeModal {
+        background: none;
+        color: $light-cream;
+        height: 20px;
+        padding: 3px !important;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        width: 20px !important;
+    }
+    
+    .confirmButton {
+        margin-top: 15px;
+        padding: 8px 30px;
+        width: fit-content;
+    }
 }
