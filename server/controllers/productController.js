@@ -5,7 +5,6 @@ const genreController = require('./genreController');
 const typeController = require('./typeController');
 
 function validateProduct(product) {
-  console.log('validating');
   if (product.name.length < 2 || product.name.length > 150) return { err: 'Name does not meet requirements' };
   if (product.description.length > 500) return { err: 'Description exceeds permitted length of 500 characters' };
   if (product.price <= 0) return { err: 'Price incorrectly set' };
@@ -87,6 +86,8 @@ async function post_product(req, res) {
     return;
   }
 
+  console.log('validated');
+
   const {
     name, description, price, number_in_stock, genres, type,
   } = req.body;
@@ -112,7 +113,7 @@ async function post_product(req, res) {
       price,
       number_in_stock,
       genres: genreDocs,
-      type: { name: type.toLowercase(), _id: typeId },
+      type: { name: type.toLowerCase(), _id: typeId },
       stock_last_updated: new Date(),
       last_updated: new Date(),
     });
@@ -127,6 +128,7 @@ async function post_product(req, res) {
 
 async function put_edit_product(req, res) {
   const { id } = req.params;
+
   const validation = validateProduct(req.body);
   if (validation.err) {
     res.status(400).send({ err: validation.err });
@@ -137,7 +139,42 @@ async function put_edit_product(req, res) {
     name, description, price, number_in_stock, genres, type,
   } = req.body;
 
-  console.log(id, '\n', name, '\n', description, '\n', price, '\n', number_in_stock, '\n', genres, '\n', type);
+  const genreArr = genres.toLowerCase().split(',');
+  genreArr.forEach((genre) => genre.trim());
+
+  const genreDocs = [];
+
+  genreArr.forEach(async (genre) => {
+    const genreDoc = await genreController.get_id(genre);
+    if (!genreDoc.length > 0) return;
+    genreDocs[genreDocs.length] = { name: genre, _id: genreDoc };
+  });
+
+  const typeId = await typeController.get_id(type);
+
+  try {
+    const result = await Product.findOneAndUpdate(
+      { _id: id },
+      {
+        $set:
+        {
+          name,
+          description,
+          price,
+          number_in_stock,
+          genres: genreDocs,
+          type: { name: type.toLowerCase(), _id: typeId },
+          stock_last_updated: new Date(),
+          last_updated: new Date(),
+        },
+      },
+      { upsert: true, new: true },
+    );
+    res.send(result);
+  } catch (err) {
+    console.log(err); // TODO: log error here later
+    res.status(500).send(err);
+  }
 }
 
 async function update_stock(req, res) {
