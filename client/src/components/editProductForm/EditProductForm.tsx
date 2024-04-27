@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import style from './EditProductForm.module.scss';
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 import retrieveTypes from "@utilities/retrieveTypes";
 import endpoint from "@utilities/endpoint";
 import Modal from "@components/modal/Modal";
@@ -97,8 +97,22 @@ const EditProductForm: React.FC = () => {
 
         try {
             const response = await fetch(`${endpoint}/products/edit/${productId}`, requestOptions);
-            const data = await response.json();
-            console.log(data);
+            if (!response.ok) {
+                const data = await response.json();
+                setModal(
+                    <Modal closeModal={() => { setModal(null); }}>
+                        <p>Error updating product</p>
+                        <p>Error: {data.err}</p>
+                    </Modal>
+                );
+            } else {
+                const confirm = { text: 'Ok', func: () => { redirect('/'); } };
+                setModal(
+                    <Modal closeModal={() => { setModal(null); }} confirm={confirm}>
+                        <p>Product edited successfully</p>
+                    </Modal>
+                );
+            }
         } catch (err) {
             console.log(err);
         }
