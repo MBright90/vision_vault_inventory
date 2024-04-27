@@ -24,10 +24,6 @@ const NewProductForm: React.FC = () => {
         void(retrieveTypes(setTypeOptions, null));
     }, []);
 
-    useEffect(() => {
-        console.log(currentType);
-    }, [currentType]);
-
     function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>):void {
         const { value } = e.target;
 
@@ -72,10 +68,11 @@ const NewProductForm: React.FC = () => {
         const response = await fetch(`${endpoint}/products/`, requestOptions);
 
         if (!response.ok) {
+            const data = await response.json();
             setModal(
                 <Modal closeModal={() => { setModal(null); }}>
-                    <h3>Error adding product</h3>
-                    <p>Please check all fields are completed and try again</p>
+                    <p>Error adding product</p>
+                    <p>Error: {data.err}</p>
                 </Modal>
             );
         } else {
