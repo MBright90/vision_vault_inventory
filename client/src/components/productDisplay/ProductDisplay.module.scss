@@ -41,6 +41,15 @@
         padding: 10px 3px;
     }
 
+    .tableText {
+        display: -webkit-box;
+        max-height: 55px;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     thead {
         background-color: #fff;
         position: sticky;

@@ -55,8 +55,8 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         if (products.length > 0) {
             const productListArr = products.map((product) => {
                 return (<tr className={style.productListTr} key={product._id} onClick={() => { updateActiveProduct(product); }}>
-                    <td className={style.productListName}>{product.name}</td>
-                    <td className={style.productListDesc}>{product.description}</td>
+                    <td className={style.productListName}><p className={style.tableText}>{product.name}</p></td>
+                    <td className={style.productListDesc}><p className={style.tableText}>{product.description}</p></td>
                     <td className={style.productListType}>{product.type.name}</td>
                     <td className={style.productListStock}>{product.number_in_stock}</td>
                 </tr>);
