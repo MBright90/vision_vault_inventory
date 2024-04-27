@@ -65,23 +65,27 @@ const NewProductForm: React.FC = () => {
             })
         };
 
-        const response = await fetch(`${endpoint}/products/`, requestOptions);
+        try {
+            const response = await fetch(`${endpoint}/products/`, requestOptions);
 
-        if (!response.ok) {
-            const data = await response.json();
-            setModal(
-                <Modal closeModal={() => { setModal(null); }}>
-                    <p>Error adding product</p>
-                    <p>Error: {data.err}</p>
-                </Modal>
-            );
-        } else {
-            const confirm = { text: 'Ok', func: () => { redirect('/'); } };
-            setModal(
-                <Modal closeModal={() => { setModal(null); }} confirm={confirm}>
-                    <p>Product added</p>
-                </Modal>
-            );
+            if (!response.ok) {
+                const data = await response.json();
+                setModal(
+                    <Modal closeModal={() => { setModal(null); }}>
+                        <p>Error adding product</p>
+                        <p>Error: {data.err}</p>
+                    </Modal>
+                );
+            } else {
+                const confirm = { text: 'Ok', func: () => { redirect('/'); } };
+                setModal(
+                    <Modal closeModal={() => { setModal(null); }} confirm={confirm}>
+                        <p>Product added successfully</p>
+                    </Modal>
+                );
+            }
+        } catch(err) {
+            console.log(err);
         }
     }
 
