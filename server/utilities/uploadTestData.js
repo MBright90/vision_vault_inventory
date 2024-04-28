@@ -49,7 +49,6 @@ async function uploadTestProducts(dataArr) {
       const productResult = await productDoc.save();
 
       productDoc.genres.forEach((genre) => {
-        console.log(genre, productResult._id);
         genreController.add_product(genre, productResult._id);
       });
 
