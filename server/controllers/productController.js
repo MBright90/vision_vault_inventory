@@ -145,7 +145,7 @@ async function put_edit_product(req, res) {
   }
 
   const {
-    name, description, price, number_in_stock, genres, type,
+    name, description, price, number_in_stock, genres, prevGenres, type,
   } = req.body;
 
   const genreArr = genres.toLowerCase().split(',');
@@ -180,6 +180,21 @@ async function put_edit_product(req, res) {
       },
       { upsert: true, new: true },
     );
+
+    // add products to genres if unique
+    result.genres.forEach((genre) => {
+      genreController.add_product(genre, id);
+    });
+
+    // add product to type if unique
+    typeController.add_product(result.type._id, id);
+
+    // remove product from removed genres
+    console.log(prevGenres);
+    prevGenres.forEach((genre) => {
+      genreController.remove_product(genre._id, id);
+    });
+
     res.send(result);
   } catch (err) {
     console.log(err); // TODO: log error here later

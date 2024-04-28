@@ -31,7 +31,15 @@ async function get_all(req, res) {
 async function add_product(genreId, productId) {
   const result = await Genre.updateOne(
     { _id: genreId },
-    { $push: { products: productId } },
+    { $addToSet: { products: productId } },
+  );
+  return result;
+}
+
+async function remove_product(genreId, productId) {
+  const result = await Genre.updateOne(
+    { _id: genreId },
+    { $pull: { products: productId } },
   );
   return result;
 }
@@ -40,4 +48,5 @@ module.exports = {
   get_id,
   get_all,
   add_product,
+  remove_product,
 };
