@@ -96,13 +96,14 @@ async function post_product(req, res) {
   const genreArr = genres.toLowerCase().split(',');
   genreArr.forEach((genre) => genre.trim());
 
-  const genreDocs = [];
+  let formattedGenres = [];
 
-  genreArr.forEach(async (genre) => {
-    const genreDoc = await genreController.get_id(genre);
-    if (!genreDoc.length > 0) return;
-    genreDocs[genreDocs.length] = { name: genre, _id: genreDoc };
-  });
+  if (genreArr.length > 0 && genreArr[0] !== '') {
+    formattedGenres = await Promise.all(genreArr.map(async (genre) => {
+      const ID = await genreController.get_id(genre);
+      return { name: genre, _id: ID };
+    }));
+  }
 
   const typeId = await typeController.get_id(type);
 
@@ -112,13 +113,21 @@ async function post_product(req, res) {
       description,
       price,
       number_in_stock,
-      genres: genreDocs,
+      genres: formattedGenres,
       type: { name: type.toLowerCase(), _id: typeId },
       stock_last_updated: new Date(),
       last_updated: new Date(),
     });
 
     const result = await newProduct.save();
+
+    // add product to genres
+    result.genres.forEach((genre) => {
+      genreController.add_product(genre, result._id);
+    });
+    // add product to type
+    typeController.add_product(result.type._id, result._id);
+
     res.send(result);
   } catch (err) {
     console.log(err); // TODO: log error here later
@@ -142,13 +151,14 @@ async function put_edit_product(req, res) {
   const genreArr = genres.toLowerCase().split(',');
   genreArr.forEach((genre) => genre.trim());
 
-  const genreDocs = [];
+  let formattedGenres = [];
 
-  genreArr.forEach(async (genre) => {
-    const genreDoc = await genreController.get_id(genre);
-    if (!genreDoc.length > 0) return;
-    genreDocs[genreDocs.length] = { name: genre, _id: genreDoc };
-  });
+  if (genreArr.length > 0 && genreArr[0] !== '') {
+    formattedGenres = await Promise.all(genreArr.map(async (genre) => {
+      const ID = await genreController.get_id(genre);
+      return { name: genre, _id: ID };
+    }));
+  }
 
   const typeId = await typeController.get_id(type);
 
@@ -162,7 +172,7 @@ async function put_edit_product(req, res) {
           description,
           price,
           number_in_stock,
-          genres: genreDocs,
+          genres: formattedGenres,
           type: { name: type.toLowerCase(), _id: typeId },
           stock_last_updated: new Date(),
           last_updated: new Date(),
