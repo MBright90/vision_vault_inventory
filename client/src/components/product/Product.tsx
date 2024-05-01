@@ -23,7 +23,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     const [modal, setModal] = useState<React.ReactNode | null>(null);
 
     const productGenres: React.ReactNode[] = product.genres.map((genre: product_genre) => {
-        return <span key={genre._id}>{capitalize(genre.name)}</span>;
+        return <span key={genre._id}>{capitalize(genre.name)}, </span>;
     });
 
     const lastUpdatedArr: string[] = product.stock_last_updated.split('T');
@@ -68,8 +68,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             setIsEditingStock(false);
         }
     };
-
-    // };
 
      return (
         <div className={style.productContainer}>
