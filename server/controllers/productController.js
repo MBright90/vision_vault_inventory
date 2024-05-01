@@ -190,9 +190,10 @@ async function put_edit_product(req, res) {
     typeController.add_product(result.type._id, id);
 
     // remove product from removed genres
-    console.log(prevGenres);
-    prevGenres.forEach((genre) => {
-      genreController.remove_product(genre._id, id);
+    prevGenres.forEach((currentGenre) => {
+      if (result.genres.some((genre) => genre._id === currentGenre._id)) {
+        genreController.remove_product(currentGenre._id, id);
+      }
     });
 
     res.send(result);
