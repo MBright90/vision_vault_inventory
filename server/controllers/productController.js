@@ -205,6 +205,10 @@ async function put_edit_product(req, res) {
 
     res.send(result);
   } catch (err) {
+    // Handle transaction abortion
+    await session.abortTransaction();
+    session.endSession();
+
     console.log(err); // TODO: log error here later
     res.status(500).send(err);
   }
