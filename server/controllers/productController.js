@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
+const { default: mongoose } = require('mongoose');
 const Product = require('../models/product');
 const genreController = require('./genreController');
 const typeController = require('./typeController');
@@ -162,6 +163,9 @@ async function put_edit_product(req, res) {
 
   const typeId = await typeController.get_id(type);
 
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     const result = await Product.findOneAndUpdate(
       { _id: id },
@@ -179,22 +183,25 @@ async function put_edit_product(req, res) {
         },
       },
       { upsert: true, new: true },
-    );
+    ).session(session);
 
     // add products to genres if unique
     result.genres.forEach((genre) => {
-      genreController.add_product(genre, id);
+      genreController.add_product(genre, id, session);
     });
 
     // add product to type if unique
-    typeController.add_product(result.type._id, id);
+    typeController.add_product(result.type._id, id, session);
 
     // remove product from removed genres
-    prevGenres.forEach((currentGenre) => {
-      if (result.genres.some((genre) => genre._id === currentGenre._id)) {
-        genreController.remove_product(currentGenre._id, id);
+    await Promise.all(prevGenres.forEach(async (currentGenre) => {
+      if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
+        await genreController.remove_product(currentGenre._id, id, session);
       }
-    });
+    }));
+
+    await session.commitTransaction();
+    session.endSession();
 
     res.send(result);
   } catch (err) {
