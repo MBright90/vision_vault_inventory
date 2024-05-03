@@ -87,8 +87,6 @@ async function post_product(req, res) {
     return;
   }
 
-  console.log('validated');
-
   const {
     name, description, price, number_in_stock, genres, type,
   } = req.body;
@@ -108,6 +106,9 @@ async function post_product(req, res) {
 
   const typeId = await typeController.get_id(type);
 
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     const newProduct = new Product({
       name,
@@ -118,19 +119,25 @@ async function post_product(req, res) {
       type: { name: type.toLowerCase(), _id: typeId },
       stock_last_updated: new Date(),
       last_updated: new Date(),
-    });
+    }).session(session);
 
     const result = await newProduct.save();
 
     // add product to genres
     result.genres.forEach((genre) => {
-      genreController.add_product(genre, result._id);
+      genreController.add_product(genre, result._id, session);
     });
     // add product to type
-    typeController.add_product(result.type._id, result._id);
+    typeController.add_product(result.type._id, result._id, session);
+
+    await session.commitTransaction();
+    session.endSession();
 
     res.send(result);
   } catch (err) {
+    session.abortTransaction();
+    session.endSession();
+
     console.log(err); // TODO: log error here later
     res.status(500).send(err);
   }
