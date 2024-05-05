@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 const Genre = require('../models/genre');
 
-async function get_id(genre) {
+async function get_id(genre, session = null) {
   // find genre and create if not found
   try {
     if (genre === '') return '';
@@ -10,7 +10,7 @@ async function get_id(genre) {
     const result = await Genre.findOneAndUpdate(
       { name: lowerGen },
       { name: lowerGen },
-      { upsert: true, new: true },
+      { upsert: true, new: true, session },
     );
     return result._id;
   } catch (err) {

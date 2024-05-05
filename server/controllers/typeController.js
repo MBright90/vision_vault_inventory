@@ -12,24 +12,23 @@ async function get_all(req, res) {
   }
 }
 
-async function get_id(type) {
+async function get_id(type, session = null) {
   // find type and create if not found
   try {
     const lowerType = type.toLowerCase();
     const result = await Type.findOneAndUpdate(
       { name: lowerType },
       { name: lowerType },
-      { upsert: true, new: true },
+      { upsert: true, new: true, session },
     );
     return result._id;
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log(err); // log error
-    throw err;
+    return null;
   }
 }
 
-async function add_product(typeId, productId, session) {
+async function add_product(typeId, productId, session = null) {
   const result = await Type.updateOne(
     { _id: typeId },
     { $push: { products: productId } },
