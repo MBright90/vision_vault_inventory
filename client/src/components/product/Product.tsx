@@ -37,7 +37,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
     const changeStockEditValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const newValue = parseInt(e.target.value);
-        console.log(newValue);
         setEditingStockValue(newValue);
     };
 
@@ -49,8 +48,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         };
 
         const response = await fetch(`${endpoint}/products/update_stock/${product._id}`, requestOptions);
-        const data = response.json();
-        console.log(data);
         if (!response.ok) { setModal(
             <Modal closeModal={() => { setModal(null); }}>
                 <p>Error updating stock amount</p>
@@ -75,6 +72,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             <p className={style.productName}>{product.name}</p>
             <p className={style.productDetails}>{capitalize(product.type.name)} / {productGenres}</p>
             <p className={style.productDescription}>{product.description}</p>
+            <p className={style.productPrice}>£{product.price}</p>
             <div className={style.inStockContainer}>
                 <button className={style.stockButton} onClick={beginStockUpdate}>Update stock</button>
                 <p>In stock: { product.number_in_stock > 0 ? product.number_in_stock : 'NO' }</p>
