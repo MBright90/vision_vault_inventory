@@ -29,10 +29,11 @@ async function get_id(type) {
   }
 }
 
-async function add_product(typeId, productId) {
+async function add_product(typeId, productId, session) {
   const result = await Type.updateOne(
     { _id: typeId },
     { $push: { products: productId } },
+    { session },
   );
   return result;
 }

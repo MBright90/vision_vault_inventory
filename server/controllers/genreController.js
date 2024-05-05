@@ -28,18 +28,20 @@ async function get_all(req, res) {
   }
 }
 
-async function add_product(genreId, productId) {
+async function add_product(genreId, productId, session = null) {
   const result = await Genre.updateOne(
     { _id: genreId },
     { $addToSet: { products: productId } },
+    { session },
   );
   return result;
 }
 
-async function remove_product(genreId, productId) {
+async function remove_product(genreId, productId, session = null) {
   const result = await Genre.updateOne(
     { _id: genreId },
     { $pull: { products: productId } },
+    { session },
   );
   return result;
 }
