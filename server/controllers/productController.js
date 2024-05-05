@@ -93,21 +93,22 @@ async function post_product(req, res) {
 
   // parse genres and normalize
   const genreArr = genres.toLowerCase().split(',');
-  genreArr.forEach((genre) => genre.trim());
+  const trimmedGenres = genreArr.map((genre) => genre.trim());
 
   let formattedGenres = [];
 
+  // Begin mongodb session and start transaction - Ensure changes only occur if all are successful
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   if (genreArr.length > 0 && genreArr[0] !== '') {
-    formattedGenres = await Promise.all(genreArr.map(async (genre) => {
-      const ID = await genreController.get_id(genre);
+    formattedGenres = await Promise.all(trimmedGenres.map(async (genre) => {
+      const ID = await genreController.get_id(genre, session);
       return { name: genre, _id: ID };
     }));
   }
 
-  const typeId = await typeController.get_id(type);
-
-  const session = await mongoose.startSession();
-  session.startTransaction();
+  const typeId = await typeController.get_id(type, session);
 
   try {
     const newProduct = new Product({
@@ -119,9 +120,9 @@ async function post_product(req, res) {
       type: { name: type.toLowerCase(), _id: typeId },
       stock_last_updated: new Date(),
       last_updated: new Date(),
-    }).session(session);
+    });
 
-    const result = await newProduct.save();
+    const result = await newProduct.save({ session });
 
     // add product to genres
     result.genres.forEach((genre) => {
@@ -146,6 +147,7 @@ async function post_product(req, res) {
 async function put_edit_product(req, res) {
   const { id } = req.params;
 
+  // verify all required fields
   const validation = validateProduct(req.body);
   if (validation.err) {
     res.status(400).send({ err: validation.err });
@@ -156,22 +158,24 @@ async function put_edit_product(req, res) {
     name, description, price, number_in_stock, genres, prevGenres, type,
   } = req.body;
 
+  // parse genres and normalize
   const genreArr = genres.toLowerCase().split(',');
   genreArr.forEach((genre) => genre.trim());
 
   let formattedGenres = [];
 
+  // Begin mongodb session and start transaction - Ensure changes only occur if all are successful
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   if (genreArr.length > 0 && genreArr[0] !== '') {
     formattedGenres = await Promise.all(genreArr.map(async (genre) => {
-      const ID = await genreController.get_id(genre);
+      const ID = await genreController.get_id(genre, session);
       return { name: genre, _id: ID };
     }));
   }
 
-  const typeId = await typeController.get_id(type);
-
-  const session = await mongoose.startSession();
-  session.startTransaction();
+  const typeId = await typeController.get_id(type, session);
 
   try {
     const result = await Product.findOneAndUpdate(
@@ -189,8 +193,8 @@ async function put_edit_product(req, res) {
           last_updated: new Date(),
         },
       },
-      { upsert: true, new: true },
-    ).session(session);
+      { upsert: true, new: true, session },
+    );
 
     // add products to genres if unique
     result.genres.forEach((genre) => {
