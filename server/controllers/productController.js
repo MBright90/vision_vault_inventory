@@ -95,22 +95,22 @@ async function post_product(req, res) {
   const genreArr = genres.toLowerCase().split(',');
   const trimmedGenres = genreArr.map((genre) => genre.trim());
 
-  let formattedGenres = [];
-
   // Begin mongodb session and start transaction - Ensure changes only occur if all are successful
   const session = await mongoose.startSession();
   session.startTransaction();
 
-  if (genreArr.length > 0 && genreArr[0] !== '') {
-    formattedGenres = await Promise.all(trimmedGenres.map(async (genre) => {
-      const ID = await genreController.get_id(genre, session);
-      return { name: genre, _id: ID };
-    }));
-  }
-
-  const typeId = await typeController.get_id(type, session);
-
   try {
+    let formattedGenres = [];
+
+    if (genreArr.length > 0 && genreArr[0] !== '') {
+      formattedGenres = await Promise.all(trimmedGenres.map(async (genre) => {
+        const ID = await genreController.get_id(genre, session);
+        return { name: genre, _id: ID };
+      }));
+    }
+
+    const typeId = await typeController.get_id(type, session);
+
     const newProduct = new Product({
       name,
       description,
@@ -125,21 +125,25 @@ async function post_product(req, res) {
     const result = await newProduct.save({ session });
 
     // add product to genres
-    result.genres.forEach((genre) => {
-      genreController.add_product(genre, result._id, session);
+    result.genres.forEach(async (genre) => {
+      await genreController.add_product(genre, result._id, session);
     });
     // add product to type
-    typeController.add_product(result.type._id, result._id, session);
+    await typeController.add_product(result.type._id, result._id, session);
 
     await session.commitTransaction();
     session.endSession();
 
     res.send(result);
   } catch (err) {
-    session.abortTransaction();
+    if (session.transaction) {
+      session.abortTransaction();
+    }
     session.endSession();
 
-    console.log(err); // TODO: log error here later
+    console.log('Transaction aborted');
+
+    // console.log(err); // TODO: log error here later
     res.status(500).send(err);
   }
 }
@@ -162,22 +166,22 @@ async function put_edit_product(req, res) {
   const genreArr = genres.toLowerCase().split(',');
   genreArr.forEach((genre) => genre.trim());
 
-  let formattedGenres = [];
-
   // Begin mongodb session and start transaction - Ensure changes only occur if all are successful
   const session = await mongoose.startSession();
   session.startTransaction();
 
-  if (genreArr.length > 0 && genreArr[0] !== '') {
-    formattedGenres = await Promise.all(genreArr.map(async (genre) => {
-      const ID = await genreController.get_id(genre, session);
-      return { name: genre, _id: ID };
-    }));
-  }
-
-  const typeId = await typeController.get_id(type, session);
-
   try {
+    let formattedGenres = [];
+
+    if (genreArr.length > 0 && genreArr[0] !== '') {
+      formattedGenres = await Promise.all(genreArr.map(async (genre) => {
+        const ID = await genreController.get_id(genre, session);
+        return { name: genre, _id: ID };
+      }));
+    }
+
+    const typeId = await typeController.get_id(type, session);
+
     const result = await Product.findOneAndUpdate(
       { _id: id },
       {
