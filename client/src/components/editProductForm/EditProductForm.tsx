@@ -51,8 +51,6 @@ const EditProductForm: React.FC = () => {
             }
         };
 
-        console.log('retrieving');
-
         // Set options for types
         void retrieveProduct();
         void retrieveTypes(setTypeOptions, null);
