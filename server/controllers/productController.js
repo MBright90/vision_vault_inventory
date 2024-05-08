@@ -97,9 +97,10 @@ async function post_product(req, res) {
 
   // Begin mongodb session and start transaction - Ensure changes only occur if all are successful
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
+    session.startTransaction();
+
     let formattedGenres = [];
 
     if (genreArr.length > 0 && genreArr[0] !== '') {
@@ -125,9 +126,9 @@ async function post_product(req, res) {
     const result = await newProduct.save({ session });
 
     // add product to genres
-    result.genres.forEach(async (genre) => {
+    await Promise.all(result.genres.map(async (genre) => {
       await genreController.add_product(genre, result._id, session);
-    });
+    }));
     // add product to type
     await typeController.add_product(result.type._id, result._id, session);
 
@@ -136,9 +137,7 @@ async function post_product(req, res) {
 
     res.send(result);
   } catch (err) {
-    if (session.transaction) {
-      session.abortTransaction();
-    }
+    await session.abortTransaction();
     session.endSession();
 
     console.log('Transaction aborted');
