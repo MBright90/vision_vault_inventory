@@ -12,14 +12,18 @@ async function get_all(req, res) {
   }
 }
 
-async function get_id(type, session = null) {
+async function get_id(type, session = null) { // THIS WORKED
   // find type and create if not found
   try {
     const lowerType = type.toLowerCase();
+
+    const options = { upsert: true, new: true };
+    if (session) options.session = session;
+
     const result = await Type.findOneAndUpdate(
       { name: lowerType },
       { name: lowerType },
-      { upsert: true, new: true, session },
+      options,
     );
     return result._id;
   } catch (err) {
