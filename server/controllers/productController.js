@@ -129,6 +129,7 @@ async function post_product(req, res) {
     await Promise.all(result.genres.map(async (genre) => {
       await genreController.add_product(genre, result._id, session);
     }));
+
     // add product to type
     await typeController.add_product(result.type._id, result._id, session);
 
