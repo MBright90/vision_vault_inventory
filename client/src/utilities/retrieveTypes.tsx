@@ -11,17 +11,28 @@ interface FilterIdSet{
 
 const retrieveTypes = async (
     setFilterOptions: (nodes: React.ReactNode[]) => void,
-    setFilterIdArr: ((idSet: FilterIdSet[]) => void) | null
+    setFilterIdArr: ((idSet: FilterIdSet[]) => void) | null,
+    selected: string | null = null,
     ): Promise<void> => {
+        let formattedSelected: string = "";
+        if (selected !== null) {
+            formattedSelected = capitalize(selected);
+        }
     let data: productType_type[] = [];
     try {
         const response = await fetch(`${endpoint}/types/`);
         data = await response.json();
         // Create ReactNode arr
         const filterNodes: React.ReactNode[] = data.map((type: productType_type) => {
-            return (<option key={type._id} data-id={type._id}>
-                {capitalize(type.name)}
-            </option>);
+            if (capitalize(formattedSelected) === type.name) {
+                return (<option key={type._id} data-id={type._id} selected={true}>
+                    {capitalize(type.name)}
+                </option>);
+            } else {
+                return (<option key={type._id} data-id={type._id}>
+                    {capitalize(type.name)}
+                </option>);
+            }
         });
         setFilterOptions(filterNodes);
 
