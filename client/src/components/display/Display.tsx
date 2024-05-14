@@ -50,11 +50,12 @@ const Display: React.FC = () => {
     // Node creation from genreSelection
     useEffect((): void => {
         const nodeArr = genreSelection.map((genre: genre_type) => {
-            return (
+            if (genre.products.length > 0) return (
                 <ul className={`${style.selectionItem} ${genre._id === currentlySelected ? style.selectedItem : null }`} key={genre._id}>
                     <button key={genre._id} onClick={() => {toggleItemSelection(genre._id);}}>{capitalize(genre.name)} ({genre.products.length})</button>
                 </ul>
             );
+            return null;
         });
         setSelectionNodes(nodeArr);
     }, [genreSelection, currentlySelected]);
