@@ -162,19 +162,22 @@ async function put_edit_product(req, res) {
     name, description, price, number_in_stock, genres, prevGenres, type,
   } = req.body;
 
+  console.log(name, description, price, number_in_stock, genres, prevGenres, type);
+
   // parse genres and normalize
   const genreArr = genres.toLowerCase().split(',');
-  genreArr.forEach((genre) => genre.trim());
+  const trimmedGenres = genreArr.map((genre) => genre.trim());
 
   // Begin mongodb session and start transaction - Ensure changes only occur if all are successful
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
+    session.startTransaction();
+
     let formattedGenres = [];
 
     if (genreArr.length > 0 && genreArr[0] !== '') {
-      formattedGenres = await Promise.all(genreArr.map(async (genre) => {
+      formattedGenres = await Promise.all(trimmedGenres.map(async (genre) => {
         const ID = await genreController.get_id(genre, session);
         return { name: genre, _id: ID };
       }));
@@ -201,21 +204,23 @@ async function put_edit_product(req, res) {
     );
 
     // add products to genres if unique
-    result.genres.forEach((genre) => {
-      genreController.add_product(genre, id, session);
-    });
+    // result.genres.forEach((genre) => {
+    //   genreController.add_product(genre, id, session);
+    // });
 
     // add product to type if unique
     typeController.add_product(result.type._id, id, session);
 
-    // remove product from removed genres
-    await Promise.all(prevGenres.forEach(async (currentGenre) => {
-      if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
-        await genreController.remove_product(currentGenre._id, id, session);
-      }
-    }));
+    //   // remove product from removed genres
+    //   await Promise.all(prevGenres.forEach(async (currentGenre) => {
+    //     if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
+    //       await genreController.remove_product(currentGenre._id, id, session);
+    //     }
+    //   }));
 
-    await session.commitTransaction();
+    console.log(result);
+
+    await session.abortTransaction();
     session.endSession();
 
     res.send(result);
