@@ -142,6 +142,7 @@ async function post_product(req, res) {
     session.endSession();
 
     console.log('Transaction aborted');
+    console.log(err);
 
     // console.log(err); // TODO: log error here later
     res.status(500).send(err);
@@ -204,23 +205,26 @@ async function put_edit_product(req, res) {
     );
 
     // add products to genres if unique
-    // result.genres.forEach((genre) => {
-    //   genreController.add_product(genre, id, session);
-    // });
+    await Promise.all(result.genres.map(async (genre) => {
+      await genreController.add_product(genre, result._id, session);
+    }));
 
     // add product to type if unique
-    typeController.add_product(result.type._id, id, session);
+    if (result.type.name !== type) {
+      typeController.add_product(result.type._id, id, session);
+      // remove product from old type
+    }
 
-    //   // remove product from removed genres
-    //   await Promise.all(prevGenres.forEach(async (currentGenre) => {
-    //     if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
-    //       await genreController.remove_product(currentGenre._id, id, session);
-    //     }
-    //   }));
+    // remove product from removed genres
+    await Promise.all(prevGenres.map(async (currentGenre) => {
+      if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
+        await genreController.remove_product(currentGenre._id, id, session);
+      }
+    }));
 
     console.log(result);
 
-    await session.abortTransaction();
+    await session.commitTransaction();
     session.endSession();
 
     res.send(result);
@@ -234,7 +238,7 @@ async function put_edit_product(req, res) {
   }
 }
 
-async function update_stock(req, res) {
+async function put_update_stock(req, res) {
   const { id } = req.params;
   const { increment } = req.body;
 
@@ -251,6 +255,26 @@ async function update_stock(req, res) {
   }
 }
 
+async function delete_product(req, res) {
+  const { id } = req.params;
+  const { genres } = req.body;
+
+  try {
+    const result = await Product.deleteOne({ _id: id });
+
+    genres.forEach(async (currentGenre) => {
+      if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
+        await genreController.remove_product(currentGenre._id, id);
+      }
+    });
+
+    res.send(result);
+  } catch (err) {
+    console.log(`Error deleting product ${id}: ${err}`);
+    res.status(500).send(err);
+  }
+}
+
 module.exports = {
   get_all,
   get_by_id,
@@ -259,5 +283,6 @@ module.exports = {
   get_by_type_and_genre,
   post_product,
   put_edit_product,
-  update_stock,
+  put_update_stock,
+  delete_product,
 };
