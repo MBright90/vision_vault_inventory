@@ -20,6 +20,8 @@ productRouter.post('/', productController.post_product);
 
 productRouter.put('/edit/:id', productController.put_edit_product);
 
-productRouter.put('/update_stock/:id', productController.update_stock);
+productRouter.put('/update_stock/:id', productController.put_update_stock);
+
+productRouter.delete('/delete/:id', productController.delete_product);
 
 module.exports = productRouter;
