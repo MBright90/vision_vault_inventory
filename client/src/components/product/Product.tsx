@@ -8,7 +8,8 @@ import endpoint from "@utilities/endpoint";
 import { Link } from "react-router-dom";
 
 interface ProductProps {
-    product: product_type
+    product: product_type,
+    closeSelection: () => void;
 }
 
 interface product_genre {
@@ -16,7 +17,7 @@ interface product_genre {
     _id: string
 }
 
-const Product: React.FC<ProductProps> = ({ product }) => {
+const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
     const [isEditingStock, setIsEditingStock] = useState<boolean>(false);
     const [editingStockValue, setEditingStockValue] = useState<number>(0);
 
@@ -66,6 +67,30 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         }
     };
 
+    const deleteCallback = async (): Promise<void> => {
+        const genreNames = product.genres.map((genre) => genre.name);
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ genres: genreNames})
+        };
+
+        const result = await fetch(`${endpoint}/delete/${product._id}`, requestOptions);
+        if (result.ok) console.log('deleted');
+        closeSelection();
+    };
+
+    const showDeleteModal = (): void => {
+
+        setModal(
+            <Modal closeModal={() => { setModal(null); }} confirm={{ text: 'Confirm', func: deleteCallback}}>
+                <p>Are you sure you want to delete this?</p>
+            </Modal>
+        );
+
+    };
+
      return (
         <div className={style.productContainer}>
             { modal }
@@ -87,6 +112,9 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             <div className={style.editContainer}>
                 <Link className={style.editButton} to={`/edit/${product._id}`}>Edit details</Link>
                 <p>Last Edited: {formattedLastUpdated}</p>
+            </div>
+            <div className={style.editContainer}>
+                <button className={style.editButton} onClick={showDeleteModal}>Delete</button>
             </div>
         </div>
      );
