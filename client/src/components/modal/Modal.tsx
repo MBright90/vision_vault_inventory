@@ -9,18 +9,20 @@ interface ModalProps {
     closeModal: () => void
     confirm?: {
         text: string,
-        func: () => void
+        func: (() => void) | (() => Promise<void>)
     }
 }
 
 const Modal: React.FC<ModalProps> = ({ children, closeModal, confirm = null }) => {
+
+
     return (
         <div className={style.modalBackground}>
             <div className={style.modalContainer}>
                 {children}
                 <button className={style.closeModal} onClick={closeModal}><FontAwesomeIcon icon={faXmark}/></button>
                 { confirm !== null ? 
-                    <button className={style.confirmButton} onClick={() => { confirm.func(); closeModal(); }}>
+                    <button className={style.confirmButton} onClick={() => { void confirm.func(); closeModal(); }}>
                         {confirm.text}
                     </button>
                 :  null }
