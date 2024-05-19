@@ -257,16 +257,20 @@ async function put_update_stock(req, res) {
 
 async function delete_product(req, res) {
   const { id } = req.params;
-  const { genres } = req.body;
+  const { genres, typeId } = req.body; // Add transactional update here
 
   try {
     const result = await Product.deleteOne({ _id: id });
 
+    // remove product from genres
     genres.forEach(async (currentGenre) => {
       if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
         await genreController.remove_product(currentGenre._id, id);
       }
     });
+
+    // remove product from type
+    await typeController.remove_product(typeId, id);
 
     res.send(result);
   } catch (err) {
