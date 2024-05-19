@@ -73,7 +73,7 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
         const requestOptions = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ genres: genreNames})
+            body: JSON.stringify({ genres: genreNames, typeId: product.type._id })
         };
 
         const result = await fetch(`${endpoint}/delete/${product._id}`, requestOptions);
