@@ -43,7 +43,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
             } catch(err) {
                 console.log(err); // log error
             }
-            setProducts(data);
+            if (activeProduct !== null) setProducts(data);
             setIsLoading(false);
         };
 
