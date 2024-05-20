@@ -57,6 +57,7 @@ async function remove_product(typeId, productId, session = null) {
       options,
     );
 
+    console.log(`${productId} removed from type ${typeId}`);
     return result;
   } catch (err) {
     console.log(err);

@@ -57,6 +57,8 @@ async function remove_product(genreId, productId, session) {
       { $pull: { products: productId } },
       options,
     );
+
+    console.log(`${productId} removed from genre ${genreId}`);
     return result;
   } catch (err) {
     console.log(`Error removing product ${productId} from genre ${genreId}: ${err}`);
