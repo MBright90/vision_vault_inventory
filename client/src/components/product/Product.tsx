@@ -69,6 +69,7 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
 
     const deleteCallback = async (): Promise<void> => {
         const genreNames = product.genres.map((genre) => genre.name);
+        console.log(genreNames);
 
         const requestOptions = {
             method: 'DELETE',
@@ -76,7 +77,7 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
             body: JSON.stringify({ genres: genreNames, typeId: product.type._id })
         };
 
-        const result = await fetch(`${endpoint}/delete/${product._id}`, requestOptions);
+        const result = await fetch(`${endpoint}/products/delete/${product._id}`, requestOptions);
         if (result.ok) console.log('deleted');
         closeSelection();
     };
