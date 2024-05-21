@@ -257,23 +257,31 @@ async function put_update_stock(req, res) {
 
 async function delete_product(req, res) {
   const { id } = req.params;
-  const { genres, typeId } = req.body; // Add transactional update here
+  const { genreIds, typeId } = req.body;
+
+  const session = await mongoose.startSession();
 
   try {
-    const result = await Product.deleteOne({ _id: id });
+    session.startTransaction();
+
+    const result = await Product.deleteOne({ _id: id }, { session });
 
     // remove product from genres
-    genres.forEach(async (currentGenre) => {
-      if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
-        await genreController.remove_product(currentGenre._id, id);
-      }
-    });
+    await Promise.all(genreIds.map(async (genreId) => {
+      await genreController.remove_product(genreId, id, session);
+    }));
 
     // remove product from type
-    await typeController.remove_product(typeId, id);
+    await typeController.remove_product(typeId, id, session);
+
+    await session.commitTransaction();
+    session.endSession();
 
     res.send(result);
   } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+
     console.log(`Error deleting product ${id}: ${err}`);
     res.status(500).send(err);
   }
