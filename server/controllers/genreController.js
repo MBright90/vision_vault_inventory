@@ -50,8 +50,8 @@ async function add_product(genreId, productId, session) {
 }
 
 async function remove_product(genreId, productId, session) {
+  const options = session ? { session } : {};
   try {
-    const options = session ? { session } : {};
     const result = await Genre.updateOne(
       { _id: genreId },
       { $pull: { products: productId } },
