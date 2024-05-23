@@ -20,7 +20,7 @@ const EditProductForm: React.FC = () => {
     const [currentStock, setCurrentStock] = useState<number>(0);
     const [currentType, setCurrentType] = useState<string>('');
     const [currentGenres, setCurrentGenres] = useState<string>('');
-    const [prevGenres, setPrevGenres] = useState<Array<{name: string, _id: string}>>([]);
+    const [prevGenres, setPrevGenres] = useState<string[]>([]);
 
     useEffect(() => {
         const retrieveProduct = async (): Promise<void> => {
@@ -45,7 +45,8 @@ const EditProductForm: React.FC = () => {
                 const genres = product.genres.map((genre) => genre.name);
                 setCurrentGenres(genres.join(', '));
 
-                setPrevGenres(product.genres);
+                const prevIds = product.genres.map((genre) => genre._id);
+                setPrevGenres(prevIds);
             } catch (err) {
                 console.log(err);
             }
