@@ -3,7 +3,6 @@
 const Genre = require('../models/genre');
 
 async function get_id(genre, session = null) {
-  console.log(genre);
   // find genre and create if not found
   try {
     if (genre === '') return '';
