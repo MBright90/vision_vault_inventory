@@ -23,7 +23,7 @@ async function get_all(req, res) {
     const result = await Product.find().sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // TODO: log error here later
+    console.log(err);
     res.status(500).send(err);
   }
 }
@@ -34,7 +34,7 @@ async function get_by_id(req, res) {
     const result = await Product.findById(id);
     res.send(result);
   } catch (err) {
-    console.log(err); // TODO: log error here later
+    console.log(err);
     res.status(500).send(err);
   }
 }
@@ -48,7 +48,7 @@ async function get_by_genre(req, res) {
     ).sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // TODO: log error here later
+    console.log(err);
     res.status(500).send(err);
   }
 }
@@ -60,7 +60,7 @@ async function get_by_type(req, res) {
     const result = await Product.find({ 'type._id': typeId }).sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // TODO: log error here later
+    console.log(err);
     res.status(500).send(err);
   }
 }
@@ -74,7 +74,7 @@ async function get_by_type_and_genre(req, res) {
     ).sort({ name: 1 });
     res.send(result);
   } catch (err) {
-    console.log(err); // TODO: log error here later
+    console.log(err);
     res.status(500).send(err);
   }
 }
@@ -127,7 +127,7 @@ async function post_product(req, res) {
 
     // add product to genres
     await Promise.all(result.genres.map(async (genre) => {
-      await genreController.add_product(genre, result._id, session);
+      await genreController.add_product(genre._id, result._id, session);
     }));
 
     // add product to type
@@ -141,10 +141,7 @@ async function post_product(req, res) {
     await session.abortTransaction();
     session.endSession();
 
-    console.log('Transaction aborted');
     console.log(err);
-
-    // console.log(err); // TODO: log error here later
     res.status(500).send(err);
   }
 }
@@ -162,8 +159,6 @@ async function put_edit_product(req, res) {
   const {
     name, description, price, number_in_stock, genres, prevGenres, type,
   } = req.body;
-
-  console.log(name, description, price, number_in_stock, genres, prevGenres, type);
 
   // parse genres and normalize
   const genreArr = genres.toLowerCase().split(',');
@@ -206,23 +201,23 @@ async function put_edit_product(req, res) {
 
     // add products to genres if unique
     await Promise.all(result.genres.map(async (genre) => {
-      await genreController.add_product(genre, result._id, session);
+      await genreController.add_product(genre._id, result._id, session);
     }));
 
     // add product to type if unique
     if (result.type.name !== type) {
       typeController.add_product(result.type._id, id, session);
-      // remove product from old type
+      // remove product from old type if changed
     }
 
     // remove product from removed genres
-    await Promise.all(prevGenres.map(async (currentGenre) => {
-      if (!result.genres.some((genre) => genre._id === currentGenre._id)) {
-        await genreController.remove_product(currentGenre._id, id, session);
+    await Promise.all(prevGenres.map(async (prevGenreId) => {
+      if (!result.genres.includes((genre) => genre._id === prevGenreId)) {
+        await genreController.remove_product(prevGenreId, id, session);
       }
     }));
 
-    console.log(result);
+    console.log('FIVE');
 
     await session.commitTransaction();
     session.endSession();
