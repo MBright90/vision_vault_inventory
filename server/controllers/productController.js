@@ -207,7 +207,7 @@ async function put_edit_product(req, res) {
     // add product to type if unique
     if (result.type.name !== type) {
       typeController.add_product(result.type._id, id, session);
-      // remove product from old type if changed
+      typeController.remove_product_by_name(type, result._id, session);
     }
 
     // remove product from removed genres
@@ -216,8 +216,6 @@ async function put_edit_product(req, res) {
         await genreController.remove_product(prevGenreId, id, session);
       }
     }));
-
-    console.log('FIVE');
 
     await session.commitTransaction();
     session.endSession();
