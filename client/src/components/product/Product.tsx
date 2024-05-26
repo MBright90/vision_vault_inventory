@@ -95,7 +95,7 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
         <div className={style.productContainer}>
             { modal }
             <p className={style.productName}>{product.name}</p>
-            <p className={style.productDetails}>{capitalize(product.type.name)} / {productGenres}</p>
+            <p className={style.productDetails}>{capitalize(product.type.name)} <span>|</span> {productGenres}</p>
             <p className={style.productDescription}>{product.description}</p>
             <p className={style.productPrice}>£{product.price}</p>
             <div className={style.inStockContainer}>

@@ -19,6 +19,10 @@
     
     .productDetails {
         font-style: italic;
+
+        span:first-of-type {
+            font-style: normal;
+        }
     }
 
     .productPrice {
