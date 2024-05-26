@@ -65,9 +65,27 @@ async function remove_product(typeId, productId, session = null) {
   }
 }
 
+async function remove_product_by_name(typeName, productId, session = null) {
+  const options = session ? { session } : {};
+  try {
+    const result = await Type.updateOne(
+      { name: typeName },
+      { $pull: { products: productId } },
+      options,
+    );
+
+    console.log(`${productId} removed from type ${typeName}`);
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports = {
   get_all,
   get_id,
   add_product,
   remove_product,
+  remove_product_by_name,
 };
