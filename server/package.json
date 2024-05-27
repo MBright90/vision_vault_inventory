@@ -7,7 +7,8 @@
     "start": "NODE_ENV=production node --env-file=.env server",
     "startdev": "nodemon --env-file=.env server.js",
     "serverstart": "DEBUG=server:* npm run startDev",
-    "uploadtestdata": "node --env-file=.env utilities/uploadTestData.js"
+    "uploadtestdata": "node --env-file=.env utilities/uploadTestData.js",
+    "cleangenres": "node --env-file=.env utilities/cleanDB.js"
   },
   "keywords": [],
   "author": "",
