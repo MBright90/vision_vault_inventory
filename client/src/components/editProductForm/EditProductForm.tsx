@@ -4,7 +4,7 @@ import style from './EditProductForm.module.scss';
 import { redirect, useParams } from "react-router-dom";
 import retrieveTypes from "@utilities/retrieveTypes";
 import endpoint from "@utilities/endpoint";
-import Modal from "@components/modal/ConfirmModal";
+import Modal from "@components/modals/confirmModal/ConfirmModal";
 import { type product_type } from "@custom_types/types";
 
 const EditProductForm: React.FC = () => {

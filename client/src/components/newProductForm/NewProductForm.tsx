@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import retrieveTypes from "@utilities/retrieveTypes";
 
 import style from './NewProductForm.module.scss';
-import Modal from "@components/modal/ConfirmModal";
+import Modal from "@components/modals//confirmModal/ConfirmModal";
 import endpoint from "@utilities/endpoint";
 import { redirect } from "react-router-dom";
 
