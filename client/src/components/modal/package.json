@@ -1,7 +1,7 @@
 {
-    "name": "modal",
+    "name": "confirm-modal",
     "version": "0.0.0",
-    "main": "Modal.tsx",
+    "main": "ConfirmModal.tsx",
     "dependencies": {
         "react": "^18.2.0"
     }

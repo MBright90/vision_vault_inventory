@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Modal from "@components/modal";
+import Modal from "@components/modal/ConfirmModal";
 import capitalize from "@utilities/capitalize";
 import style from "./Product.module.scss";
 import type { product_type } from "@custom_types/types";
