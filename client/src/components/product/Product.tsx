@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import Modal from "@components/modals/confirmModal/ConfirmModal";
+import AuthModal from "@components/modals/authModal";
+import ConfirmModal from "@components/modals/confirmModal/ConfirmModal";
 import capitalize from "@utilities/capitalize";
 import style from "./Product.module.scss";
 import type { product_type } from "@custom_types/types";
@@ -50,43 +51,49 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
 
         const response = await fetch(`${endpoint}/products/update_stock/${product._id}`, requestOptions);
         if (!response.ok) { setModal(
-            <Modal closeModal={() => { setModal(null); }}>
+            <ConfirmModal closeModal={() => { setModal(null); }}>
                 <p>Error updating stock amount</p>
                 <p>Please try again later</p>
-            </Modal>
+            </ConfirmModal>
         ); } else {
             // set out stock change
             product.number_in_stock = product.number_in_stock + editingStockValue;
             setModal(
-                <Modal closeModal={() => { setModal(null); }}>
+                <ConfirmModal closeModal={() => { setModal(null); }}>
                     <p>Stock updated</p>
-                </Modal>
+                </ConfirmModal>
             );
             setEditingStockValue(0);
             setIsEditingStock(false);
         }
     };
 
-    const deleteCallback = async (): Promise<void> => {
-        const genreIds = product.genres.map((genre) => genre._id);
+    // const deleteCallback = async (): Promise<void> => {
+    //     const genreIds = product.genres.map((genre) => genre._id);
 
-        const requestOptions = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ genreIds, typeId: product.type._id })
-        };
+    //     const requestOptions = {
+    //         method: 'DELETE',
+    //         headers: { 'Content-Type': 'application/json' }, 
+    //         body: JSON.stringify({ genreIds, typeId: product.type._id })
+    //     };
 
-        const result = await fetch(`${endpoint}/products/delete/${product._id}`, requestOptions);
-        if (result.ok) console.log('deleted');
-        closeSelection();
-    };
+    //     const result = await fetch(`${endpoint}/products/delete/${product._id}`, requestOptions);
+    //     if (result.ok) console.log('deleted');
+    //     closeSelection();
+    // };
 
     const showDeleteModal = (): void => {
+        const genreIds = product.genres.map((genre) => genre._id);
 
         setModal(
-            <Modal closeModal={() => { setModal(null); }} confirm={{ text: 'Confirm', func: deleteCallback}}>
-                <p>Are you sure you want to delete this?</p>
-            </Modal>
+            <AuthModal 
+                closeModal={() => { setModal(null); }}
+                reqOptions={{
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ genreIds, typeId: product.type._id })
+                }} 
+                displayModalFunc={() => {}}/>
         );
 
     };
