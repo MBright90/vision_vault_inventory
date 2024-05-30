@@ -1,6 +1,6 @@
 import React from "react";
 
-import style from './Modal.module.scss';
+import style from './ConfirmModal.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
