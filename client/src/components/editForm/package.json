@@ -1,8 +1,0 @@
-{
-    "name": "edit-form",
-    "version": "0.0.0",
-    "main": "EditForm.tsx",
-    "dependencies": {
-        "react": "^18.2.0"
-    }
-}
