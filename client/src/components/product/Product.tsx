@@ -92,7 +92,8 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify({ genreIds, typeId: product.type._id })
-                }} 
+                }}
+                productId={product._id}
                 displayModalFunc={() => {}}/>
         );
 
