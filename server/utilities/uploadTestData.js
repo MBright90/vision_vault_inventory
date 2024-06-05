@@ -43,30 +43,24 @@ async function uploadTestProducts(dataArr) {
     };
   }));
 
-  const session = await mongoose.startSession();
-
   await Promise.all(mappedData.map(async (item) => {
-    session.startTransaction();
     try {
       const productDoc = new Product(item);
-      const result = await productDoc.save({ session });
+      const result = await productDoc.save();
 
       console.log(result);
 
       await Promise.all(result.genres.map(async (genre) => {
-        await genreController.add_product(genre._id, result._id, session);
+        await genreController.add_product(genre._id, result._id);
       }));
 
-      await typeController.add_product(result.type._id, result._id, session);
+      await typeController.add_product(result.type._id, result._id);
 
-      await session.commitTransaction();
       console.log(`${item.name} successfully added`);
     } catch (err) {
-      session.abortTransaction();
-      console.log(`Error adding product ${item.name}`);
+      console.log(`Error adding product: ${err}`);
     }
   }));
-  session.endSession();
 }
 
 main()
