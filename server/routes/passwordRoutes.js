@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
-router.get('/', passwordHashController.get_password_hash);
+router.get('/', passwordHashController.compare_password_hash);
 
 module.exports = router;
