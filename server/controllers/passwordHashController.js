@@ -3,20 +3,6 @@
 const bcrypt = require('bcrypt');
 const PasswordHash = require('../models/passwordHash');
 
-async function compare_password_hash(req, res) {
-  const { reqHash } = req.body;
-  try {
-    const result = await PasswordHash.findOne({ _id: 'admin' });
-    const { hash } = result;
-    if (reqHash === hash) console.log('valid');
-    else console.log('invalid');
-    res.send('');
-  } catch (err) {
-    console.log(err);
-    res.send(-1);
-  }
-}
-
 async function get_password_hash(req, res) {
   try {
     const result = await PasswordHash.findOne({ _id: 'admin' });
@@ -52,7 +38,6 @@ async function update_password_hash(newPassword) {
 }
 
 module.exports = {
-  compare_password_hash,
   get_password_hash,
   set_password,
   update_password_hash,
