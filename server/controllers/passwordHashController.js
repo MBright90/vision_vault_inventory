@@ -16,7 +16,7 @@ async function set_password(password) {
   const hash = bcrypt.hashSync(password, 10);
   try {
     const result = await PasswordHash.save({
-      _id: 1,
+      _id: 'admin',
       hash,
     });
     return result;
