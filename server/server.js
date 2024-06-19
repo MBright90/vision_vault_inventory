@@ -6,6 +6,7 @@ const cors = require('cors');
 const productRouter = require('./routes/productRoutes');
 const genreRouter = require('./routes/genreRoutes');
 const typeRouter = require('./routes/typeRoutes');
+const passwordRouter = require('./routes/passwordRoutes');
 
 const PORT = process.env.PORT || 3000;
 
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/products/', productRouter);
 app.use('/genres/', genreRouter);
 app.use('/types/', typeRouter);
+app.use('/password', passwordRouter);
 
 // Error handling
 app.use((req, res) => {
