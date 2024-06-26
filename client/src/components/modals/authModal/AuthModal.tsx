@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import comparePassword from "@utilities/comparePassword";
 
 import style from './AuthModal.module.scss';
 import endpoint from "@utilities/endpoint";
@@ -8,20 +9,9 @@ import endpoint from "@utilities/endpoint";
 interface AuthModalProps {
     closeModal: () => void
     reqOptions: { 
-        method: "DELETE" | "POST",
-        headers: {'Content-Type': string},
-        body: {
-            currentName: string | null
-            description: string | null
-            number_in_stock: number | null
-            genres: string | null
-            type: string | null
-            prevGenres: string[] | null
-            password: string | null
-
-            genreIds: string[] | null
-            typeId: string | null
-        }
+        method: "DELETE" | "POST"
+        headers: {'Content-Type': string}
+        body: string
     }
     productId: string
     displayModalFunc: () => void
@@ -31,16 +21,41 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
     const [currentPassword, setCurrentPassword] = useState<string>('');
 
     async function confirmFunc(): Promise<void> {
-        reqOptions.body.password = currentPassword;
+        try {
+            // check password validity
+            const passwordBool = await comparePassword(currentPassword);
+            if (reqOptions.method === 'POST' && passwordBool) {
+                const response = await fetch(`${endpoint}/edit/${productId}}`, reqOptions);
+                if (response.ok) {
+                    displayModalFunc();
+                } else {
+                    displayModalFunc();
+                }
+            } else if (passwordBool) {
+                const response = await fetch(`${endpoint}/delete/${productId}`, reqOptions);
+                if (response.ok) {
+                    displayModalFunc();
+                } else {
+                    displayModalFunc();
+                }
+            } else {
+                console.log('Incorrect password');
+            }
+        } catch(err) {
+            console.log(err);
+        }
+        
+
+        // Add password to req body
         if (reqOptions.method === 'POST') {
-            const response = await fetch(`${endpoint}/edit/${productId}}`);
+            const response = await fetch(`${endpoint}/edit/${productId}}`, reqOptions);
             if (response.ok) {
                 displayModalFunc();
             } else {
                 displayModalFunc();
             }
         } else {
-            const response = await fetch(`${endpoint}/delete/${productId}`);
+            const response = await fetch(`${endpoint}/delete/${productId}`, reqOptions);
             if (response.ok) {
                 displayModalFunc();
             } else {
