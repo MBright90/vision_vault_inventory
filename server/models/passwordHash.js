@@ -4,4 +4,4 @@ const PasswordHashSchema = mongoose.Schema({
   hash: { type: String, required: true },
 });
 
-module.exports = mongoose.model(PasswordHashSchema);
+module.exports = mongoose.model('passwordHash', PasswordHashSchema);
