@@ -5,6 +5,8 @@ import type { product_type } from "@custom_types/types";
 import Filter from "@components/filter/Filter";
 import Product from "@components/product/Product";
 
+import endpoint from "@utilities/endpoint";
+
 interface ProductDisplayProps {
     genreId: string;
 }
@@ -25,18 +27,18 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
             try {
                 if (genreId !== 'all') {
                     if (typeFilter === 'all') {
-                        const response = await fetch(`http://localhost:3000/products/bygenre/${genreId}`); // tick
+                        const response = await fetch(`${endpoint}/products/bygenre/${genreId}`); // tick
                         data = await response.json();
                     } else {
-                        const response = await fetch(`http://localhost:3000/products/bygenreandtype/${genreId}/${typeFilter}`);
+                        const response = await fetch(`${endpoint}/products/bygenreandtype/${genreId}/${typeFilter}`);
                         data = await response.json();
                     }
                 } else {
                     if (typeFilter === 'all') {
-                        const response = await fetch(`http://localhost:3000/products/all`); // tick
+                        const response = await fetch(`${endpoint}/products/all`); // tick
                         data = await response.json();
                     } else {
-                        const response = await fetch(`http://localhost:3000/products/bytype/${typeFilter}`); // tick
+                        const response = await fetch(`${endpoint}/products/bytype/${typeFilter}`); // tick
                         data = await response.json();
                     }
                 }
