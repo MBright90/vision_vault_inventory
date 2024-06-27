@@ -49,6 +49,12 @@ module.exports = {
       '@custom_types': path.resolve(__dirname, 'src/custom_types'),
       '@style': path.resolve(__dirname, 'src/style'),
       '@utilities': path.resolve(__dirname, 'src/utilities'),
-    }
-  }
+    },
+    fallback: {
+      'crypto': require.resolve("crypto-browserify"),
+      'buffer': false,
+      'vm': false,
+      'stream': false
+    },
+  },
 }
