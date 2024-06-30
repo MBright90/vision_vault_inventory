@@ -40,27 +40,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
                 }
             } else {
                 console.log('Incorrect password');
+                closeModal();
             }
         } catch(err) {
             console.log(err);
-        }
-        
-
-        // Add password to req body
-        if (reqOptions.method === 'POST') {
-            const response = await fetch(`${endpoint}/edit/${productId}}`, reqOptions);
-            if (response.ok) {
-                displayModalFunc();
-            } else {
-                displayModalFunc();
-            }
-        } else {
-            const response = await fetch(`${endpoint}/delete/${productId}`, reqOptions);
-            if (response.ok) {
-                displayModalFunc();
-            } else {
-                displayModalFunc();
-            }
         }
     }
 
@@ -80,7 +63,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
                         Cancel
                     </button>
                 </div>
-                
             </div>
         </div>
     );
