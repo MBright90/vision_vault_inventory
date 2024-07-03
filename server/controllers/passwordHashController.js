@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
 const PasswordHash = require('../models/passwordHash');
 
 async function get_password_hash(req, res) {
@@ -12,24 +12,13 @@ async function get_password_hash(req, res) {
   }
 }
 
-async function set_password(password) {
-  const hash = bcrypt.hashSync(password, 10);
+async function update_password_hash(hash) {
   try {
-    const result = await PasswordHash.save({
-      _id: 'admin',
-      hash,
-    });
-    return result;
-  } catch (err) {
-    console.log(err);
-    return -1;
-  }
-}
-
-async function update_password_hash(newPassword) {
-  const hash = bcrypt.hashSync(newPassword, 10);
-  try {
-    const result = await PasswordHash.findOneAndUpdate({ _id: 'admin' }, { hash });
+    const result = await PasswordHash.findOneAndUpdate(
+      { _id: new ObjectId('admin') },
+      { hash },
+      { upsert: true, new: true },
+    );
     return result;
   } catch (err) {
     console.log(err);
@@ -39,6 +28,5 @@ async function update_password_hash(newPassword) {
 
 module.exports = {
   get_password_hash,
-  set_password,
   update_password_hash,
 };
