@@ -1,11 +1,10 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-const { ObjectId } = require('mongodb');
 const PasswordHash = require('../models/passwordHash');
 
 async function get_password_hash(req, res) {
   try {
-    const result = await PasswordHash.findOne({ _id: 'admin' });
+    const result = await PasswordHash.findOne({ type: 'admin' });
     res.send(result);
   } catch (err) {
     console.log(err);
@@ -15,7 +14,7 @@ async function get_password_hash(req, res) {
 async function update_password_hash(hash) {
   try {
     const result = await PasswordHash.findOneAndUpdate(
-      { _id: new ObjectId('admin') },
+      { type: 'admin' },
       { hash },
       { upsert: true, new: true },
     );
