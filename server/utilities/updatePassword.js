@@ -27,7 +27,6 @@ async function inputPassword() {
         if (hash.length > 0) {
           const result = await passwordHashController.update_password_hash(hash);
           if (result.ok) console.log('Password update successful');
-          else console.log('Unsuccessful');
         }
       } catch (err) {
         console.log(`Password update unsuccessful: ${err}`);
