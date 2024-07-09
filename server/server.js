@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/products/', productRouter);
 app.use('/genres/', genreRouter);
 app.use('/types/', typeRouter);
-app.use('/password', passwordRouter);
+app.use('/password/', passwordRouter);
 
 // Error handling
 app.use((req, res) => {
