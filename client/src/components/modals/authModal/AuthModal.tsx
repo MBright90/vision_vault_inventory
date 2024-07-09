@@ -14,7 +14,7 @@ interface AuthModalProps {
         body: string
     }
     productId: string
-    displayModalFunc: () => void
+    displayModalFunc: (message: string) => void
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId, displayModalFunc }) => {
@@ -24,26 +24,28 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
         try {
             // check password validity
             const passwordBool = await comparePassword(currentPassword);
+            console.log(passwordBool);
             if (reqOptions.method === 'POST' && passwordBool) {
-                const response = await fetch(`${endpoint}/edit/${productId}}`, reqOptions);
+                const response = await fetch(`${endpoint}/products/edit/${productId}}`, reqOptions);
                 if (response.ok) {
-                    displayModalFunc();
+                    displayModalFunc('Product edited successfully'); // unsuccessful message
                 } else {
-                    displayModalFunc();
+                    displayModalFunc('Product edit unsuccessful'); // unsuccessful message
                 }
             } else if (passwordBool) {
-                const response = await fetch(`${endpoint}/delete/${productId}`, reqOptions);
+                const response = await fetch(`${endpoint}/products/delete/${productId}`, reqOptions);
                 if (response.ok) {
-                    displayModalFunc();
+                    displayModalFunc('Product deleted successfully'); // success message
                 } else {
-                    displayModalFunc();
+                    displayModalFunc('Product delete unsuccessful'); // unsuccessful message
                 }
             } else {
                 console.log('Incorrect password');
-                closeModal();
+                displayModalFunc('Incorrect password'); // incorrect message
             }
         } catch(err) {
             console.log(err);
+            displayModalFunc('Error: Please try again later'); // error message
         }
     }
 
@@ -53,6 +55,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
                 <button className={style.closeModal} onClick={closeModal}><FontAwesomeIcon icon={faXmark}/></button>
                 <p>Enter admin password to confirm:</p>
                 <input 
+                    autoFocus
+                    type='password'
                     className={style.passwordInput}
                     onChange={(e) => { setCurrentPassword(e.target.value); }}/>
                 <div className={style.buttonsContainer}>
