@@ -6,7 +6,7 @@ async function get_password_hash(req, res) {
   try {
     const result = await PasswordHash.findOne({ type: 'admin' });
     if (result !== null) res.send(result);
-    res.status(404).send('error');
+    else res.status(404).send('error');
   } catch (err) {
     console.log(err);
     res.status(404).send(err);
@@ -17,7 +17,7 @@ async function update_password_hash(hash) {
   try {
     const result = await PasswordHash.findOneAndUpdate(
       { type: 'admin' },
-      { hash },
+      { type: 'admin', hash },
       { upsert: true, new: true },
     );
     return result;
