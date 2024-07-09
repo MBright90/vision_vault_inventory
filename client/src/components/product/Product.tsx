@@ -68,20 +68,6 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
         }
     };
 
-    // const deleteCallback = async (): Promise<void> => {
-    //     const genreIds = product.genres.map((genre) => genre._id);
-
-    //     const requestOptions = {
-    //         method: 'DELETE',
-    //         headers: { 'Content-Type': 'application/json' }, 
-    //         body: JSON.stringify({ genreIds, typeId: product.type._id })
-    //     };
-
-    //     const result = await fetch(`${endpoint}/products/delete/${product._id}`, requestOptions);
-    //     if (result.ok) console.log('deleted');
-    //     closeSelection();
-    // };
-
     const showDeleteModal = (): void => {
         const genreIds = product.genres.map((genre) => genre._id);
 
@@ -94,7 +80,13 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
                     body: JSON.stringify({ genreIds, typeId: product.type._id })
                 }}
                 productId={product._id}
-                displayModalFunc={() => {}}/>
+                displayModalFunc={(message: string) => {
+                    setModal(
+                        <ConfirmModal closeModal={() => { setModal(null); }}>
+                            {message}
+                        </ConfirmModal>
+                    );}
+                }/>
         );
 
     };
