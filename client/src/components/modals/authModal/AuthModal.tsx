@@ -9,7 +9,7 @@ import endpoint from "@utilities/endpoint";
 interface AuthModalProps {
     closeModal: () => void
     reqOptions: { 
-        method: "DELETE" | "POST"
+        method: "DELETE" | "PUT"
         headers: {'Content-Type': string}
         body: string
     }
@@ -25,7 +25,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
             // check password validity
             const passwordBool = await comparePassword(currentPassword);
             console.log(passwordBool);
-            if (reqOptions.method === 'POST' && passwordBool) {
+            if (reqOptions.method === 'PUT' && passwordBool) {
                 const response = await fetch(`${endpoint}/products/edit/${productId}}`, reqOptions);
                 if (response.ok) {
                     displayModalFunc('Product edited successfully'); // unsuccessful message
