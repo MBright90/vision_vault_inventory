@@ -19,7 +19,7 @@ async function main() {
 }
 
 async function inputPassword() {
-  rl.question('Enter new password:', async (password) => {
+  rl.question('Enter new password: ', async (password) => {
     const hash = bcrypt.hashSync(password, 10);
 
     if (hash.length > 0) {
