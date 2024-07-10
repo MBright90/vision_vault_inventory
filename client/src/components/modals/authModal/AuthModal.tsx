@@ -26,7 +26,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
             const passwordBool = await comparePassword(currentPassword);
             console.log(passwordBool);
             if (reqOptions.method === 'PUT' && passwordBool) {
-                const response = await fetch(`${endpoint}/products/edit/${productId}}`, reqOptions);
+                const response = await fetch(`${endpoint}/products/edit/${productId}`, reqOptions);
                 if (response.ok) {
                     displayModalFunc('Product edited successfully'); // unsuccessful message
                 } else {
@@ -60,10 +60,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ closeModal, reqOptions, productId
                     className={style.passwordInput}
                     onChange={(e) => { setCurrentPassword(e.target.value); }}/>
                 <div className={style.buttonsContainer}>
-                    <button className={style.ModalButton} onClick={() => { void confirmFunc(); }}>
+                    <button className={style.modalButton} onClick={() => { void confirmFunc(); }}>
                         Confirm
                     </button>
-                    <button className={style.ModalButton} onClick={() => { closeModal(); }}>
+                    <button className={style.modalButton} onClick={() => { closeModal(); }}>
                         Cancel
                     </button>
                 </div>
