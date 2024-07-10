@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 import style from './EditProductForm.module.scss';
-import { redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import retrieveTypes from "@utilities/retrieveTypes";
 import endpoint from "@utilities/endpoint";
-import Modal from "@components/modals/confirmModal/ConfirmModal";
+import ConfirmModal from "@components/modals/confirmModal";
 import { type product_type } from "@custom_types/types";
+import AuthModal from "@components/modals/authModal";
 
 const EditProductForm: React.FC = () => {
     const { productId } = useParams();
@@ -28,9 +29,9 @@ const EditProductForm: React.FC = () => {
                 const response = await fetch(`${endpoint}/products/${productId}`);
                 if (!response.ok) {
                     setModal(
-                        <Modal closeModal={() => {setModal(null);} }>
+                        <ConfirmModal closeModal={() => {setModal(null);} }>
                             <p>Error retrieving product</p>
-                        </Modal>
+                        </ConfirmModal>
                     );
                     return;
                 }
@@ -86,41 +87,39 @@ const EditProductForm: React.FC = () => {
     async function submitForm(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         e.preventDefault();
 
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({
-                name: currentName,
-                description: currentDescription,
-                price: currentPrice,
-                number_in_stock: currentStock,
-                genres: currentGenres,
-                type: currentType,
-                prevGenres,
-            })
+        if (productId !== undefined) {
+            setModal(
+                <AuthModal 
+                    closeModal={() => { setModal(null); }}
+                    reqOptions={{
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' }, 
+                        body: JSON.stringify({
+                            name: currentName,
+                            description: currentDescription,
+                            price: currentPrice,
+                            number_in_stock: currentStock,
+                            genres: currentGenres,
+                            type: currentType,
+                            prevGenres,
+                        })
+                    }}
+                    productId={productId}
+                    displayModalFunc={(message: string) => {
+                        setModal(
+                            <ConfirmModal closeModal={() => { setModal(null); }}>
+                                {message}
+                            </ConfirmModal>
+                        );}}
+                />
+            );
+        } else {
+            setModal(
+                <ConfirmModal closeModal={() => { setModal(null); }}>
+                    <p>Error finding product ID</p> 
+                </ConfirmModal>
+            );
         };
-
-        try {
-            const response = await fetch(`${endpoint}/products/edit/${productId}`, requestOptions);
-            if (!response.ok) {
-                const data = await response.json();
-                setModal(
-                    <Modal closeModal={() => { setModal(null); }}>
-                        <p>Error updating product</p>
-                        <p>Error: {data.err}</p>
-                    </Modal>
-                );
-            } else {
-                const confirm = { text: 'Ok', func: () => { redirect('/'); } };
-                setModal(
-                    <Modal closeModal={() => { setModal(null); }} confirm={confirm}>
-                        <p>Product edited successfully</p>
-                    </Modal>
-                );
-            }
-        } catch (err) {
-            console.log(err);
-        }
     }
 
     return (
