@@ -4,6 +4,12 @@ import "@testing-library/jest-dom"
 import Navbar from "./Navbar";
 import { MemoryRouter } from "react-router-dom";
 
+test('matches snapshot', () => {
+    const { container } = render(<Navbar />);
+
+    expect(container).toMatchSnapshot();
+});
+
 test('renders navbar h1 brand title', () => {
     render(
         <MemoryRouter>
