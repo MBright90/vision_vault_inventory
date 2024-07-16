@@ -20,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ children, closeModal, confirm = null }) =
         <div className={style.modalBackground}>
             <div className={style.modalContainer}>
                 {children}
-                <button className={style.closeModal} onClick={closeModal}><FontAwesomeIcon icon={faXmark}/></button>
+                <button className={style.closeModal} onClick={closeModal} data-testid='close button'><FontAwesomeIcon icon={faXmark}/></button>
                 { confirm !== null ? 
                     <button className={style.confirmButton} onClick={() => { void confirm.func(); closeModal(); }}>
                         {confirm.text}
