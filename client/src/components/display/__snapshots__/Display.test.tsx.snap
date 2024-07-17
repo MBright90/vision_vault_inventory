@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <main>
+    <div>
+      <ul />
+    </div>
+    <div>
+      <div>
+        <div>
+          <select
+            id="filter-select"
+            name="filter-select"
+          >
+            <option
+              value="all"
+            >
+              All
+            </option>
+          </select>
+        </div>
+        <div>
+          <div />
+        </div>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Product
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  In Stock
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  colspan="4"
+                >
+                  No products matching search parameters
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+`;
