@@ -1,5 +1,5 @@
 import React from "react";
-import { screen, render } from "@testing-library/react"
+import { screen, render, fireEvent } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import ConfirmModal from "./ConfirmModal"
 
@@ -41,21 +41,27 @@ test('confirm text is displayed as confirm button text', () => {
     expect(confirmButton).toBeInTheDocument();
 });
 
-test('passed closeModal function is called on X click', () => {
+test('closeModal function is called on X click', () => {
     render(
         <ConfirmModal closeModal={mockCloseModal} confirm={mockConfirm}>
             <p></p>
         </ConfirmModal>
     );
 
-    const closeButton = screen.getByTestId('close button'); // simulate click?
+    const closeButton = screen.getByTestId(/close button/);
+    fireEvent.click(closeButton);
     expect(mockCloseModal).toHaveBeenCalled();
 });
 
-test('passed confirm.func is called on confirm button click', () => {
+test('confirm.func and closeModal are called on confirm button click', () => {
     render(
         <ConfirmModal closeModal={mockCloseModal} confirm={mockConfirm}>
             <p></p>
         </ConfirmModal>
     );
+
+    const confirmButton = screen.getByText(/confirm/);
+    fireEvent.click(confirmButton);
+    expect(mockConfirm.func).toHaveBeenCalled();
+    expect(mockCloseModal).toHaveBeenCalled();
 });
