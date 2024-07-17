@@ -5,7 +5,11 @@ import Navbar from "./Navbar";
 import { MemoryRouter } from "react-router-dom";
 
 test('matches snapshot', () => {
-    const { container } = render(<Navbar />);
+    const { container } = render(
+        <MemoryRouter>
+            <Navbar />
+        </MemoryRouter>
+    );
 
     expect(container).toMatchSnapshot();
 });
