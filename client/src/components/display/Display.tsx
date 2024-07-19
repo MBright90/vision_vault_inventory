@@ -55,6 +55,7 @@ const Display: React.FC = () => {
                   className={`${style.selectionItem} ${genre._id === currentlySelected ? style.selectedItem : null }`}
                   data-testid={genre._id === currentlySelected ? 'currently-selected' : 'not-currently-selected'}
                   key={genre._id}
+                  role='button'
                 >
                     <button key={genre._id} onClick={() => {toggleItemSelection(genre._id);}}>{capitalize(genre.name)} ({genre.products.length})</button>
                 </ul>
