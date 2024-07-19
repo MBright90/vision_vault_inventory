@@ -6,7 +6,7 @@ interface ProductDisplayMockProps {
 
 const ProductDisplayMock: React.FC<ProductDisplayMockProps> = ({ genreId }) => {
     return (
-        <p>{genreId}</p>
+        <div data-testid="mock-product-display" >mock-product-display - Genre ID: {genreId}</div>
     )
 };
 
