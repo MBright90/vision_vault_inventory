@@ -10,4 +10,4 @@ const ProductDisplayMock: React.FC<ProductDisplayMockProps> = ({ genreId }) => {
     )
 };
 
-export default ProductDisplayMockProps
+export default ProductDisplayMock
