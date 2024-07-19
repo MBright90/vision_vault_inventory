@@ -51,7 +51,11 @@ const Display: React.FC = () => {
     useEffect((): void => {
         const nodeArr = genreSelection.map((genre: genre_type) => {
             if (genre.products.length > 0) return (
-                <ul className={`${style.selectionItem} ${genre._id === currentlySelected ? style.selectedItem : null }`} key={genre._id}>
+                <ul 
+                  className={`${style.selectionItem} ${genre._id === currentlySelected ? style.selectedItem : null }`}
+                  data-testid={genre._id === currentlySelected ? 'currently-selected' : 'not-currently-selected'}
+                  key={genre._id}
+                >
                     <button key={genre._id} onClick={() => {toggleItemSelection(genre._id);}}>{capitalize(genre.name)} ({genre.products.length})</button>
                 </ul>
             );
