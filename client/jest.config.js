@@ -15,6 +15,7 @@ module.exports = {
 
     // mocks
     '\\.(s)?css$': '<rootDir>/test/jest/__mocks__/styleMock.js',
-    '\\.ProductDisplay.tsx': '<rootDir>/test/jest/__mocks__/ProductDisplayMock.tsx'
-  }
+    '^@components/productDisplay/ProductDisplay$': '<rootDir>/test/jest/__mocks__/ProductDisplayMock.tsx',
+  },
+  verbose: true,
 };
