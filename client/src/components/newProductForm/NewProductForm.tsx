@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import retrieveTypes from "@utilities/retrieveTypes";
 
 import style from './NewProductForm.module.scss';
-import Modal from "@components/modals//confirmModal/ConfirmModal";
+import ConfirmModal from "@components/modals/confirmModal/ConfirmModal";
 import endpoint from "@utilities/endpoint";
 import { redirect } from "react-router-dom";
 
@@ -71,17 +71,17 @@ const NewProductForm: React.FC = () => {
             if (!response.ok) {
                 const data = await response.json();
                 setModal(
-                    <Modal closeModal={() => { setModal(null); }}>
+                    <ConfirmModal closeModal={() => { setModal(null); }}>
                         <p>Error adding product</p>
                         <p>Error: {data.err}</p>
-                    </Modal>
+                    </ConfirmModal>
                 );
             } else {
                 const confirm = { text: 'Ok', func: () => { redirect('/'); } };
                 setModal(
-                    <Modal closeModal={() => { setModal(null); }} confirm={confirm}>
+                    <ConfirmModal closeModal={() => { setModal(null); }} confirm={confirm}>
                         <p>Product added successfully</p>
-                    </Modal>
+                    </ConfirmModal>
                 );
             }
         } catch(err) {
