@@ -58,7 +58,7 @@ test('matches snapshot', async () => {
     const { container } = render(<Display />);
 
     await waitFor(() => {
-        expect(screen.getByText(/Test1/)).toBeInTheDocument();
+        expect(screen.getByText(/Test1/i)).toBeInTheDocument();
         expect(container).toMatchSnapshot();
     });
 });
@@ -71,7 +71,7 @@ test('correctly creates and renders nodes based on genreSelection', async () => 
         expect(genreButtons.length).toBe(4);
 
         expect(screen.getAllByText(/All/i)[0]).toHaveRole('button');
-        expect(screen.getByText(/Test1/)).toHaveRole('button');
+        expect(screen.getByText(/Test1/i)).toHaveRole('button');
         expect(screen.getByText(/Test2/i)).toHaveRole('button');
         expect(screen.getByText(/Test3/i)).toHaveRole('button');
     });
@@ -81,13 +81,13 @@ test('displays amount of products within each genre', async () => {
     render(<Display />);
 
     await waitFor(() => {
-        const testGenreOne = screen.getByText(/Test1 \(1\)/);
+        const testGenreOne = screen.getByText(/Test1 \(1\)/i);
         expect(testGenreOne).toBeInTheDocument();
         
-        const testGenreTwo = screen.getByText(/Test2 \(2\)/);
+        const testGenreTwo = screen.getByText(/Test2 \(2\)/i);
         expect(testGenreTwo).toBeInTheDocument();
 
-        const testGenreThree = screen.getByText(/Test3 \(3\)/);
+        const testGenreThree = screen.getByText(/Test3 \(3\)/i);
         expect(testGenreThree).toBeInTheDocument();
     });
 });
@@ -96,7 +96,7 @@ test('does not display genres which contain no products', async () => {
     render(<Display />);
 
     await waitFor(() => {
-        expect(screen.queryByText(/Test4 \(4\)/)).toBeNull();
+        expect(screen.queryByText(/Test4 \(4\)/i)).toBeNull();
     });
 });
 
@@ -117,7 +117,7 @@ test('updates selected genre on click', async () => {
     });
 
     await waitFor(() => {
-        const testGenreOne = screen.getByText(/Test1/);
+        const testGenreOne = screen.getByText(/Test1/i);
         fireEvent.click(testGenreOne);
 
         const newlySelectedGenre = screen.getByTestId('currently-selected');
@@ -125,7 +125,7 @@ test('updates selected genre on click', async () => {
     });
 
     await waitFor(() => {
-        const testGenreThree = screen.getByText(/Test3/);
+        const testGenreThree = screen.getByText(/Test3/i);
         fireEvent.click(testGenreThree);
 
         const finalSelectedGenre = screen.getByTestId('currently-selected');
