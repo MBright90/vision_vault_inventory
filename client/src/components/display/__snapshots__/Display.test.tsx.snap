@@ -8,12 +8,44 @@ exports[`matches snapshot 1`] = `
         <ul
           class="undefined undefined"
           data-testid="currently-selected"
-          role="button"
         >
           <button>
             All
              (
             6
+            )
+          </button>
+        </ul>
+        <ul
+          class="undefined null"
+          data-testid="not-currently-selected"
+        >
+          <button>
+            Test1
+             (
+            1
+            )
+          </button>
+        </ul>
+        <ul
+          class="undefined null"
+          data-testid="not-currently-selected"
+        >
+          <button>
+            Test2
+             (
+            2
+            )
+          </button>
+        </ul>
+        <ul
+          class="undefined null"
+          data-testid="not-currently-selected"
+        >
+          <button>
+            Test3
+             (
+            3
             )
           </button>
         </ul>
