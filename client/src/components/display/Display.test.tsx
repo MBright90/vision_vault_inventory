@@ -58,6 +58,7 @@ test('matches snapshot', async () => {
     const { container } = render(<Display />);
 
     await waitFor(() => {
+        expect(screen.getByText(/Test1/)).toBeInTheDocument();
         expect(container).toMatchSnapshot();
     });
 });
@@ -69,10 +70,10 @@ test('correctly creates and renders nodes based on genreSelection', async () => 
         const genreButtons = screen.getAllByRole('button');
         expect(genreButtons.length).toBe(4);
 
-        expect(screen.getByText(/All/i)).toBeInTheDocument();
-        expect(screen.getByText(/Test1/)).toBeInTheDocument();
-        expect(screen.getByText(/Test2/i)).toBeInTheDocument();
-        expect(screen.getByText(/Test3/i)).toBeInTheDocument();
+        expect(screen.getAllByText(/All/i)[0]).toHaveRole('button');
+        expect(screen.getByText(/Test1/)).toHaveRole('button');
+        expect(screen.getByText(/Test2/i)).toHaveRole('button');
+        expect(screen.getByText(/Test3/i)).toHaveRole('button');
     });
 });
 
@@ -110,21 +111,25 @@ test('Initially selects all genre on component mounting', async () => {
 test('updates selected genre on click', async () => {
     render(<Display />);
 
-    await waitFor(() => {
+    await waitFor(async () => {
         const initialSelectedGenre = screen.getByTestId('currently-selected');
         expect(initialSelectedGenre).toHaveTextContent('All (6)');
+    });
 
+    await waitFor(() => {
         const testGenreOne = screen.getByText(/Test1/);
         fireEvent.click(testGenreOne);
 
         const newlySelectedGenre = screen.getByTestId('currently-selected');
-        expect(newlySelectedGenre).toHaveTextContent('test1 (1)');
+        expect(newlySelectedGenre).toHaveTextContent('Test1 (1)');
+    });
 
+    await waitFor(() => {
         const testGenreThree = screen.getByText(/Test3/);
         fireEvent.click(testGenreThree);
 
         const finalSelectedGenre = screen.getByTestId('currently-selected');
-        expect(finalSelectedGenre).toHaveTextContent('test3 (3)');
+        expect(finalSelectedGenre).toHaveTextContent('Test3 (3)');
     });
 });
 
