@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <main>
+    <h3>
+      Add Product
+    </h3>
+    <form
+      action=""
+    >
+      <div>
+        <label
+          for="name-input"
+        >
+          Product Name
+        </label>
+        <input
+          id="name-input"
+          name="name-input"
+          required=""
+          type="text"
+        />
+        <p>
+          Required
+        </p>
+        <p>
+          2 - 150 characters
+        </p>
+      </div>
+      <div>
+        <label
+          for="description-input"
+        >
+          Description
+        </label>
+        <textarea
+          id="description-input"
+          name="description-input"
+          required=""
+        />
+      </div>
+      <div>
+        <label
+          for="price-input"
+        >
+          Price
+        </label>
+        <input
+          id="price-input"
+          min="0"
+          name="price-input"
+          required=""
+          step="0.01"
+          type="number"
+          value="0"
+        />
+        <p>
+          Required
+        </p>
+        <p>
+          Must be more than 0.00
+        </p>
+      </div>
+      <div>
+        <label
+          for="stock-input"
+        >
+          Initial stock
+        </label>
+        <input
+          id="stock-input"
+          max="100"
+          min="0"
+          name="stock-input"
+          required=""
+          step="1"
+          type="number"
+          value="0"
+        />
+        <p>
+          Required
+        </p>
+      </div>
+      <div>
+        <label
+          for="type-input"
+        >
+          Type
+        </label>
+        <select
+          id="type-input"
+          name="type-input"
+          required=""
+        >
+          <option>
+            Select Type...
+          </option>
+        </select>
+        <p>
+          Required
+        </p>
+      </div>
+      <div>
+        <label
+          for="genres-input"
+        >
+          Genres
+        </label>
+        <input
+          id="genres-input"
+          name="genres-input"
+          required=""
+          type="text"
+        />
+        <p>
+          Minimum of one required
+        </p>
+        <p>
+          Separate genres with a comma
+        </p>
+      </div>
+      <button
+        type="submit"
+      >
+        Add Product
+      </button>
+    </form>
+  </main>
+</div>
+`;
