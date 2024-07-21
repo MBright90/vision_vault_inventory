@@ -14,7 +14,7 @@ jest.mock('@components/productDisplay/ProductDisplay', () => ({
         </div>
       );
     }
-  }));
+}));
 
 beforeAll(async () => {
     global.fetch = jest.fn((): Promise<Response> =>
