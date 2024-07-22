@@ -14,3 +14,9 @@ test('renders link to creators github page', () => {
     const aLink = screen.getByText(/MBright90/);
     expect(aLink).toBeInTheDocument();
 });
+
+test('handles component unmounting without errors', () => {
+    const { unmount } = render(<Footer />);
+
+    expect(() => unmount()).not.toThrow();
+})

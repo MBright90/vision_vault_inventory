@@ -43,3 +43,9 @@ test('renders navbar add product link', () => {
     const addLink = screen.getByText(/Add Product/);
     expect(addLink).toBeInTheDocument();
 });
+
+test('handles component unmounting without errors', () => {
+    const { unmount } = render(<Navbar />);
+
+    expect(() => unmount()).not.toThrow();
+});

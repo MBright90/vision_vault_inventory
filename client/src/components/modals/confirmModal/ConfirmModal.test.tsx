@@ -65,3 +65,13 @@ test('confirm.func and closeModal are called on confirm button click', () => {
     expect(mockConfirm.func).toHaveBeenCalled();
     expect(mockCloseModal).toHaveBeenCalled();
 });
+
+test('handles component unmounting without errors', () => {
+    const { unmount } = render(
+        <ConfirmModal closeModal={mockCloseModal} confirm={mockConfirm}>
+            <p></p>
+        </ConfirmModal>
+    );
+
+    expect(() => unmount()).not.toThrow();
+});

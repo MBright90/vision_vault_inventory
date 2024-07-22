@@ -47,9 +47,9 @@ beforeAll(async () => {
     );
 });
 
-test('verify mock-product-display component is rendered', () => {
+test('verify mock-product-display component is rendered', async () => {
     render(<Display />);
-    waitFor(() => {
+    await waitFor(() => {
         expect(screen.getByTestId("mock-product-display")).toBeInTheDocument();
     });
 })

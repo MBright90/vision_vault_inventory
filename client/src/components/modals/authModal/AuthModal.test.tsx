@@ -259,3 +259,16 @@ test('displays correct message when password is correct, reqOptions.method is DE
         expect(mockDisplayModalFunc).toHaveBeenCalledWith('Product edit unsuccessful');
     })
 });
+
+test('handles component unmounting without errors', () => {
+    const { unmount } = render(
+        <AuthModal 
+            closeModal={mockCloseModal}
+            reqOptions={mockReqOptions}
+            productId={mockProductId}
+            displayModalFunc={mockDisplayModalFunc}
+        />
+    );
+
+    expect(() => unmount()).not.toThrow();
+});
