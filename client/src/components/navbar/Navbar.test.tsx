@@ -45,7 +45,11 @@ test('renders navbar add product link', () => {
 });
 
 test('handles component unmounting without errors', () => {
-    const { unmount } = render(<Navbar />);
+    const { unmount } = render(
+        <MemoryRouter>
+            <Navbar />
+        </MemoryRouter>
+    );
 
     expect(() => unmount()).not.toThrow();
 });
