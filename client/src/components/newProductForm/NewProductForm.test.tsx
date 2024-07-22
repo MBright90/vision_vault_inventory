@@ -18,9 +18,9 @@ jest.mock('@components/modals/confirmModal/ConfirmModal', () => ({
 
 jest.mock('@utilities/retrieveTypes', () => jest.fn());
 
-beforeAll(async () => {
-    global.fetch = jest.fn();
-});
+// beforeAll(async () => {
+//     global.fetch = jest.fn();
+// });
 
 beforeEach(() => {
     jest.resetAllMocks();
@@ -90,6 +90,12 @@ test('updates the product genres input value when typed into', () => {
 });
 
 test('form is submitted when submit button is clicked', async () => {
+    global.fetch = jest.fn((): Promise<Response> => 
+        Promise.resolve({
+            ok: true,
+            json: async () => {},
+        } as Response)
+    );
     render(<NewProductForm />);
 
     const submitButton = screen.getByRole('button');
