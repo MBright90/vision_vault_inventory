@@ -110,7 +110,34 @@ test('calls comparePassword when password is submitted', () => {
         />
     );
 
+    const submitBtn = screen.getByText(/^Confirm/i);
+    fireEvent.click(submitBtn);
+
     expect(comparePassword).toHaveBeenCalled();
+});
+
+test('displays correct message when password is incorrect', async () => {
+    (comparePassword as jest.Mock).mockResolvedValue(false);
+
+    render(
+        <AuthModal 
+            closeModal={mockCloseModal}
+            reqOptions={mockReqOptions}
+            productId={mockProductId}
+            displayModalFunc={mockDisplayModalFunc}
+        />
+    );
+
+    const passwordInput = screen.getByLabelText(/Enter admin password to confirm:/i);
+    fireEvent.change(passwordInput, { target: { value: 'incorrect-password'} });
+
+    const submitBtn = screen.getByText(/^Confirm/i);
+    fireEvent.click(submitBtn);
+
+    await waitFor(() => {
+        expect(comparePassword).toHaveBeenCalledWith('incorrect-password');
+        expect(mockDisplayModalFunc).toHaveBeenCalledWith('Incorrect password');
+    })
 });
 
 test('displays correct message when password is correct, reqOptions.method is DELETE and process successful', async () => {
@@ -133,12 +160,12 @@ test('displays correct message when password is correct, reqOptions.method is DE
     const passwordInput = screen.getByLabelText(/Enter admin password to confirm:/i);
     fireEvent.change(passwordInput, { target: { value: 'correct-password' } });
 
-    const submitBtn = screen.getByText(/Confirm/i);
+    const submitBtn = screen.getByText(/^Confirm/i);
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
         expect(comparePassword).toHaveBeenCalledWith('correct-password');
-        expect(mockDisplayModalFunc).toHaveBeenCalledWith('Product edited successfully');
+        expect(mockDisplayModalFunc).toHaveBeenCalledWith('Product deleted successfully');
     });
 });
 
@@ -162,15 +189,73 @@ test('displays correct message when password is correct, reqOptions.method is DE
     const passwordInput = screen.getByLabelText(/Enter admin password to confirm:/i);
     fireEvent.change(passwordInput, { target: { value: 'correct-password' } });
 
-    const submitBtn = screen.getByText(/Confirm/i);
+    const submitBtn = screen.getByText(/^Confirm/i);
+    fireEvent.click(submitBtn);
+
+    await waitFor(() => {
+        expect(comparePassword).toHaveBeenCalledWith('correct-password');
+        expect(mockDisplayModalFunc).toHaveBeenCalledWith('Product delete unsuccessful');
+    });
+});
+
+test('displays correct message when password is incorrect, reqOptions.method is PUT and process successful', async () => {
+    (comparePassword as jest.Mock).mockResolvedValue(true);
+    global.fetch = jest.fn((): Promise<Response> =>
+        Promise.resolve({
+            ok: true,
+        } as Response)
+    );
+
+    mockReqOptions.method = "PUT";
+
+    render(
+        <AuthModal 
+            closeModal={mockCloseModal}
+            reqOptions={mockReqOptions}
+            productId={mockProductId}
+            displayModalFunc={mockDisplayModalFunc}
+        />
+    );
+
+    const passwordInput = screen.getByLabelText(/Enter admin password to confirm:/i);
+    fireEvent.change(passwordInput, { target: { value: 'correct-password' } });
+
+    const submitBtn = screen.getByText(/^Confirm/i);
+    fireEvent.click(submitBtn);
+
+    await waitFor(() => {
+        expect(comparePassword).toHaveBeenCalledWith('correct-password');
+        expect(mockDisplayModalFunc).toHaveBeenCalledWith('Product edited successfully');
+    })
+});
+
+test('displays correct message when password is correct, reqOptions.method is DELETE and process unsuccessful', async () => {
+    (comparePassword as jest.Mock).mockResolvedValue(true);
+    global.fetch = jest.fn((): Promise<Response> =>
+        Promise.resolve({
+            ok: false,
+        } as Response)
+    );
+
+    mockReqOptions.method = "PUT";
+
+    render(
+        <AuthModal 
+            closeModal={mockCloseModal}
+            reqOptions={mockReqOptions}
+            productId={mockProductId}
+            displayModalFunc={mockDisplayModalFunc}
+        />
+    );
+
+    const passwordInput = screen.getByLabelText(/Enter admin password to confirm:/i);
+    fireEvent.change(passwordInput, { target: { value: 'correct-password' } });
+
+    const submitBtn = screen.getByText(/^Confirm/i);
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
         expect(comparePassword).toHaveBeenCalledWith('correct-password');
         expect(mockDisplayModalFunc).toHaveBeenCalledWith('Product edit unsuccessful');
-    });
+    })
 });
-
-test('displays correct message when password is incorrect, reqOptions.method is PUT and process successful', async () => {});
-
-test('displays correct message when password is correct, reqOptions.method is DELETE and process unsuccessful', async () => {});
