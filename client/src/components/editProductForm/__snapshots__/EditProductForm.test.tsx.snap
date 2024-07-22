@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <main>
+    <h3>
+      Edit Product
+    </h3>
+    <form
+      action=""
+    >
+      <div>
+        <label
+          for="name-input"
+        >
+          Product Name
+        </label>
+        <input
+          id="name-input"
+          name="name-input"
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+      <div>
+        <label
+          for="description-input"
+        >
+          Description
+        </label>
+        <textarea
+          id="description-input"
+          name="description-input"
+          required=""
+        />
+      </div>
+      <div>
+        <label
+          for="price-input"
+        >
+          Price
+        </label>
+        <input
+          id="price-input"
+          min="0"
+          name="price-input"
+          required=""
+          step="0.01"
+          type="number"
+          value="0"
+        />
+      </div>
+      <div>
+        <label
+          for="stock-input"
+        >
+          Current stock
+        </label>
+        <input
+          id="stock-input"
+          max="100"
+          min="0"
+          name="stock-input"
+          required=""
+          step="1"
+          type="number"
+          value="0"
+        />
+        <p>
+          Max 100
+        </p>
+      </div>
+      <div>
+        <label
+          for="type-input"
+        >
+          Type
+        </label>
+        <select
+          id="type-input"
+          name="type-input"
+          required=""
+        >
+          <option>
+            Select Type...
+          </option>
+        </select>
+      </div>
+      <div>
+        <label
+          for="genres-input"
+        >
+          Genres
+        </label>
+        <input
+          id="genres-input"
+          name="genres-input"
+          required=""
+          type="text"
+          value=""
+        />
+        <p>
+          Minimum of one required
+        </p>
+        <p>
+          Separate genres with a comma
+        </p>
+      </div>
+      <button
+        type="submit"
+      >
+        Update Product
+      </button>
+    </form>
+  </main>
+</div>
+`;
