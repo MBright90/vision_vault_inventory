@@ -102,7 +102,16 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 <p>In stock: { product.number_in_stock > 0 ? product.number_in_stock : 'NO' }</p>
 
                 { isEditingStock ? <>
-                    <input type='number' name='update-stock' id='update-stock' className={style.stockUpdate} value={editingStockValue} onChange={(e) => { changeStockEditValue(e); }} min={-100} max={100}/>
+                    <input 
+                        type='number'
+                        name='update-stock'
+                        id='update-stock'
+                        className={style.stockUpdate}
+                        value={editingStockValue}
+                        onChange={(e) => { changeStockEditValue(e); }}
+                        role='textbox'
+                        min={-100} max={100}
+                    />
                     <button onClick={() => { void updateStock(); }}>Submit</button>
                     <button onClick={() => { setIsEditingStock(false); setEditingStockValue(0); }}>Cancel</button>
                 </> : null }
