@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div>
+    <p>
+      test-name
+    </p>
+    <p>
+      Test-type-name
+       
+      <span>
+        |
+      </span>
+       
+      <span>
+        Test-genre-one
+        , 
+      </span>
+      <span>
+        Test-genre-two
+        , 
+      </span>
+    </p>
+    <p>
+      test-description
+    </p>
+    <p>
+      £
+      10
+    </p>
+    <div>
+      <button>
+        Update stock
+      </button>
+      <p>
+        In stock: 
+        100
+      </p>
+    </div>
+    <div>
+      <a
+        href="/edit/test-id"
+      >
+        Edit details
+      </a>
+      <p>
+        Last Edited: 
+        09:09:10 05/06/2024
+      </p>
+    </div>
+    <div>
+      <button>
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+`;
