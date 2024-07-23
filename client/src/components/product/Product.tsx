@@ -9,8 +9,7 @@ import endpoint from "@utilities/endpoint";
 import { Link } from "react-router-dom";
 
 interface ProductProps {
-    product: product_type,
-    closeSelection: () => void;
+    product: product_type
 }
 
 interface product_genre {
@@ -18,7 +17,7 @@ interface product_genre {
     _id: string
 }
 
-const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
+const Product: React.FC<ProductProps> = ({ product }) => {
     const [isEditingStock, setIsEditingStock] = useState<boolean>(false);
     const [editingStockValue, setEditingStockValue] = useState<number>(0);
 
@@ -103,7 +102,7 @@ const Product: React.FC<ProductProps> = ({ product, closeSelection }) => {
                 <p>In stock: { product.number_in_stock > 0 ? product.number_in_stock : 'NO' }</p>
 
                 { isEditingStock ? <>
-                    <input type='number' className={style.stockUpdate} value={editingStockValue} onChange={(e) => { changeStockEditValue(e); }} min={-100} max={100}/>
+                    <input type='number' name='update-stock' id='update-stock' className={style.stockUpdate} value={editingStockValue} onChange={(e) => { changeStockEditValue(e); }} min={-100} max={100}/>
                     <button onClick={() => { void updateStock(); }}>Submit</button>
                     <button onClick={() => { setIsEditingStock(false); setEditingStockValue(0); }}>Cancel</button>
                 </> : null }
