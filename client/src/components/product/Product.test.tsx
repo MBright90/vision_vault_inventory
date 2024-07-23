@@ -230,3 +230,13 @@ test('displays AuthModal when user requests product deletion', async () => {
         expect(screen.getByTestId('mock-auth-modal')).toBeInTheDocument();
     });
 });
+
+test('', () => {
+    const { unmount } = render(
+        <MemoryRouter>
+            <Product product={mockProduct} />
+        </MemoryRouter>
+    );
+
+    expect(() => unmount()).not.toThrow();
+})
