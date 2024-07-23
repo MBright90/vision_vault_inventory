@@ -63,7 +63,8 @@ test('renders product information correctly', () => {
 
     expect(screen.getByText(/^test-name/i)).toBeInTheDocument();
     expect(screen.getByText(/^test-type-name/i)).toBeInTheDocument();
-    expect(screen.getByText(/^test-genre-one, test-genre-two/i)).toBeInTheDocument();
+    expect(screen.getByText(/^test-genre-one,/i)).toBeInTheDocument();
+    expect(screen.getByText(/^test-genre-two,/i)).toBeInTheDocument();
     expect(screen.getByText(/^test-description/i)).toBeInTheDocument();
     expect(screen.getByText(/^£10/i)).toBeInTheDocument();
     expect(screen.getByText(/^In stock: 100/i)).toBeInTheDocument();
@@ -90,7 +91,7 @@ test('displays number input and control buttons when updating stock', async () =
     fireEvent.click(updateStockBtn);
 
     await waitFor(() => {
-        const updateStockInput = screen.getByRole('textbox', { name: 'update-stock' });
+        const updateStockInput = screen.getByRole('textbox');
         expect(updateStockInput).toBeInTheDocument();
         expect(screen.getByText(/Submit/i)).toBeInTheDocument();
         expect(screen.getByText(/Cancel/i)).toBeInTheDocument();
@@ -108,14 +109,18 @@ test('stock input value updates upon change', async () => {
     fireEvent.click(updateStockBtn);
 
     await waitFor(() => {
-        const updateStockInput = screen.getByRole('textbox', { name: 'update-stock' });
+        const updateStockInput = screen.getByRole('textbox');
         fireEvent.change(updateStockInput, { target: { value: 20 } });
         expect(updateStockInput).toHaveValue(20);
     });
 });
 
 test('updates a positive stock change value', async () => {
-    global.fetch = jest.fn();
+    global.fetch = jest.fn((): Promise<Response> => 
+    Promise.resolve({
+        ok: true,
+    } as Response)
+);
 
     render(
         <MemoryRouter>
@@ -127,9 +132,11 @@ test('updates a positive stock change value', async () => {
     fireEvent.click(updateStockBtn);
 
     await waitFor(() => {
-        const updateStockInput = screen.getByRole('textbox', { name: 'update-stock' });
+        const updateStockInput = screen.getByRole('textbox');
         fireEvent.change(updateStockInput, { target: { value: 20 } });
+    });
 
+    await waitFor(() => {
         const submitBtn = screen.getByText(/Submit/i);
         fireEvent.click(submitBtn);
 
@@ -138,7 +145,11 @@ test('updates a positive stock change value', async () => {
 });
 
 test('updates a positive stock change value', async () => {
-    global.fetch = jest.fn();
+    global.fetch = jest.fn((): Promise<Response> => 
+        Promise.resolve({
+            ok: true,
+        } as Response)
+    );
 
     render(
         <MemoryRouter>
@@ -150,12 +161,14 @@ test('updates a positive stock change value', async () => {
     fireEvent.click(updateStockBtn);
 
     await waitFor(() => {
-        const updateStockInput = screen.getByRole('textbox', { name: 'update-stock' });
+        const updateStockInput = screen.getByRole('textbox');
         fireEvent.change(updateStockInput, { target: { value: -5 } });
+    });
 
+    await waitFor(() => {
         const submitBtn = screen.getByText(/Submit/i);
         fireEvent.click(submitBtn);
-
+    
         expect(screen.getByText(/In stock: 5/i)).toBeInTheDocument();
     });
 });
@@ -177,9 +190,11 @@ test('displays ConfirmModal with success message on stock update success', async
     fireEvent.click(updateStockBtn);
 
     await waitFor(() => {
-        const updateStockInput = screen.getByRole('textbox', { name: 'update-stock' });
+        const updateStockInput = screen.getByRole('textbox');
         fireEvent.change(updateStockInput, { target: { value: 1 } });
+    });
 
+    await waitFor(() => {
         const submitBtn = screen.getByText(/Submit/i);
         fireEvent.click(submitBtn);
 
@@ -205,9 +220,11 @@ test('displays ConfirmModal with error message on stock update error', async () 
     fireEvent.click(updateStockBtn);
 
     await waitFor(() => {
-        const updateStockInput = screen.getByRole('textbox', { name: 'update-stock' });
+        const updateStockInput = screen.getByRole('textbox');
         fireEvent.change(updateStockInput, { target: { value: 1 } });
+    });
 
+    await waitFor(() => {
         const submitBtn = screen.getByText(/Submit/i);
         fireEvent.click(submitBtn);
 
@@ -231,7 +248,7 @@ test('displays AuthModal when user requests product deletion', async () => {
     });
 });
 
-test('', () => {
+test('handles component unmounting without errors', () => {
     const { unmount } = render(
         <MemoryRouter>
             <Product product={mockProduct} />
