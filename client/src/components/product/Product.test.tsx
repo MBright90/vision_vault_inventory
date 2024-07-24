@@ -6,22 +6,6 @@ import { MemoryRouter } from "react-router-dom";
 import { product_type } from "@custom_types/types";
 import { ReqOptions } from "@components/modals/authModal/AuthModal";
 
-const mockProduct: product_type = {
-    _id: 'test-id',
-    __v: 0,
-    name: 'test-name',
-    description: 'test-description',
-    price: 10,
-    number_in_stock: 100,
-    type: { _id: 'test-type-id', name: 'test-type-name' },
-    genres: [
-        { name: 'test-genre-one', _id: 'test-genre-id-1' },
-        { name: 'test-genre-two', _id: 'test-genre-id-2' },
-    ],
-    stock_last_updated: '2024-06-05T09:09:10.297+00:00',
-    last_updated: '2024-06-05T09:09:10.297+00:00',
-}
-
 jest.mock('@components/modals/confirmModal/ConfirmModal', () => ({
     __esModule: true,
     default: (props: { children: React.ReactNode[], closeModal: () => {} }) => {
@@ -43,6 +27,26 @@ jest.mock('@components/modals/authModal/AuthModal', () => ({
         )
     }
 }));
+
+let mockProduct: product_type;
+
+beforeEach(() => {
+    mockProduct = {
+        _id: 'test-id',
+        __v: 0,
+        name: 'test-name',
+        description: 'test-description',
+        price: 10,
+        number_in_stock: 100,
+        type: { _id: 'test-type-id', name: 'test-type-name' },
+        genres: [
+            { name: 'test-genre-one', _id: 'test-genre-id-1' },
+            { name: 'test-genre-two', _id: 'test-genre-id-2' },
+        ],
+        stock_last_updated: '2024-06-05T09:09:10.297+00:00',
+        last_updated: '2024-06-05T09:09:10.297+00:00',
+    }
+});
 
 test('matches snapshot', () => {
     const { container } = render(
@@ -136,15 +140,15 @@ test('updates a positive stock change value', async () => {
         fireEvent.change(updateStockInput, { target: { value: 20 } });
     });
 
-    await waitFor(() => {
-        const submitBtn = screen.getByText(/Submit/i);
-        fireEvent.click(submitBtn);
+    const submitBtn = screen.getByText(/Submit/i);
+    fireEvent.click(submitBtn);
 
-        expect(screen.getByText(/In stock: 30/i)).toBeInTheDocument();
+    await waitFor(() => {
+        expect(screen.getByText(/In stock: 120/i)).toBeInTheDocument();
     });
 });
 
-test('updates a positive stock change value', async () => {
+test('updates a negative stock change value', async () => {
     global.fetch = jest.fn((): Promise<Response> => 
         Promise.resolve({
             ok: true,
@@ -165,11 +169,11 @@ test('updates a positive stock change value', async () => {
         fireEvent.change(updateStockInput, { target: { value: -5 } });
     });
 
+    const submitBtn = screen.getByText(/Submit/i);
+    fireEvent.click(submitBtn);
+
     await waitFor(() => {
-        const submitBtn = screen.getByText(/Submit/i);
-        fireEvent.click(submitBtn);
-    
-        expect(screen.getByText(/In stock: 5/i)).toBeInTheDocument();
+        expect(screen.getByText(/In stock: 95/i)).toBeInTheDocument();
     });
 });
 
@@ -194,10 +198,10 @@ test('displays ConfirmModal with success message on stock update success', async
         fireEvent.change(updateStockInput, { target: { value: 1 } });
     });
 
-    await waitFor(() => {
-        const submitBtn = screen.getByText(/Submit/i);
-        fireEvent.click(submitBtn);
+    const submitBtn = screen.getByText(/Submit/i);
+    fireEvent.click(submitBtn);
 
+    await waitFor(() => {
         expect(screen.getByTestId('mock-confirm-modal')).toBeInTheDocument();
         expect(screen.getByText(/^Stock updated/i)).toBeInTheDocument();
     });
@@ -222,12 +226,15 @@ test('displays ConfirmModal with error message on stock update error', async () 
     await waitFor(() => {
         const updateStockInput = screen.getByRole('textbox');
         fireEvent.change(updateStockInput, { target: { value: 1 } });
-    });
 
-    await waitFor(() => {
         const submitBtn = screen.getByText(/Submit/i);
         fireEvent.click(submitBtn);
+    });
 
+    const submitBtn = screen.getByText(/Submit/i);
+    fireEvent.click(submitBtn);
+
+    await waitFor(() => {
         expect(screen.getByTestId('mock-confirm-modal')).toBeInTheDocument();
         expect(screen.getByText(/Error updating stock amount/i)).toBeInTheDocument();
     });
