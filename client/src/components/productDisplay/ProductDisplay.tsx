@@ -84,7 +84,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         <div className={style.productDisplayContainer}>
             <Filter goBack={() => { updateActiveProduct(null); }} productIsActive={activeProduct !== null} updateFilter={updateFilter}/>
 
-            { activeProduct !== null ? <Product product={activeProduct} closeSelection={() => { updateActiveProduct(null); }}/> : 
+            { activeProduct !== null ? <Product product={activeProduct} /> : //closeSelection={() => { updateActiveProduct(null); }} 
             <>
                 { loading }
                 <div className={style.tableWrapper}>
