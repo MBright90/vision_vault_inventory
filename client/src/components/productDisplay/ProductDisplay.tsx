@@ -65,7 +65,11 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
             });
             setProductList(productListArr);
         } else {
-            setProductList([]);
+            setProductList([
+                <tr className={style.productListTr} key="no-products">
+                    <td className={style.noProductMessage} colSpan={4}>No products matching search parameters</td>
+                </tr>
+            ]);
         }
     }, [products]);
 
@@ -98,9 +102,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            { productList.length > 0 ? productList : <tr>
-                                <td className={style.noProductMessage} colSpan={4}>No products matching search parameters</td>
-                            </tr> }
+                            { productList }
                         </tbody>
                     </table>
                 </div>
