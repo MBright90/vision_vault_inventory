@@ -53,10 +53,9 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
     }, [genreId, typeFilter, activeProduct]);
 
     useEffect((): void => {
-        // create productList here
         if (products.length > 0) {
             const productListArr = products.map((product) => {
-                return (<tr className={style.productListTr} key={product._id} onClick={() => { updateActiveProduct(product); }}>
+                return (<tr className={style.productListTr} key={product._id} onClick={() => { updateActiveProduct(product); }} role="button">
                     <td className={style.productListName}><p className={style.tableText}>{product.name}</p></td>
                     <td className={style.productListDesc}><p className={style.tableText}>{product.description}</p></td>
                     <td className={style.productListType}>{product.type.name}</td>
@@ -88,7 +87,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ genreId }) => {
         <div className={style.productDisplayContainer}>
             <Filter goBack={() => { updateActiveProduct(null); }} productIsActive={activeProduct !== null} updateFilter={updateFilter}/>
 
-            { activeProduct !== null ? <Product product={activeProduct} /> : //closeSelection={() => { updateActiveProduct(null); }} 
+            { activeProduct !== null ? <Product product={activeProduct} /> :
             <>
                 { loading }
                 <div className={style.tableWrapper}>

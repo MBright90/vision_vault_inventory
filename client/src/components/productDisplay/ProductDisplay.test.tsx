@@ -2,6 +2,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom"
 import ProductDisplay from "./ProductDisplay";
+import { product_type } from "@custom_types/types";
 
 jest.mock('@components/filter/Filter', () => ({
     _esModule: true,
@@ -21,7 +22,11 @@ jest.mock('@components/filter/Filter', () => ({
 
 jest.mock('@components/product/Product', () => ({
     __esModule: true,
-    default: () => <div data-testid="mock-product"></div>,
+    default: (product: product_type) => (
+        <div data-testid="mock-product">
+            <p>Product id: {product._id}</p>
+        </div>
+    ),
 }));
 
 beforeEach(() => {
@@ -87,5 +92,28 @@ test('displays a retrieved products name, description and type', async () => {
     await waitFor(() => {
         expect(screen.getByText(/^test-name$/i)).toBeInTheDocument();
         expect(screen.getByText(/^test-description$/i)).toBeInTheDocument();
+        expect(screen.getAllByText(/^test-type-name$/i)[0]).toBeInTheDocument();
+    });
+});
+
+test('displays multiple products name, description and type', async () => {
+    render(<ProductDisplay genreId="all" />);
+
+    await waitFor(() => {
+        expect(screen.getByText(/^test-name$/i)).toBeInTheDocument();
+        expect(screen.getByText(/^test-description$/i)).toBeInTheDocument();
+        expect(screen.getByText(/^test-name$/i)).toBeInTheDocument();
+        expect(screen.getByText(/^test-description$/i)).toBeInTheDocument();
+        expect(screen.getAllByText(/^test-type-name$/i).length).toBe(2);
+    });
+});
+
+test('clicking on a product in the table row renders the Product component', async () => {
+    render(<ProductDisplay genreId="all" />);
+
+    await waitFor(() => {
+        const productBtn = screen.getAllByRole('button')[0];
+        fireEvent.click(productBtn);
+        expect(screen.getByTestId('mock-product'));
     });
 });
