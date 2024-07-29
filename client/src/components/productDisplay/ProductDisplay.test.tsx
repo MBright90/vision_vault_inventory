@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom"
+import "@testing-library/jest-dom";
 import ProductDisplay from "./ProductDisplay";
 import { product_type } from "@custom_types/types";
 
