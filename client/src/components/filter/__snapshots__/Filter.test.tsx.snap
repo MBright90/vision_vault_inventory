@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div>
+    <select
+      id="filter-select"
+      name="filter-select"
+    >
+      <option
+        value="all"
+      >
+        All
+      </option>
+      <option
+        data-id="type1"
+      >
+        Type 1
+      </option>
+      <option
+        data-id="type2"
+      >
+        Type 2
+      </option>
+    </select>
+  </div>
+</div>
+`;
