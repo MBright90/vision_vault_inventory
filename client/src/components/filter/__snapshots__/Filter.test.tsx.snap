@@ -12,16 +12,6 @@ exports[`matches snapshot 1`] = `
       >
         All
       </option>
-      <option
-        data-id="type1"
-      >
-        Type 1
-      </option>
-      <option
-        data-id="type2"
-      >
-        Type 2
-      </option>
     </select>
   </div>
 </div>
