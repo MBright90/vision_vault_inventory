@@ -2,8 +2,8 @@ import React from "react";
 
 export default jest.fn(async (setFilterOptions, setFilterIdArr, selected) => {
     const data = [
-        { _id: 'type1', name: 'Type 1' },
-        { _id: 'type2', name: 'Type 2' },
+        { _id: 'type1', name: 'Type One' },
+        { _id: 'type2', name: 'Type Two' },
     ];
 
     const filterNodes = data.map(type => (
