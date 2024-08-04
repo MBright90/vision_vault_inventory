@@ -4,6 +4,7 @@ exports[`matches snapshot 1`] = `
 <div>
   <div>
     <select
+      data-testid="filter-select"
       id="filter-select"
       name="filter-select"
     >
