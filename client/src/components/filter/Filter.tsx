@@ -32,7 +32,7 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
 
     function toggleFilter(e: React.ChangeEvent<HTMLSelectElement>): void {
         setSelectedFilter(e.target.value.toLowerCase());
-    }
+    };
 
     // Include back button in controls if a product is currently active
     const back: React.ReactNode | null = productIsActive ? <button onClick={goBack} className={style.back}>
@@ -42,7 +42,7 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
     return (
         <div className={style.filterContainer}>
             { back }
-            <select className={style.filterSelect} name="filter-select" id='filter-select' onChange={(e) => {toggleFilter(e);}}>
+            <select className={style.filterSelect} name="filter-select" id='filter-select' value={selectedFilter} data-testid="filter-select" onChange={(e) => {toggleFilter(e);}}>
                 <option className={style.filterOption} value="all">All</option>
                 { filterOptions }
             </select>
