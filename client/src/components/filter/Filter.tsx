@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-
 import retrieveTypes from "@utilities/retrieveTypes";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
 import { type FilterIdSet } from "@custom_types/types";
-
 import style from './Filter.module.scss';
 
 interface FilterProps {
@@ -26,7 +23,7 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
 
     // Pass selected filter id to parent component on change
     useEffect(() => {
-        const newFilterIndex = filterIdArr.findIndex((type) => selectedFilter === type.name);
+        const newFilterIndex = filterIdArr.findIndex((type) => selectedFilter === type.name.toLowerCase());
         if (newFilterIndex >= 0) updateFilter(filterIdArr[newFilterIndex]._id);
     }, [selectedFilter]);
 
@@ -35,14 +32,23 @@ const Filter: React.FC<FilterProps> = ({ goBack, productIsActive, updateFilter }
     };
 
     // Include back button in controls if a product is currently active
-    const back: React.ReactNode | null = productIsActive ? <button onClick={goBack} className={style.back}>
-        <FontAwesomeIcon icon={faBackward} /> <span>Go Back</span>
-    </button> : null;
+    const back: React.ReactNode | null = productIsActive ? (
+        <button onClick={goBack} className={style.back}>
+            <FontAwesomeIcon icon={faBackward} /> <span>Go Back</span>
+        </button>
+    ) : null;
 
     return (
         <div className={style.filterContainer}>
             { back }
-            <select className={style.filterSelect} name="filter-select" id='filter-select' value={selectedFilter} data-testid="filter-select" onChange={(e) => {toggleFilter(e);}}>
+            <select 
+                className={style.filterSelect} 
+                name="filter-select" 
+                id='filter-select' 
+                value={selectedFilter} 
+                data-testid="filter-select" 
+                onChange={(e) => toggleFilter(e)}
+            >
                 <option className={style.filterOption} value="all">All</option>
                 { filterOptions }
             </select>
