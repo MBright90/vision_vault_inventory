@@ -3,21 +3,31 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Filter from "./Filter";
 
-jest.mock('@utilities/retrieveTypes');
-
 const mockGoBack = jest.fn();
 const mockUpdateFilter = jest.fn();
 
 beforeEach(() => {
     jest.resetAllMocks();
+
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve([
+                { _id: 'type1', name: 'type one' },
+                { _id: 'type2', name: 'type two' },
+            ]),
+        })
+    ) as jest.Mock;
 });
 
-test('matches snapshot', () => {
+test('matches snapshot', async () => {
     const { container } = render(
         <Filter goBack={mockGoBack} productIsActive={false} updateFilter={mockUpdateFilter}/>
     );
 
-    expect(container).toMatchSnapshot();
+    await waitFor(() => {
+        expect(container).toMatchSnapshot();
+    });
 });
 
 test('go back button is visible when product is active', () => {
@@ -45,4 +55,44 @@ test('calls goBack when go back button fires click event', () => {
     fireEvent.click(goBackBtn);
 
     expect(mockGoBack).toHaveBeenCalled();
+});
+
+test('renders default filter option correctly', async () => {
+    render(
+        <Filter goBack={mockGoBack} productIsActive={true} updateFilter={mockUpdateFilter}/>
+    );
+
+    const selectElement = screen.getByRole('combobox');
+    expect(selectElement).toHaveValue('all');
+
+    expect(screen.getByRole('option', { name: 'All' })).toBeInTheDocument();
+});
+
+test('renders option tags for fetched filters', async () => {
+    render(
+        <Filter goBack={mockGoBack} productIsActive={true} updateFilter={mockUpdateFilter}/>
+    );
+
+    await waitFor(() => {
+        expect(screen.getByText(/Type One/i)).toBeInTheDocument();
+        expect(screen.getByText(/Type Two/i)).toBeInTheDocument();
+    });
+});
+
+test('changes value of select when new value is posed', async () => {
+    render(
+        <Filter goBack={mockGoBack} productIsActive={true} updateFilter={mockUpdateFilter}/>
+    );
+
+    await waitFor(() => {
+        expect(screen.getByText(/Type One/i)).toBeInTheDocument();
+    });
+
+    const selectElement = screen.getByTestId('filter-select');
+    fireEvent.change(selectElement, { target: { value: 'type one' } });
+
+    await waitFor(() => {
+        expect(selectElement).toHaveValue('type one');
+    });
+
 });
