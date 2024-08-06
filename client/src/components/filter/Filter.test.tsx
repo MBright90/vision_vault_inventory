@@ -30,23 +30,27 @@ test('matches snapshot', async () => {
     });
 });
 
-test('go back button is visible when product is active', () => {
+test('go back button is visible when product is active', async () => {
     render(
         <Filter goBack={mockGoBack} productIsActive={true} updateFilter={mockUpdateFilter}/>
     );
 
-    expect(screen.getByText(/Go Back/i)).toBeInTheDocument();
+    await waitFor(() => {
+        expect(screen.getByText(/Go Back/i)).toBeInTheDocument();
+    });
 });
 
-test('go back button not visible when no product is active', () => {
+test('go back button not visible when no product is active', async () => {
     render(
         <Filter goBack={mockGoBack} productIsActive={false} updateFilter={mockUpdateFilter}/>
     );
 
-    expect(screen.queryByText(/Go Back/i)).not.toBeInTheDocument();
+    await waitFor(() => {
+        expect(screen.queryByText(/Go Back/i)).not.toBeInTheDocument();
+    });
 });
 
-test('calls goBack when go back button fires click event', () => {
+test('calls goBack when go back button fires click event', async () => {
     render(
         <Filter goBack={mockGoBack} productIsActive={true} updateFilter={mockUpdateFilter}/>
     );
@@ -54,7 +58,9 @@ test('calls goBack when go back button fires click event', () => {
     const goBackBtn = screen.getByText(/Go Back/i);
     fireEvent.click(goBackBtn);
 
-    expect(mockGoBack).toHaveBeenCalled();
+    await waitFor(() => {
+        expect(mockGoBack).toHaveBeenCalled();
+    });
 });
 
 test('renders default filter option correctly', async () => {
@@ -65,7 +71,9 @@ test('renders default filter option correctly', async () => {
     const selectElement = screen.getByRole('combobox');
     expect(selectElement).toHaveValue('all');
 
-    expect(screen.getByRole('option', { name: 'All' })).toBeInTheDocument();
+    await waitFor(() => {
+        expect(screen.getByRole('option', { name: 'All' })).toBeInTheDocument();
+    });
 });
 
 test('renders option tags for fetched filters', async () => {
