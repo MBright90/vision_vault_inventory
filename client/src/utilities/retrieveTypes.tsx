@@ -25,11 +25,11 @@ const retrieveTypes = async (
         // Create ReactNode arr
         const filterNodes: React.ReactNode[] = data.map((type: productType_type) => {
             if (capitalize(formattedSelected) === type.name) {
-                return (<option key={type._id} data-id={type._id} selected={true}>
+                return (<option key={type._id} data-id={type._id} selected={true} value={type.name}>
                     {capitalize(type.name)}
                 </option>);
             } else {
-                return (<option key={type._id} data-id={type._id}>
+                return (<option key={type._id} data-id={type._id} value={type.name}>
                     {capitalize(type.name)}
                 </option>);
             }
