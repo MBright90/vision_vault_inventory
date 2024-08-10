@@ -1,7 +1,7 @@
 /** @type {import('jest').Config} */
 const config = {
   clearMocks: true,
-  collectCoverage: true,
+  // collectCoverage: true,
   coverageDirectory: 'coverage',
 };
 
