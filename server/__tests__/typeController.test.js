@@ -70,3 +70,62 @@ describe('get_id', () => {
     await expect(typeController.get_id(type)).rejects.toThrow(mockError);
   });
 });
+
+describe('add_product', () => {
+  test('should add a product of the correct type', async () => {
+    const typeId = 'mockTypeId';
+    const productId = 'mockProductId';
+    const mockResult = { nModified: 1 };
+
+    Type.updateOne.mockResolvedValue(mockResult);
+
+    const result = await typeController.add_product(typeId, productId);
+
+    expect(Type.updateOne).toHaveBeenCalledWith(
+      { _id: typeId },
+      { $push: { products: productId } },
+      {},
+    );
+    expect(result).toBe(mockResult);
+  });
+
+  test('should handle errors and throw them', async () => {
+    const typeId = 'mockTypeId';
+    const productId = 'mockProductId';
+    const mockError = new Error('Database error');
+
+    Type.updateOne.mockRejectedValue(mockError);
+
+    await expect(typeController.add_product(typeId, productId)).rejects.toThrow(mockError);
+  });
+});
+
+describe('remove_product', () => {
+  test('should remove product from type', async () => {
+    const typeId = 'mockTypeId';
+    const productId = 'mockProductId';
+    const mockResult = { nModified: 1 };
+
+    Type.updateOne.mockResolvedValue(mockResult);
+
+    const result = await typeController.remove_product(typeId, productId);
+
+    expect(Type.updateOne).toHaveBeenCalledWith(
+      { _id: typeId },
+      { $pull: { products: productId } },
+      {},
+    );
+    expect(result).toBe(mockResult);
+  });
+
+  test('should handle errors and throw them', async () => {
+    const typeId = 'mockTypeId';
+    const productId = 'mockProductId';
+    const mockError = new Error('Database error');
+
+    Type.updateOne.mockRejectedValue(mockError);
+
+    await expect(typeController.remove_product(typeId, productId)).rejects.toThrow(mockError);
+  });
+});
+
