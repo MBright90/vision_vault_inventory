@@ -1,5 +1,6 @@
 /node_modules/
 /.vscode/
+/coverage/
 
 .env
 /test_suite_analysis/
