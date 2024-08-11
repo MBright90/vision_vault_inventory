@@ -129,3 +129,33 @@ describe('remove_product', () => {
   });
 });
 
+describe('remove_product_by_name', () => {
+  test('should remove product from type by matching name', async () => {
+    const typeName = 'mockTypeName';
+    const productId = 'mockProductId';
+    const mockResult = { nModified: 1 };
+
+    Type.updateOne.mockResolvedValue(mockResult);
+
+    const result = await typeController.remove_product_by_name(typeName, productId);
+
+    expect(Type.updateOne).toHaveBeenCalledWith(
+      { name: typeName },
+      { $pull: { products: productId } },
+      {},
+    );
+    expect(result).toBe(mockResult);
+  });
+
+  test('should handle errors and throw them', async () => {
+    const typeName = 'mockTypeName';
+    const productId = 'mockProductId';
+    const mockError = new Error('Database error');
+
+    Type.updateOne.mockRejectedValue(mockError);
+
+    await expect(
+      typeController.remove_product_by_name(typeName, productId),
+    ).rejects.toThrow(mockError);
+  });
+});
