@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 const Genre = require('../models/genre');
 const genreController = require('../controllers/genreController');
@@ -49,7 +50,45 @@ describe('get_id', () => {
   });
 });
 
-describe('get_all', () => {});
+describe('get_all', () => {
+  test('should retrieve and return all genres sorted by name', async () => {
+    const req = {};
+    const res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    };
+    const mockGenres = [{ name: 'genre1' }, { name: 'genre2' }];
+
+    Genre.find.mockReturnValue({
+      sort: jest.fn().mockResolvedValue(mockGenres),
+    });
+
+    await genreController.get_all(req, res);
+
+    expect(Genre.find).toHaveBeenCalled();
+    expect(res.send).toHaveBeenCalledWith(mockGenres);
+  });
+
+  test('should log the error if an error occurs', async () => {
+    const req = {};
+    const res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    };
+    const mockError = new Error('Database error');
+
+    console.log = jest.fn();
+
+    Genre.find.mockReturnValue({
+      sort: jest.fn().mockRejectedValue(mockError),
+    });
+
+    await genreController.get_all(req, res);
+
+    expect(Genre.find).toHaveBeenCalled();
+    expect(console.log).toHaveBeenCalledWith(mockError);
+  });
+});
 
 describe('add_product', () => {});
 
