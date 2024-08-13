@@ -90,6 +90,41 @@ describe('get_all', () => {
   });
 });
 
-describe('add_product', () => {});
+describe('add_product', () => {
+  test('adds product to database', async () => {
+    const mockGenreId = 'mockGenreId';
+    const mockProductId = 'mockProductId';
+    const mockResult = { nModified: 1 };
+
+    Genre.updateOne.mockResolvedValue(mockResult);
+
+    const result = await genreController.add_product(mockGenreId, mockProductId);
+
+    expect(Genre.updateOne).toHaveBeenCalledWith(
+      { _id: mockGenreId },
+      { $addToSet: { products: mockProductId } },
+      {},
+    );
+    expect(result).toBe(mockResult);
+  });
+
+  test('should log and throw error on database issue', async () => {
+    const mockGenreId = 'mockGenreId';
+    const mockProductId = 'mockProductId';
+    const mockError = new Error('Database error');
+
+    Genre.updateOne.mockRejectedValue(mockError);
+
+    console.log = jest.fn();
+
+    await expect(
+      genreController.add_product(mockGenreId, mockProductId),
+    ).rejects.toThrow(mockError);
+    expect(Genre.updateOne).toHaveBeenCalled();
+    expect(console.log).toHaveBeenCalledWith(
+      `Error adding product ${mockProductId} to genre ${mockGenreId}: ${mockError}`,
+    );
+  });
+});
 
 describe('remove_product', () => {});
