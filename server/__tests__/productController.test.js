@@ -67,7 +67,7 @@ describe('get_by_id', () => {
     const req = { params: { id: 'mockId' } };
     const res = {
       send: jest.fn(),
-      status: jest.fn().mockReturnValue,
+      status: jest.fn().mockReturnThis(),
     };
     const mockError = new Error('Database error');
 
