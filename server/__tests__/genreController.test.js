@@ -91,7 +91,7 @@ describe('get_all', () => {
 });
 
 describe('add_product', () => {
-  test('adds product to database', async () => {
+  test('should add product to database', async () => {
     const mockGenreId = 'mockGenreId';
     const mockProductId = 'mockProductId';
     const mockResult = { nModified: 1 };
@@ -127,4 +127,39 @@ describe('add_product', () => {
   });
 });
 
-describe('remove_product', () => {});
+describe('remove_product', () => {
+  test('should remove product form database', async () => {
+    const mockGenreId = 'mockGenreId';
+    const mockProductId = 'mockProductId';
+    const mockResult = { nModified: 1 };
+
+    Genre.updateOne.mockResolvedValue(mockResult);
+
+    const result = await genreController.remove_product(mockGenreId, mockProductId);
+
+    expect(Genre.updateOne).toHaveBeenCalledWith(
+      { _id: mockGenreId },
+      { $pull: { products: mockProductId } },
+      {},
+    );
+    expect(result).toBe(mockResult);
+  });
+
+  test('should log and throw error on database issue', async () => {
+    const mockGenreId = 'mockGenreId';
+    const mockProductId = 'mockProductId';
+    const mockError = new Error('Database error');
+
+    console.log = jest.fn();
+
+    Genre.updateOne.mockRejectedValue(mockError);
+
+    await expect(
+      genreController.remove_product(mockGenreId, mockProductId),
+    ).rejects.toThrow(mockError);
+    expect(Genre.updateOne).toHaveBeenCalled();
+    expect(console.log).toHaveBeenCalledWith(
+      `Error removing product ${mockProductId} from genre ${mockGenreId}: ${mockError}`,
+    );
+  });
+});
