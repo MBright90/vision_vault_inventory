@@ -83,7 +83,48 @@ describe('get_by_id', () => {
   });
 });
 
-describe('get_by_genre', () => {});
+describe('get_by_genre', () => {
+  test('should retrieve an array of products by a given genre, sorted by name', async () => {
+    const req = { params: { genreId: 'mockGenreId' } };
+    const res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    };
+    const mockResult = [{ name: 'product1' }, { name: 'product2' }];
+
+    Product.find.mockReturnValue({
+      sort: jest.fn().mockResolvedValue(mockResult),
+    });
+
+    await productController.get_by_genre(req, res);
+
+    expect(Product.find).toHaveBeenCalledWith(
+      { genres: { $elemMatch: { _id: 'mockGenreId' } } },
+    );
+    expect(res.send).toHaveBeenCalledWith(mockResult);
+  });
+
+  test('should log and send the error if an error occurs', async () => {
+    const req = { params: { genreId: 'mockGenreId' } };
+    const res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    };
+    const mockError = new Error('Database error');
+
+    console.log = jest.fn();
+
+    Product.find.mockReturnValue({
+      sort: jest.fn().mockRejectedValue(mockError),
+    });
+
+    await productController.get_by_genre(req, res);
+
+    expect(console.log).toHaveBeenCalledWith(mockError);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(mockError);
+  });
+});
 
 describe('get_by_type', () => {});
 
