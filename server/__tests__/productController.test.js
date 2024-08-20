@@ -126,7 +126,46 @@ describe('get_by_genre', () => {
   });
 });
 
-describe('get_by_type', () => {});
+describe('get_by_type', () => {
+  test('should retrieve an array of products by a given type, sorted by name', async () => {
+    const req = { typeId: 'mockTypeId' };
+    const res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    };
+    const mockResult = [{ name: 'product1' }, { name: 'product2' }];
+
+    Product.find.mockReturnValue({
+      sort: jest.fn().mockResolvedValue(mockResult),
+    });
+
+    await productController.get_by_type(req, res);
+
+    expect(Product.find).toHaveBeenCalledWith({ 'type._id': req.typeId });
+    expect(res.send).toHaveBeenCalledWith(mockResult);
+  });
+
+  test('should log and send the error if an error occurs', async () => {
+    const req = { typeId: 'mockTypeId' };
+    const res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnThis(),
+    };
+    const mockError = new Error('Database error');
+
+    console.log = jest.fn();
+
+    Product.find.mockReturnValue({
+      sort: jest.fn().mockRejectedValue(mockError),
+    });
+
+    await productController.get_by_type(req, res);
+
+    expect(console.log).toHaveBeenCalledWith(mockError);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(mockError);
+  });
+});
 
 describe('get_by_type_and_genre', () => {});
 
