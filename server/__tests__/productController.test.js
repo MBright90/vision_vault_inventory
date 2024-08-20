@@ -1,7 +1,11 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+const mongoose = require('mongoose');
 const Product = require('../models/product');
 const productController = require('../controllers/productController');
+const genreController = require('../controllers/genreController');
+const typeController = require('../controllers/typeController');
+const validateProduct = require('../validators/productValidator');
 
 jest.mock('../models/product');
 
@@ -215,7 +219,12 @@ describe('get_by_type_and_genre', () => {
   });
 });
 
-describe('post_product', () => {});
+describe('post_product', () => {
+  jest.mock('mongoose');
+  jest.mock('../controllers/genre');
+  jest.mock('../controllers/type');
+  jest.mock('../validators/productValidator');
+});
 
 describe('put_edit_product', () => {});
 
