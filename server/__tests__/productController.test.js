@@ -272,6 +272,16 @@ describe('post_product', () => {
       type: { _id: 'mockTypeId', name: 'type1' },
     });
   });
+
+  test('should validate the input and return a 400 error if validation fails', async () => {
+    validateProduct.mockReturnValue({ err: 'Validation error' });
+
+    await productController.post_product(req, res);
+
+    expect(validateProduct).toHaveBeenCalledWith(req.body);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.send).toHaveBeenCalledWith({ err: 'Validation Error' });
+  });
 });
 
 describe('put_edit_product', () => {});
