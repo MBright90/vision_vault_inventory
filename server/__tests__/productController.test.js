@@ -224,6 +224,54 @@ describe('post_product', () => {
   jest.mock('../controllers/genre');
   jest.mock('../controllers/type');
   jest.mock('../validators/productValidator');
+
+  let req;
+  let res;
+  let session;
+
+  beforeEach(() => {
+    req = {
+      body: {
+        name: 'Product1',
+        description: 'A sample product',
+        price: 100,
+        number_in_stock: 10,
+        genres: 'Genre1,Genre2',
+        type: 'Type1',
+      },
+    };
+    res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnValue(),
+    };
+    session = {
+      startTransaction: jest.fn(),
+      commitTransaction: jest.fn(),
+      abortTransaction: jest.fn(),
+      endSession: jest.fn(),
+    };
+
+    // mock session creation
+    mongoose.startTransaction.mockResolvedValue(session);
+
+    // mock product validation
+    validateProduct.mockReturnValue({ err: null });
+
+    // mock genre controller
+    genreController.get_id.mockResolvedValue('mockGenreId');
+    genreController.add_product.mockResolvedValue({});
+
+    // mock type controller
+    typeController.get_id.mockResolvedValue('mockTypeId');
+    typeController.add_product.mockResolvedValue({});
+
+    // mock product save
+    Product.save.mockResolvedValue({
+      _id: 'mockProductId',
+      genres: [{ _id: 'mockGenreId', name: 'genre1' }],
+      type: { _id: 'mockTypeId', name: 'type1' },
+    });
+  });
 });
 
 describe('put_edit_product', () => {});
