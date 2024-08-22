@@ -236,8 +236,8 @@ describe('post_product', () => {
         description: 'A sample product',
         price: 100,
         number_in_stock: 10,
-        genres: 'Genre1,Genre2',
-        type: 'Type1',
+        genres: 'genre1, genre2',
+        type: 'type1',
       },
     };
     res = {
@@ -281,6 +281,42 @@ describe('post_product', () => {
     expect(validateProduct).toHaveBeenCalledWith(req.body);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.send).toHaveBeenCalledWith({ err: 'Validation Error' });
+  });
+
+  test('should start a transaction, save the product, and commit the transaction', async () => {
+    await productController.post_product(req, res);
+
+    expect(mongoose.startSession).toHaveBeenCalled();
+    expect(session.startTransaction).toHaveBeenCalled();
+    expect(Product.save).toHaveBeenCalledWith({ session });
+    expect(session.commitTransaction).toHaveBeenCalled();
+    expect(session.endSession).toHaveBeenCalled();
+    expect(res.send).toHaveBeenCalledWith(expect.objectContaining({
+      _id: 'mockProductId',
+    }));
+  });
+
+  test('should call genreController.get_id and typeController.get_id with the correct parameters', async () => {
+    await productController.post_product(req, res);
+
+    expect(genreController.get_id).toHaveBeenCalledWith('genre1', session);
+    expect(typeController.get_id).toHaveBeenCalledWith('type1', session);
+  });
+
+  test('should call genreController.add_product and typeController.add_product after saving the product', async () => {
+    await productController.post_product(req, res);
+
+    expect(genreController.get_id).toHaveBeenCalledWith('mockGenreId', 'mockProductId', session);
+    expect(typeController.get_id).toHaveBeenCalledWith('mockTypeId', 'mockProductId', session);
+  });
+
+  test('should abort the transaction and return a 500 error if an error occurs', async () => {
+    Product.save.mockRejectedValue(new Error('Saving error'));
+
+    expect(session.abortTransaction).toHaveBeenCalled();
+    expect(session.endTransaction).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(expect.any(Error));
   });
 });
 
