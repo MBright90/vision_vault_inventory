@@ -481,4 +481,65 @@ describe('put_update_stock', () => {
   });
 });
 
-describe('delete_product', () => {});
+describe('delete_product', () => {
+  jest.mock('mongoose');
+  jest.mock('../controllers/genre');
+  jest.mock('../controllers/type');
+
+  let req;
+  let res;
+  let session;
+
+  beforeEach(() => {
+    req = {
+      params: { id: 'mockProductId' },
+      body: {
+        genreIds: ['mockGenre1', 'mockGenre2'],
+        typeId: 'mockTypeId',
+      },
+    };
+    res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnValue(),
+    };
+    session = {
+      startTransaction: jest.fn(),
+      commitTransaction: jest.fn(),
+      abortTransaction: jest.fn(),
+      endSession: jest.fn(),
+    };
+
+    // mock session creation
+    mongoose.startTransaction.mockResolvedValue(session);
+
+    // mock genre controller
+    genreController.remove_product.mockResolvedValue({});
+
+    // mock type controller
+    typeController.remove_product.mockResolvedValue({});
+  });
+
+  test('should delete the product, remove it from genres and type, and commit the transaction', async () => {
+
+  });
+
+  test('should abort the transaction and return a 500 error if product deletion fails', async () => {
+
+  });
+
+  test('should abort the transaction and return a 500 error if genre removal fails', async () => {
+
+  });
+
+  test('should abort the transaction and return a 500 error if type removal fails', async () => {
+
+  });
+
+  test('should handle missing genreIds or typeId gracefully', async () => {
+
+  });
+
+  test('should log an error if any operation fails', async () => {
+
+  });
+});
