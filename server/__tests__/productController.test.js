@@ -437,6 +437,48 @@ describe('put_edit_product', () => {
   });
 });
 
-describe('put_update_stock', () => {});
+describe('put_update_stock', () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    req = {
+      params: { id: 'mockProductId' },
+      body: { increment: 10 },
+    };
+    res = {
+      send: jest.fn(),
+      status: jest.fn().mockReturnValue(),
+    };
+  });
+
+  test('Should increment the number_in_stock of a given product found by id', async () => {
+    const mockResult = { nModified: 1 };
+
+    Product.findOneAndUpdate.mockResolvedValue(mockResult);
+
+    await productController.put_update_stock(req, res);
+
+    expect(Product.findOneAndUpdate).toHaveBeenCalledWith(
+      { _id: 'mockProductId' },
+      { $inc: { number_in_stock: 10 }, $set: { stock_last_updated: expect.any(Date) } },
+    );
+    expect(res.send).toHaveBeenCalledWith(mockResult);
+  });
+
+  test('should log and send the error if an error occurs', async () => {
+    const mockError = new Error('Database error');
+
+    console.log = jest.fn();
+
+    Product.findOneAndUpdate.mockRejectedValue(mockError);
+
+    await productController.put_update_stock(req, res);
+
+    expect(console.log).toHaveBeenCalledWith(mockError);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(mockError);
+  });
+});
 
 describe('delete_product', () => {});
