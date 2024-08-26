@@ -339,6 +339,7 @@ describe('put_edit_product', () => {
         price: 100,
         number_in_stock: 10,
         genres: 'genre1, genre2',
+        prevGenres: ['prevGenre1', 'prevGenre2'],
         type: 'type1',
       },
     };
@@ -399,6 +400,40 @@ describe('put_edit_product', () => {
     );
     expect(session.commitTransaction).toHaveBeenCalled();
     expect(session.endSession).toHaveBeenCalled();
+  });
+
+  test('should call genreController.get_id and typeController.get_id with the correct parameters', async () => {
+    await productController.put_edit_product(req, res);
+
+    expect(genreController.get_id).toHaveBeenCalledWith('genre1', session);
+    expect(typeController.get_id).toHaveBeenCalledWith('type1', session);
+  });
+
+  test('should call genreController.add_product and remove_product after updating the product', async () => {
+    await productController.put_edit_product(req, res);
+
+    expect(genreController.add_product).toHaveBeenCalledWith('mockGenreId', 'mockProductId', session);
+    expect(genreController.remove_product).toHaveBeenCalledWith('prevGenre1', 'mockProductId', session);
+  });
+
+  test('should call typeController.add_product and remove_product_by_name when type changes', async () => {
+    Product.findOneAndUpdate.mockResolvedValueOnce({
+      _id: 'mockProductId',
+      genres: [{ _id: 'mockGenreId', name: 'genre1' }],
+      type: { _id: 'differentTypeId', name: 'differentType' },
+    });
+
+    expect(typeController.add_product).toHaveBeenCalledWith('differentTypeId', 'mockProductId', session);
+    expect(typeController.remove_product).toHaveBeenCalledWith('prevGenre1', 'mockProductId', session);
+  });
+
+  test('should abort the transaction and return a 500 error if an error occurs', async () => {
+    Product.findOneAndUpdate.mockRejectedValue(new Error('Saving error'));
+
+    expect(session.abortTransaction).toHaveBeenCalled();
+    expect(session.endTransaction).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(expect.any(Error));
   });
 });
 
