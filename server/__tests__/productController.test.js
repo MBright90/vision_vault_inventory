@@ -8,6 +8,7 @@ const typeController = require('../controllers/typeController');
 const validateProduct = require('../validators/productValidator');
 
 jest.mock('../models/product');
+console.log = jest.fn();
 
 describe('get_all', () => {
   test('should retrieve all products sorted by name', async () => {
@@ -35,8 +36,6 @@ describe('get_all', () => {
       status: jest.fn().mockReturnThis(),
     };
     const mockError = new Error('Database error');
-
-    console.log = jest.fn();
 
     Product.find.mockReturnValue({
       sort: jest.fn().mockRejectedValue(mockError),
@@ -74,8 +73,6 @@ describe('get_by_id', () => {
       status: jest.fn().mockReturnThis(),
     };
     const mockError = new Error('Database error');
-
-    console.log = jest.fn();
 
     Product.findById.mockRejectedValue(mockError);
 
@@ -116,8 +113,6 @@ describe('get_by_genre', () => {
     };
     const mockError = new Error('Database error');
 
-    console.log = jest.fn();
-
     Product.find.mockReturnValue({
       sort: jest.fn().mockRejectedValue(mockError),
     });
@@ -156,8 +151,6 @@ describe('get_by_type', () => {
       status: jest.fn().mockReturnThis(),
     };
     const mockError = new Error('Database error');
-
-    console.log = jest.fn();
 
     Product.find.mockReturnValue({
       sort: jest.fn().mockRejectedValue(mockError),
@@ -204,8 +197,6 @@ describe('get_by_type_and_genre', () => {
       status: jest.fn().mockReturnThis(),
     };
     const mockError = new Error('Database error');
-
-    console.log = jest.fn();
 
     Product.find.mockReturnValue({
       sort: jest.fn().mockRejectedValue(mockError),
@@ -469,8 +460,6 @@ describe('put_update_stock', () => {
   test('should log and send the error if an error occurs', async () => {
     const mockError = new Error('Database error');
 
-    console.log = jest.fn();
-
     Product.findOneAndUpdate.mockRejectedValue(mockError);
 
     await productController.put_update_stock(req, res);
@@ -517,29 +506,75 @@ describe('delete_product', () => {
 
     // mock type controller
     typeController.remove_product.mockResolvedValue({});
+
+    // mock successful deletion
+    Product.deleteOne.mockResolvedValue({ acknowledged: true, deletedCount: 1 });
   });
 
-  test('should delete the product, remove it from genres and type, and commit the transaction', async () => {
+  test('should start a transaction, delete the product, and commit the transaction', async () => {
+    await productController.delete_product(req, res);
 
+    expect(mongoose.startSession).toHaveBeenCalled();
+    expect(session.startTransaction).toHaveBeenCalled();
+    expect(Product.deleteOne).toHaveBeenCalledWith(
+      { _id: 'mockProductId' },
+      { session },
+    );
+    expect(session.commitTransaction).toHaveBeenCalled();
+    expect(session.endSession).toHaveBeenCalled();
   });
 
   test('should abort the transaction and return a 500 error if product deletion fails', async () => {
+    const mockError = new Error('Database error');
+    Product.deleteOne.mockRejectedValue(mockError);
 
+    await productController.delete_product(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(mockError);
   });
 
   test('should abort the transaction and return a 500 error if genre removal fails', async () => {
+    const mockError = new Error('Database error');
+    genreController.remove_product.mockRejectedValue(mockError);
 
+    await productController.delete_product(req, res);
+
+    expect(session.abortTransaction).toHaveBeenCalled();
+    expect(console.log).toHaveBeenCalledWith(`Error deleting product mockProductId: ${mockError}`);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(mockError);
   });
 
   test('should abort the transaction and return a 500 error if type removal fails', async () => {
+    const mockError = new Error('Database error');
+    typeController.remove_product.mockRejectedValue(mockError);
 
+    await productController.delete_product(req, res);
+
+    expect(session.abortTransaction).toHaveBeenCalled();
+    expect(console.log).toHaveBeenCalledWith(`Error deleting product mockProductId: ${mockError}`);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith(mockError);
   });
 
   test('should handle missing genreIds or typeId gracefully', async () => {
+    req.body.genreIds = null;
+    req.body.typeId = null;
 
+    await productController.delete_product(req, res);
+
+    expect(Product.deleteOne).toHaveBeenCalled();
+    expect(session.commitTransaction).toHaveBeenCalled();
+    expect(session.endSession).toHaveBeenCalled();
   });
 
   test('should log an error if any operation fails', async () => {
+    const mockError = new Error('Any error');
+    Product.deleteOne.mockRejectedValue(mockError);
 
+    await productController.delete_product(req, res);
+
+    expect(console.log).toHaveBeenCalledWith(`Error deleting product mockProductId: ${mockError}`);
   });
 });
